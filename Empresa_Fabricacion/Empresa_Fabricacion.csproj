@@ -70,7 +70,7 @@
     <Compile Include="Model\Empleado.cs" />
     <Compile Include="Model\Fabricacion.cs" />
     <Compile Include="Model\Material.cs" />
-    <Compile Include="Model\Pedido.cs" />
+    <Compile Include="Model\Venta.cs" />
     <Compile Include="Model\Producto.cs" />
     <Compile Include="Model\Proveedor.cs" />
     <Compile Include="PropertyValidateModel.cs" />

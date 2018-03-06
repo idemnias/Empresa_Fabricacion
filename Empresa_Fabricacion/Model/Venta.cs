@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Empresa_Fabricacion.Model
 {
-    class Pedido
+    public class Venta
     {
     }
 }
