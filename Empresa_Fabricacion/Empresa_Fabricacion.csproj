@@ -66,6 +66,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DAL\EmpresaFabricacionContext.cs" />
+    <Compile Include="DAL\RepositorioGenerico.cs" />
+    <Compile Include="DAL\UnitOfWork.cs" />
     <Compile Include="Model\Cliente.cs" />
     <Compile Include="Model\Empleado.cs" />
     <Compile Include="Model\Fabricacion.cs" />
@@ -74,6 +77,13 @@
     <Compile Include="Model\Producto.cs" />
     <Compile Include="Model\Proveedor.cs" />
     <Compile Include="PropertyValidateModel.cs" />
+    <Compile Include="Repositorios\RepositorioCliente.cs" />
+    <Compile Include="Repositorios\RepositorioEmpleado.cs" />
+    <Compile Include="Repositorios\RepositorioFabricacion.cs" />
+    <Compile Include="Repositorios\RepositorioMaterial.cs" />
+    <Compile Include="Repositorios\RepositorioProducto.cs" />
+    <Compile Include="Repositorios\RepositorioProveedor.cs" />
+    <Compile Include="Repositorios\RepositorioVenta.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
