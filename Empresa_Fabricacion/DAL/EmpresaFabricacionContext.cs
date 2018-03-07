@@ -18,7 +18,6 @@ namespace Empresa_Fabricacion.DAL
         public DbSet<Material> Materiales { get; set; }
         public DbSet<Producto> Productos { get; set; }
         public DbSet<Proveedor> Proveedores { get; set; }
-        public DbSet<Venta> Ventas { get; set; }
 
 
 

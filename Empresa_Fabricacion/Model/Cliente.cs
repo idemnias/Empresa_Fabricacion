@@ -13,7 +13,7 @@ namespace Empresa_Fabricacion.Model
     {
         public Cliente()
         {
-            Ventas = new HashSet<Venta>();
+            Productos = new HashSet<Producto>();
         }
 
         [Key]
@@ -23,7 +23,7 @@ namespace Empresa_Fabricacion.Model
         public string Telefono { get; set; }
         public string Correo { get; set; }
 
-        public virtual ICollection<Venta> Ventas { get; set; }
+        public virtual ICollection<Producto> Productos { get; set; }
 
     }
 }

@@ -16,7 +16,6 @@ namespace Empresa_Fabricacion.DAL
         private RepositorioMaterial material;
         private RepositorioProducto producto;
         private RepositorioProveedor proveedor;
-        private RepositorioVenta venta;
 
         public RepositorioCliente RepositorioCliente
         {
@@ -87,18 +86,6 @@ namespace Empresa_Fabricacion.DAL
                     this.proveedor = new RepositorioProveedor(context);
                 }
                 return proveedor;
-            }
-        }
-
-        public RepositorioVenta RepositorioVenta
-        {
-            get
-            {
-                if (this.venta == null)
-                {
-                    this.venta = new RepositorioVenta(context);
-                }
-                return venta;
             }
         }
 

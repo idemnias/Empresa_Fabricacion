@@ -20,9 +20,11 @@ namespace Empresa_Fabricacion.Model
         public int ProductoId { get; set; }
         public string Nombre { get; set; }
         public double Precio { get; set; }
-        public int Stock { get; set; }
+        public bool Vendido { get; set; }
+        public DateTime FechaVenta { get; set; }
+        public int ClienteId { get; set; }
 
-        public virtual Venta Ventas { get; set; }
+        public virtual Cliente Clientes { get; set; }
         public virtual ICollection<Fabricacion> Fabricaciones { get; set; }
         
 

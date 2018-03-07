@@ -16,6 +16,8 @@ namespace Empresa_Fabricacion.Model
         public string Nombre { get; set; }
         public double Precio { get; set; }
         public int Stock { get; set; }
+        public int FabricacionId { get; set; }
+        public int ProveedorId { get; set; }
 
         public virtual Fabricacion Fabricaciones { get; set; }
         public virtual Proveedor Proveedores { get; set; }

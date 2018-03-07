@@ -14,15 +14,19 @@ namespace Empresa_Fabricacion.Model
         public Fabricacion()
         {
             Materiales = new HashSet<Material>();
+            Empleados = new HashSet<Empleado>();
         }
 
         [Key]
-        public int FabricacionId;
-        public DateTime FechaInicio;
-        public DateTime FechaAcaba;
+        public int FabricacionId { get; set; }
+        public DateTime FechaInicio { get; set; }
+        public DateTime FechaAcaba { get; set; }
 
-        public virtual Empleado Empleados { get; set; }
+        public int EmpleadoId { get; set; }
+        public int ProductoId { get; set; }
+
         public virtual Producto Productos { get; set; }
+        public virtual ICollection<Empleado> Empleados { get; set; }
         public virtual ICollection<Material> Materiales { get; set; }
 
     }
