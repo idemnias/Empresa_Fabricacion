@@ -90,6 +90,10 @@
     <Compile Include="Migrations\201803071132523_data.Designer.cs">
       <DependentUpon>201803071132523_data.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803081115057_nuevo.cs" />
+    <Compile Include="Migrations\201803081115057_nuevo.Designer.cs">
+      <DependentUpon>201803081115057_nuevo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModeloEntrega.Context.cs">
       <AutoGen>True</AutoGen>
@@ -155,6 +159,9 @@
     <EmbeddedResource Include="Migrations\201803071132523_data.resx">
       <DependentUpon>201803071132523_data.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803081115057_nuevo.resx">
+      <DependentUpon>201803081115057_nuevo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -179,6 +186,7 @@
     <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Imagenes\Nishad2m8-Hologram-Dock-My-computer.ico" />
     <Content Include="ModeloEntrega.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModeloEntrega.edmx</DependentUpon>

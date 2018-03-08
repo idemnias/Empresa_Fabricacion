@@ -22,6 +22,8 @@ namespace Empresa_Fabricacion.Model
         public double Precio { get; set; }
         public bool Vendido { get; set; }
         public DateTime FechaVenta { get; set; }
+        public string Descripcion { get; set; }
+
         public int ClienteId { get; set; }
 
         public virtual Cliente Clientes { get; set; }

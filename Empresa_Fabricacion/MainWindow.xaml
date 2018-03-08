@@ -5,8 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Empresa_Fabricacion"
         mc:Ignorable="d"
-        Title="MainWindow" Height="581.373" Width="917.157">
+        Title="Empresa de Fabricacion de Ordenadores Custom" Height="581.373" Width="917.157" Icon="Imagenes/Nishad2m8-Hologram-Dock-My-computer.ico">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="51"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <UniformGrid Columns="7">
+            <Button Name="bt_fabricacion" Content="FABRICACIONES" Margin="10"/>
+            <Button Name="bt_material" Content="MATERIALES" Margin="10"/>
+            <Button Name="bt_producto" Content="PRODUCTOS" Margin="10"/>
+            <Button Name="bt_inicio" Content="INICIO" Margin="10"/>
+            <Button Name="bt_cliente" Content="CLIENTES" Margin="10"/>
+            <Button Name="bt_proveedor" Content="PROVEEDORES" Margin="10"/>
+            <Button Name="bt_empleado" Content="EMPLEADOS" Margin="10"/>
+        </UniformGrid>
+        <Grid Name="grid_producto" Grid.Row="1">
+            
+        </Grid>
+        <Grid Name="grid_cliente" Grid.Row="1">
 
+        </Grid>
+        <Grid Name="grid_empleado" Grid.Row="1">
+
+        </Grid>
+        <Grid Name="grid_fabricacion" Grid.Row="1">
+
+        </Grid>
+        <Grid Name="grid_material" Grid.Row="1">
+
+        </Grid>
+        <Grid Name="grid_proveedor" Grid.Row="1">
+
+        </Grid>
     </Grid>
+    
 </Window>
