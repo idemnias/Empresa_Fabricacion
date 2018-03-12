@@ -12,12 +12,16 @@ namespace Empresa_Fabricacion.Model
     public class Empleado
     {
         [Key]
-        public int ClienteId { get; set; }
+        public int EmpleadoId { get; set; }
         public string Dni { get; set; }
         public string Nombre { get; set; }
+        public string Apellidos { get; set; }
         public string Direccion { get; set; }
         public string Telefono { get; set; }
-        public int FabricacionId { get; set; }
+        public string TipoCuenta { get; set; }
+        public string Usuario { get; set; }
+        public string Contraseña { get; set; }
+        public int? FabricacionId { get; set; }
 
         public virtual Fabricacion Fabricaciones { get; set; }
     }

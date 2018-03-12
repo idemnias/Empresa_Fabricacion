@@ -68,61 +68,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Clientes.cs">
-      <DependentUpon>ModeloEntrega.tt</DependentUpon>
-    </Compile>
-    <Compile Include="C__MigrationHistory.cs">
-      <DependentUpon>ModeloEntrega.tt</DependentUpon>
-    </Compile>
     <Compile Include="DAL\EmpresaFabricacionContext.cs" />
     <Compile Include="DAL\RepositorioGenerico.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
-    <Compile Include="Empleados.cs">
-      <DependentUpon>ModeloEntrega.tt</DependentUpon>
+    <Compile Include="Migrations\201803120851493_data.cs" />
+    <Compile Include="Migrations\201803120851493_data.Designer.cs">
+      <DependentUpon>201803120851493_data.cs</DependentUpon>
     </Compile>
-    <Compile Include="Fabricaciones.cs">
-      <DependentUpon>ModeloEntrega.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Materiales.cs">
-      <DependentUpon>ModeloEntrega.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803071132523_data.cs" />
-    <Compile Include="Migrations\201803071132523_data.Designer.cs">
-      <DependentUpon>201803071132523_data.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803081115057_nuevo.cs" />
-    <Compile Include="Migrations\201803081115057_nuevo.Designer.cs">
-      <DependentUpon>201803081115057_nuevo.cs</DependentUpon>
+    <Compile Include="Migrations\201803120854111_modificacion.cs" />
+    <Compile Include="Migrations\201803120854111_modificacion.Designer.cs">
+      <DependentUpon>201803120854111_modificacion.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="ModeloEntrega.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModeloEntrega.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ModeloEntrega.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModeloEntrega.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ModeloEntrega.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModeloEntrega.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Model\Cliente.cs" />
     <Compile Include="Model\Empleado.cs" />
     <Compile Include="Model\Fabricacion.cs" />
     <Compile Include="Model\Material.cs" />
     <Compile Include="Model\Producto.cs" />
     <Compile Include="Model\Proveedor.cs" />
-    <Compile Include="Productos.cs">
-      <DependentUpon>ModeloEntrega.tt</DependentUpon>
-    </Compile>
     <Compile Include="PropertyValidateModel.cs" />
-    <Compile Include="Proveedores.cs">
-      <DependentUpon>ModeloEntrega.tt</DependentUpon>
-    </Compile>
     <Compile Include="Repositorios\RepositorioCliente.cs" />
     <Compile Include="Repositorios\RepositorioEmpleado.cs" />
     <Compile Include="Repositorios\RepositorioFabricacion.cs" />
@@ -156,23 +120,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201803071132523_data.resx">
-      <DependentUpon>201803071132523_data.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803120851493_data.resx">
+      <DependentUpon>201803120851493_data.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803081115057_nuevo.resx">
-      <DependentUpon>201803081115057_nuevo.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803120854111_modificacion.resx">
+      <DependentUpon>201803120854111_modificacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="ModeloEntrega.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ModeloEntrega.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="ModeloEntrega.edmx.diagram">
-      <DependentUpon>ModeloEntrega.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -187,16 +144,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Imagenes\Nishad2m8-Hologram-Dock-My-computer.ico" />
-    <Content Include="ModeloEntrega.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ModeloEntrega.edmx</DependentUpon>
-      <LastGenOutput>ModeloEntrega.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="ModeloEntrega.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ModeloEntrega.edmx</DependentUpon>
-      <LastGenOutput>ModeloEntrega.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

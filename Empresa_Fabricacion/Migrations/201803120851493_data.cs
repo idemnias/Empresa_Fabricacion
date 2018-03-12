@@ -13,6 +13,7 @@ namespace Empresa_Fabricacion.Migrations
                     {
                         ClienteId = c.Int(nullable: false, identity: true),
                         Nombre = c.String(),
+                        Apellidos = c.String(),
                         Direccion = c.String(),
                         Telefono = c.String(),
                         Correo = c.String(),
@@ -28,6 +29,7 @@ namespace Empresa_Fabricacion.Migrations
                         Precio = c.Double(nullable: false),
                         Vendido = c.Boolean(nullable: false),
                         FechaVenta = c.DateTime(nullable: false),
+                        Descripcion = c.String(),
                         ClienteId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ProductoId)
@@ -52,15 +54,18 @@ namespace Empresa_Fabricacion.Migrations
                 "dbo.Empleados",
                 c => new
                     {
-                        ClienteId = c.Int(nullable: false, identity: true),
+                        EmpleadoId = c.Int(nullable: false, identity: true),
                         Dni = c.String(),
                         Nombre = c.String(),
+                        Apellidos = c.String(),
                         Direccion = c.String(),
                         Telefono = c.String(),
-                        FabricacionId = c.Int(nullable: false),
+                        Usuario = c.String(),
+                        Contraseña = c.String(),
+                        FabricacionId = c.Int(),
                     })
-                .PrimaryKey(t => t.ClienteId)
-                .ForeignKey("dbo.Fabricaciones", t => t.FabricacionId, cascadeDelete: true)
+                .PrimaryKey(t => t.EmpleadoId)
+                .ForeignKey("dbo.Fabricaciones", t => t.FabricacionId)
                 .Index(t => t.FabricacionId);
             
             CreateTable(

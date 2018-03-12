@@ -15,29 +15,59 @@
             <Button Name="bt_fabricacion" Content="FABRICACIONES" Margin="10"/>
             <Button Name="bt_material" Content="MATERIALES" Margin="10"/>
             <Button Name="bt_producto" Content="PRODUCTOS" Margin="10"/>
-            <Button Name="bt_inicio" Content="INICIO" Margin="10"/>
+            <Button Name="bt_inicio" Content="INICIO" Margin="10" Click="bt_inicio_Click"/>
             <Button Name="bt_cliente" Content="CLIENTES" Margin="10"/>
             <Button Name="bt_proveedor" Content="PROVEEDORES" Margin="10"/>
             <Button Name="bt_empleado" Content="EMPLEADOS" Margin="10"/>
         </UniformGrid>
-        <Grid Name="grid_producto" Grid.Row="1">
-            
-        </Grid>
-        <Grid Name="grid_cliente" Grid.Row="1">
 
-        </Grid>
-        <Grid Name="grid_empleado" Grid.Row="1">
-
-        </Grid>
         <Grid Name="grid_fabricacion" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="233*"/>
+                <ColumnDefinition Width="222*"/>
+            </Grid.ColumnDefinitions>
 
         </Grid>
+        
         <Grid Name="grid_material" Grid.Row="1">
 
         </Grid>
+        
+        <Grid Name="grid_producto" Grid.Row="1">
+
+        </Grid>
+        
+        <Grid Name="grid_inicio" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label Content="Usuario" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalContentAlignment="Center" Margin="0,0,40,0"/>
+            <TextBox Name="tb_usuario" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Width="119"/>
+            <Label Content="Contraseña" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" VerticalContentAlignment="Center" Margin="0,0,20,0"/>
+            <PasswordBox Name="tb_contraseña" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Width="119"/>
+            <Button Name="bt_acceder" Content="Acceder" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Top" Width="90" Height="20" Margin="20,10,0,0" Click="bt_acceder_Click"/>
+        </Grid>
+        
+        <Grid Name="grid_cliente" Grid.Row="1">
+
+        </Grid>
+
         <Grid Name="grid_proveedor" Grid.Row="1">
 
         </Grid>
+
+        <Grid Name="grid_empleado" Grid.Row="1">
+
+        </Grid>
+        
     </Grid>
     
 </Window>
