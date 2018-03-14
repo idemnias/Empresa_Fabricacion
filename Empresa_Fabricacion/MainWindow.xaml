@@ -12,13 +12,13 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <UniformGrid Columns="7">
-            <Button Name="bt_fabricacion" Content="FABRICACIONES" Margin="10"/>
-            <Button Name="bt_material" Content="MATERIALES" Margin="10"/>
-            <Button Name="bt_producto" Content="PRODUCTOS" Margin="10"/>
+            <Button Name="bt_fabricacion" Content="FABRICACIONES" Margin="10" Click="bt_fabricacion_Click"/>
+            <Button Name="bt_material" Content="MATERIALES" Margin="10" Click="bt_material_Click"/>
+            <Button Name="bt_producto" Content="PRODUCTOS" Margin="10" Click="bt_producto_Click"/>
             <Button Name="bt_inicio" Content="INICIO" Margin="10" Click="bt_inicio_Click"/>
-            <Button Name="bt_cliente" Content="CLIENTES" Margin="10"/>
-            <Button Name="bt_proveedor" Content="PROVEEDORES" Margin="10"/>
-            <Button Name="bt_empleado" Content="EMPLEADOS" Margin="10"/>
+            <Button Name="bt_cliente" Content="CLIENTES" Margin="10" Click="bt_cliente_Click"/>
+            <Button Name="bt_proveedor" Content="PROVEEDORES" Margin="10" Click="bt_proveedor_Click"/>
+            <Button Name="bt_empleado" Content="EMPLEADOS" Margin="10" Click="bt_empleado_Click"/>
         </UniformGrid>
 
         <Grid Name="grid_fabricacion" Grid.Row="1">
@@ -28,16 +28,16 @@
             </Grid.ColumnDefinitions>
 
         </Grid>
-        
+
         <Grid Name="grid_material" Grid.Row="1">
 
         </Grid>
-        
+
         <Grid Name="grid_producto" Grid.Row="1">
 
         </Grid>
-        
-        <Grid Name="grid_inicio" Grid.Row="1">
+
+        <Grid Name="grid_inicio" Visibility="Hidden" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -46,16 +46,16 @@
                 <RowDefinition/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
-                <RowDefinition/>
+                <RowDefinition />
             </Grid.RowDefinitions>
 
-            <Label Content="Usuario" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalContentAlignment="Center" Margin="0,0,40,0"/>
-            <TextBox Name="tb_usuario" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Width="119"/>
-            <Label Content="Contraseña" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" VerticalContentAlignment="Center" Margin="0,0,20,0"/>
-            <PasswordBox Name="tb_contraseña" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Width="119"/>
-            <Button Name="bt_acceder" Content="Acceder" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Top" Width="90" Height="20" Margin="20,10,0,0" Click="bt_acceder_Click"/>
+            <Label Content="Usuario" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalContentAlignment="Center" Margin="0,0,46,0" FontSize="16"/>
+            <TextBox Name="tb_usuario" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Width="119" Height="25"/>
+            <Label Content="Contraseña" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" VerticalContentAlignment="Center" Margin="0,0,20,0" FontSize="16"/>
+            <PasswordBox Name="tb_contraseña" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Width="119" Height="25"/>
+            <Button Name="bt_acceder" Content="Acceder" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Top" Width="90" Height="27" Margin="20,10,0,0" Click="bt_acceder_Click" FontSize="16"/>
         </Grid>
-        
+
         <Grid Name="grid_cliente" Grid.Row="1">
 
         </Grid>
@@ -65,9 +65,51 @@
         </Grid>
 
         <Grid Name="grid_empleado" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Label Content="Dni" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
+            <Label Content="Nombre" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
+            <Label Content="Apellidos" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
+            <Label Content="Direccion" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
+            <Label Content="Telefono" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
+            <Label Content="Usuario" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
+            <Label Content="Contraseña" Grid.Row="7" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
+            <Label Content="TipoCuenta" Grid.Row="8" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
+
+            <TextBox Name="tb_u_dni" Text="{Binding Path= Dni , Mode=TwoWay}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+            <TextBox Name="tb_u_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+            <TextBox Name="tb_u_apellidos" Text="{Binding Path= Apellidos , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+            <TextBox Name="tb_u_direccion" Text="{Binding Path= Direccion , Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+            <TextBox Name="tb_u_telefono" Text="{Binding Path= Telefono , Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+            <TextBox Name="tb_u_usuario" Text="{Binding Path= Usuario , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+            <TextBox Name="tb_u_contraseña" Text="{Binding Path= Contraseña , Mode=TwoWay}" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+            <TextBox Name="tb_u_tipocuenta" Text="{Binding Path= TipoCuenta , Mode=TwoWay}" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+
+            <DataGrid Name="dg_empleado" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="8" Margin="0,0,20,0" SelectionChanged="dg_empleado_SelectionChanged"/>
+
+            <Button Name="bt_e_añadir" Content="Añadir" Grid.Column="1" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Top" Margin="0,20,0,0" Click="bt_e_añadir_Click" />
+            <Button Name="bt_e_modificar" Content="Modificar" Grid.Column="2" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Top" Margin="0,20,0,5" Click="bt_e_modificar_Click" />
+            <Button Name="bt_e_eliminar" Content="Eliminar" Grid.Column="2" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Bottom" Margin="0,5,0,20" Click="bt_e_eliminar_Click" />
+            <Button Name="bt_e_nuevo" Content="Nuevo" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Top" Margin="0,20,0,0" Click="bt_e_nuevo_Click" />
 
         </Grid>
-        
+
     </Grid>
-    
+
 </Window>
