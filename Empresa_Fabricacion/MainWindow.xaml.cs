@@ -94,10 +94,22 @@ namespace Empresa_Fabricacion
             bt_e_modificar.Visibility = Visibility.Hidden;
             bt_e_eliminar.Visibility = Visibility.Hidden;
         }
+        public void ActivarBotonesProveedor()
+        {
+            bt_e_añadir.Visibility = Visibility.Hidden;
+            bt_e_modificar.Visibility = Visibility.Visible;
+            bt_e_eliminar.Visibility = Visibility.Visible;
+        }
+        public void DesactivarBotonesproveedor()
+        {
+            bt_e_añadir.Visibility = Visibility.Visible;
+            bt_e_modificar.Visibility = Visibility.Hidden;
+            bt_e_eliminar.Visibility = Visibility.Hidden;
+        }
         #endregion
 
-//Clicks Clases
-#region CLICKS CLASES
+        //Clicks Clases
+        #region CLICKS CLASES
         private void bt_inicio_Click(object sender, RoutedEventArgs e)
         {
             LimpiarGrids();
@@ -140,6 +152,7 @@ namespace Empresa_Fabricacion
             grid_empleado.Visibility = Visibility.Visible;
             grid_empleado.DataContext = empleado;
             dg_empleado.ItemsSource = unit.RepositorioEmpleado.ObtenerTodo().ToList();
+            DesactivarBotonesEmpleado();
         }
 
         #endregion
