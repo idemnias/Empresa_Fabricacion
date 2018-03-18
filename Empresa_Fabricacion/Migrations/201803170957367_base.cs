@@ -3,7 +3,7 @@ namespace Empresa_Fabricacion.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class data : DbMigration
+    public partial class _base : DbMigration
     {
         public override void Up()
         {
@@ -60,6 +60,7 @@ namespace Empresa_Fabricacion.Migrations
                         Apellidos = c.String(),
                         Direccion = c.String(),
                         Telefono = c.String(),
+                        TipoCuenta = c.String(),
                         Usuario = c.String(),
                         Contraseña = c.String(),
                         FabricacionId = c.Int(),

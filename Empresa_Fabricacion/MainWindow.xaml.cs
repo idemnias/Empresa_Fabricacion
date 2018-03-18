@@ -26,6 +26,14 @@ namespace Empresa_Fabricacion
         Empleado empleado = new Empleado();
         Empleado usuarioactivo = new Empleado();
         Fabricacion fabricacion = new Fabricacion();
+        Proveedor proveedor = new Proveedor();
+        Cliente cliente = new Cliente();
+        int clienteseleccionado;
+        List<Cliente> listaclientes = new List<Cliente>();
+        Producto producto = new Producto();
+
+        string rutainicial = Environment.CurrentDirectory + @"\Imagenes\";
+
         public MainWindow()
         {
             InitializeComponent();
@@ -71,45 +79,134 @@ namespace Empresa_Fabricacion
         }
 
 /* Limpiar objetos */
-        public void LimpiarEmpleados()
+        private void LimpiarEmpleados()
         {
             empleado = new Empleado();
             grid_empleado.DataContext = empleado;
             dg_empleado.ItemsSource = unit.RepositorioEmpleado.ObtenerTodo().ToList();
         }
+        private void LimpiarProveedores()
+        {
+            proveedor = new Proveedor();
+            grid_proveedor.DataContext = proveedor;
+            dg_proveedor.ItemsSource = unit.RepositorioProveedor.ObtenerTodo().ToList();
+        }
+        private void LimpiarCliente()
+        {
+            cliente = new Cliente();
+            grid_cliente.DataContext = cliente;
+            dg_cliente.ItemsSource = unit.RepositorioCliente.ObtenerTodo().ToList();
+        }
+
+        private void LimpiarProductos()
+        {
+            producto = new Producto();
+            grid_producto.DataContext = producto;
+
+        }
 
         #endregion
-    
+
 //Activar o desactivar Botones
 #region ACTIVARBOTONES
-    public void ActivarBotonesEmpleado()
+        private void ActivarBotonesEmpleado()
         {
             bt_e_añadir.Visibility = Visibility.Hidden;
             bt_e_modificar.Visibility = Visibility.Visible;
             bt_e_eliminar.Visibility = Visibility.Visible;
         }
-        public void DesactivarBotonesEmpleado()
+        private void DesactivarBotonesEmpleado()
         {
             bt_e_añadir.Visibility = Visibility.Visible;
             bt_e_modificar.Visibility = Visibility.Hidden;
             bt_e_eliminar.Visibility = Visibility.Hidden;
         }
-        public void ActivarBotonesProveedor()
+        private void ActivarBotonesProveedor()
         {
-            bt_e_añadir.Visibility = Visibility.Hidden;
-            bt_e_modificar.Visibility = Visibility.Visible;
-            bt_e_eliminar.Visibility = Visibility.Visible;
+            bt_p_añadir.Visibility = Visibility.Hidden;
+            bt_p_modificar.Visibility = Visibility.Visible;
+            bt_p_eliminar.Visibility = Visibility.Visible;
         }
-        public void DesactivarBotonesproveedor()
+        private void DesactivarBotonesProveedor()
         {
-            bt_e_añadir.Visibility = Visibility.Visible;
-            bt_e_modificar.Visibility = Visibility.Hidden;
-            bt_e_eliminar.Visibility = Visibility.Hidden;
+            bt_p_añadir.Visibility = Visibility.Visible;
+            bt_p_modificar.Visibility = Visibility.Hidden;
+            bt_p_eliminar.Visibility = Visibility.Hidden;
         }
+        private void ActivarBotonesCliente()
+        {
+            bt_c_añadir.Visibility = Visibility.Hidden;
+            bt_c_modificar.Visibility = Visibility.Visible;
+            bt_c_eliminar.Visibility = Visibility.Visible;
+        }
+        private void DesactivarBotonesCliente()
+        {
+            bt_c_añadir.Visibility = Visibility.Visible;
+            bt_c_modificar.Visibility = Visibility.Hidden;
+            bt_c_eliminar.Visibility = Visibility.Hidden;
+        }
+
+        private void ActivarProductosCliente()
+        {
+            lb_pr_seleccionar.Visibility = Visibility.Hidden;
+            cb_pr_cliente.Visibility = Visibility.Hidden;
+            bt_pr_seleccionar.Visibility = Visibility.Hidden;
+            lb1.Visibility = Visibility.Visible;
+            lb2.Visibility = Visibility.Visible;
+            lb3.Visibility = Visibility.Visible;
+            lb4.Visibility = Visibility.Visible;
+            lb5.Visibility = Visibility.Visible;
+            tb_pr_nombre.Visibility = Visibility.Visible;
+            tb_pr_precio.Visibility = Visibility.Visible;
+            tb_pr_fechaventa.Visibility = Visibility.Visible;
+            cb_pr_vendido.Visibility = Visibility.Visible;
+            tb_pr_Descripcion.Visibility = Visibility.Visible;
+            dg_producto.Visibility = Visibility.Visible;
+            bt_pr_añadir.Visibility = Visibility.Visible;
+            bt_pr_modificar.Visibility = Visibility.Visible;
+            bt_pr_eliminar.Visibility = Visibility.Visible;
+            bt_pr_nuevo.Visibility = Visibility.Visible;
+
+        }
+        private void DesactivarProductosCliente()
+        {
+            lb_pr_seleccionar.Visibility = Visibility.Visible;
+            cb_pr_cliente.Visibility = Visibility.Visible;
+            bt_pr_seleccionar.Visibility = Visibility.Visible;
+            lb1.Visibility = Visibility.Hidden;
+            lb2.Visibility = Visibility.Hidden;
+            lb3.Visibility = Visibility.Hidden;
+            lb4.Visibility = Visibility.Hidden;
+            lb5.Visibility = Visibility.Hidden;
+            tb_pr_nombre.Visibility = Visibility.Hidden;
+            tb_pr_precio.Visibility = Visibility.Hidden;
+            tb_pr_fechaventa.Visibility = Visibility.Hidden;
+            cb_pr_vendido.Visibility = Visibility.Hidden;
+            tb_pr_Descripcion.Visibility = Visibility.Hidden;
+            dg_producto.Visibility = Visibility.Hidden;
+            bt_pr_añadir.Visibility = Visibility.Hidden;
+            bt_pr_modificar.Visibility = Visibility.Hidden;
+            bt_pr_eliminar.Visibility = Visibility.Hidden;
+            bt_pr_nuevo.Visibility = Visibility.Hidden;
+        }
+        private void ActivarBotonesProductos()
+        {
+            bt_pr_añadir.Visibility = Visibility.Hidden;
+            bt_pr_modificar.Visibility = Visibility.Visible;
+            bt_pr_eliminar.Visibility = Visibility.Visible;
+        }
+        private void DesactivarBotonesProductos()
+        {
+            bt_pr_añadir.Visibility = Visibility.Visible;
+            bt_pr_modificar.Visibility = Visibility.Hidden;
+            bt_pr_eliminar.Visibility = Visibility.Hidden;
+        }
+
         #endregion
 
         //Clicks Clases
         #region CLICKS CLASES
+
         private void bt_inicio_Click(object sender, RoutedEventArgs e)
         {
             LimpiarGrids();
@@ -132,18 +229,26 @@ namespace Empresa_Fabricacion
         {
             LimpiarGrids();
             grid_producto.Visibility = Visibility.Visible;
+            DesactivarProductosCliente();
+            RellenarComboboxClientes();
         }
 
         private void bt_cliente_Click(object sender, RoutedEventArgs e)
         {
             LimpiarGrids();
             grid_cliente.Visibility = Visibility.Visible;
+            grid_cliente.DataContext = cliente;
+            dg_cliente.ItemsSource = unit.RepositorioCliente.ObtenerTodo().ToList();
+            DesactivarBotonesCliente();
         }
 
         private void bt_proveedor_Click(object sender, RoutedEventArgs e)
         {
             LimpiarGrids();
             grid_proveedor.Visibility = Visibility.Visible;
+            grid_proveedor.DataContext = proveedor;
+            dg_proveedor.ItemsSource = unit.RepositorioProveedor.ObtenerTodo().ToList();
+            DesactivarBotonesEmpleado();
         }
 
         private void bt_empleado_Click(object sender, RoutedEventArgs e)
@@ -170,6 +275,7 @@ namespace Empresa_Fabricacion
                     if (aux.TipoCuenta.Equals("Administrador"))
                     {
                         bt_empleado.Visibility = Visibility.Visible;
+                        MessageBox.Show("Sesion iniciado correctamente con la cuenta de "+aux.Nombre +" "+aux.Apellidos);
                     }
                     usuarioactivo = aux;
                 }
@@ -185,6 +291,45 @@ namespace Empresa_Fabricacion
             LimpiarInicio();
         }
 
+        private Image EnseñarImagen(string ruta)
+        {
+            try
+            {
+                Image imagen = new Image();
+                BitmapImage bit = new BitmapImage();
+                bit.BeginInit();
+                bit.UriSource = new Uri(ruta);
+                bit.EndInit();
+                imagen.Source = bit;
+                imagen.Width = 60;
+                imagen.Height = 60;
+                return imagen;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+        }
+
+        private StackPanel CreacionBotones(string rutaimagen, string nombrelabel)
+        {
+            StackPanel stackp = new StackPanel();
+            stackp.VerticalAlignment = VerticalAlignment.Center;
+            stackp.HorizontalAlignment = HorizontalAlignment.Stretch;
+            stackp.Orientation = Orientation.Vertical;
+            stackp.Width = 80;
+            stackp.Height = 80;
+
+            Label l = new Label();
+            l.Content = nombrelabel;
+            l.HorizontalAlignment = HorizontalAlignment.Center;
+            l.FontSize = 10;
+
+            stackp.Children.Add(EnseñarImagen(rutaimagen));
+            stackp.Children.Add(l);
+            return stackp;
+        }
 
         #endregion
 
@@ -220,11 +365,191 @@ namespace Empresa_Fabricacion
 
         private void dg_empleado_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            empleado = (Empleado) dg_empleado.SelectedItem;
-            grid_empleado.DataContext = empleado;
-            ActivarBotonesEmpleado();
+            try
+            {
+                empleado = (Empleado)dg_empleado.SelectedItem;
+                grid_empleado.DataContext = empleado;
+                ActivarBotonesEmpleado();
+            }
+            catch (Exception)
+            {
+            }
+            
         }
-#endregion
+        #endregion
+
+//Proveedores
+#region PROVEEDORES
+
+       
+
+        private void bt_p_nuevo_Click(object sender, RoutedEventArgs e)
+        {
+            proveedor = new Proveedor();
+            grid_proveedor.DataContext = proveedor;
+            DesactivarBotonesProveedor();
+        }
+
+        private void bt_p_añadir_Click(object sender, RoutedEventArgs e)
+        {
+            unit.RepositorioProveedor.Crear(proveedor);
+            LimpiarProveedores();
+            DesactivarBotonesProveedor();
+        }
+
+        private void bt_p_modificar_Click(object sender, RoutedEventArgs e)
+        {
+            unit.RepositorioProveedor.Actualizar(proveedor);
+            LimpiarProveedores();
+            DesactivarBotonesProveedor();
+        }
+
+        private void bt_p_eliminar_Click(object sender, RoutedEventArgs e)
+        {
+            unit.RepositorioProveedor.Eliminar(proveedor);
+            LimpiarProveedores();
+            DesactivarBotonesProveedor();
+        }
+
+        private void dg_proveedor_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                proveedor = (Proveedor)dg_proveedor.SelectedItem;
+                grid_proveedor.DataContext = proveedor;
+                ActivarBotonesProveedor();
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        #endregion
+
+//Clientes
+#region CLIENTES
+
+        private void bt_c_nuevo_Click(object sender, RoutedEventArgs e)
+        {
+            cliente = new Cliente();
+            grid_cliente.DataContext = cliente;
+            DesactivarBotonesCliente();
+        }
+
+        private void bt_c_añadir_Click(object sender, RoutedEventArgs e)
+        {
+            unit.RepositorioCliente.Crear(cliente);
+            LimpiarCliente();
+            DesactivarBotonesCliente();
+        }
+
+        private void bt_c_modificar_Click(object sender, RoutedEventArgs e)
+        {
+            unit.RepositorioCliente.Actualizar(cliente);
+            LimpiarCliente();
+            DesactivarBotonesCliente();
+        }
+
+        private void bt_c_eliminar_Click(object sender, RoutedEventArgs e)
+        {
+            unit.RepositorioCliente.Eliminar(cliente);
+            LimpiarCliente();
+            DesactivarBotonesCliente();
+        }
+
+        private void dg_cliente_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                cliente = (Cliente)dg_cliente.SelectedItem;
+                grid_cliente.DataContext = cliente;
+                ActivarBotonesCliente();
+            }
+            catch (Exception)
+            {
+            }
+        }
+        #endregion
+
+//Productos
+#region PRODUCTOS
+
+        private void RellenarComboboxClientes()
+        {
+            listaclientes = new List<Cliente>();
+            listaclientes = unit.RepositorioCliente.ObtenerTodo();
+            foreach (var item in listaclientes)
+            {
+                cb_pr_cliente.Items.Add(item.Nombre);
+            }
+        }
+
+        private void bt_p_seleccionar_Click(object sender, RoutedEventArgs e)
+        {
+            cliente = listaclientes[clienteseleccionado];
+            int numeroid = listaclientes[clienteseleccionado].ClienteId;
+            cliente = unit.RepositorioCliente.ObtenerUno(c=>c.ClienteId == cliente.ClienteId);
+            LimpiarProductos();
+            DesactivarBotonesProductos();
+            ActivarProductosCliente();
+            grid_producto.DataContext = producto;
+            dg_producto.ItemsSource = unit.RepositorioProducto.ObtenerVarios(c=>c.ClienteId == cliente.ClienteId).ToList();
+        }
+
+        private void cb_p_cliente_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            clienteseleccionado = cb_pr_cliente.SelectedIndex;
+        }
+
+        private void bt_pr_nuevo_Click(object sender, RoutedEventArgs e)
+        {
+            producto = new Producto();
+            grid_producto.DataContext = producto;
+            DesactivarProductosCliente();
+            DesactivarBotonesProductos();
+        }
+
+        private void bt_pr_añadir_Click(object sender, RoutedEventArgs e)
+        {
+            unit.RepositorioProducto.Crear(producto);
+            LimpiarProductos();
+            DesactivarBotonesProductos();
+        }
+
+        private void bt_pr_modificar_Click(object sender, RoutedEventArgs e)
+        {
+            unit.RepositorioProducto.Actualizar(producto);
+            LimpiarProductos();
+            DesactivarBotonesProductos();
+        }
+
+        private void bt_pr_eliminar_Click(object sender, RoutedEventArgs e)
+        {
+            unit.RepositorioProducto.Eliminar(producto);
+            LimpiarProductos();
+            DesactivarBotonesProductos();
+        }
+
+        private void dg_producto_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                producto = (Producto)dg_producto.SelectedItem;
+                grid_producto.DataContext = producto;
+                ActivarBotonesProductos();
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void cb_p_vendido_Checked(object sender, RoutedEventArgs e)
+        {
+            producto.Vendido = (bool) cb_pr_vendido.IsChecked;
+        }
+
+
+        #endregion
 
     }
 }

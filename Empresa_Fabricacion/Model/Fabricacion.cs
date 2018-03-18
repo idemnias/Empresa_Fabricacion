@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Empresa_Fabricacion.Model
 {
     [Table("Fabricaciones")]
-    public class Fabricacion
+    public class Fabricacion : PropertyValidateModel
     {
         public Fabricacion()
         {
@@ -22,7 +22,6 @@ namespace Empresa_Fabricacion.Model
         public DateTime FechaInicio { get; set; }
         public DateTime FechaAcaba { get; set; }
 
-        public int EmpleadoId { get; set; }
         public int ProductoId { get; set; }
 
         public virtual Producto Productos { get; set; }

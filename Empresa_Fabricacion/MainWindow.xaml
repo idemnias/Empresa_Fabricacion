@@ -12,13 +12,13 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <UniformGrid Columns="7">
-            <Button Name="bt_fabricacion" Content="FABRICACIONES" Margin="10" Click="bt_fabricacion_Click"/>
-            <Button Name="bt_material" Content="MATERIALES" Margin="10" Click="bt_material_Click"/>
-            <Button Name="bt_producto" Content="PRODUCTOS" Margin="10" Click="bt_producto_Click"/>
-            <Button Name="bt_inicio" Content="INICIO" Margin="10" Click="bt_inicio_Click"/>
-            <Button Name="bt_cliente" Content="CLIENTES" Margin="10" Click="bt_cliente_Click"/>
-            <Button Name="bt_proveedor" Content="PROVEEDORES" Margin="10" Click="bt_proveedor_Click"/>
-            <Button Name="bt_empleado" Content="EMPLEADOS" Margin="10" Click="bt_empleado_Click"/>
+            <Button Name="bt_fabricacion" Content="FABRICACIONES" Background="LightBlue" Margin="10" ToolTip="Boton para fabricacion" Click="bt_fabricacion_Click"/>
+            <Button Name="bt_material" Content="MATERIALES" Background="LightBlue" Margin="10" ToolTip="Boton para material" Click="bt_material_Click"/>
+            <Button Name="bt_producto" Content="PRODUCTOS" Background="LightBlue" Margin="10" ToolTip="Boton para producto" Click="bt_producto_Click"/>
+            <Button Name="bt_inicio" Content="INICIO" Background="LightBlue" Margin="10" ToolTip="Boton de inicio o finalice de sesion" Click="bt_inicio_Click"/>
+            <Button Name="bt_cliente" Content="CLIENTES" Background="LightBlue" Margin="10" ToolTip="Boton para clientes" Click="bt_cliente_Click"/>
+            <Button Name="bt_proveedor" Content="PROVEEDORES" Background="LightBlue" Margin="10" ToolTip="Boton para proveedores" Click="bt_proveedor_Click"/>
+            <Button Name="bt_empleado" Content="EMPLEADOS" Background="LightBlue" Margin="10" ToolTip="Boton para empleados" Click="bt_empleado_Click"/>
         </UniformGrid>
 
         <Grid Name="grid_fabricacion" Grid.Row="1">
@@ -34,7 +34,47 @@
         </Grid>
 
         <Grid Name="grid_producto" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
+            <Label Name="lb_pr_seleccionar" Visibility="Hidden" Content="Seleccione un cliente" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center"/>
+            <ComboBox Name="cb_pr_cliente" Visibility="Hidden" Grid.Column="2" Grid.Row="4" SelectionChanged="cb_p_cliente_SelectionChanged"/>
+            <Button Name="bt_pr_seleccionar" Visibility="Hidden" Content="Seleccionar" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" Width="130" Click="bt_p_seleccionar_Click" />
+
+            <Label Name="lb1" Content="Nombre" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Width="100"></Label>
+            <Label Name="lb2" Content="Precio" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Width="100"></Label>
+            <Label Name="lb3" Content="Vendido" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Width="100"></Label>
+            <Label Name="lb4" Content="Fecha de venta" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" Width="100"></Label>
+            <Label Name="lb5" Content="Correo" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" Width="100"></Label>
+
+            <TextBox Name="tb_pr_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+            <TextBox Name="tb_pr_precio" Text="{Binding Path= Precio , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+            <CheckBox Name="cb_pr_vendido" IsChecked="{Binding Path=Vendido ,  Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="150" Checked="cb_p_vendido_Checked" />
+            <DatePicker Name="tb_pr_fechaventa" Text="{Binding Path= FechaVenta , Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+            <TextBox Name="tb_pr_Descripcion" Text="{Binding Path= Descripcion , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+
+            <DataGrid Name="dg_producto" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="7" Margin="0,0,20,0" SelectionChanged="dg_producto_SelectionChanged"/>
+
+            <Button Name="bt_pr_añadir" Content="Añadir" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_pr_añadir_Click"/>
+            <Button Name="bt_pr_modificar" Content="Modificar" Visibility="Visible" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Top" Margin="25" Click="bt_pr_modificar_Click"/>
+            <Button Name="bt_pr_nuevo" Content="Nuevo" Grid.Column="2" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_pr_nuevo_Click"/>
+            <Button Name="bt_pr_eliminar" Content="Eliminar" Visibility="Visible" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Bottom" Margin="25" Click="bt_pr_eliminar_Click"/>
+            
         </Grid>
 
         <Grid Name="grid_inicio" Visibility="Hidden" Grid.Row="1">
@@ -56,11 +96,7 @@
             <Button Name="bt_acceder" Content="Acceder" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Top" Width="90" Height="27" Margin="20,10,0,0" Click="bt_acceder_Click" FontSize="16"/>
         </Grid>
 
-        <Grid Name="grid_cliente" Grid.Row="1">
-
-        </Grid>
-
-        <Grid Name="grid_proveedor" Visibility="Visible" Grid.Row="1">
+        <Grid Name="grid_cliente" Visibility="Hidden" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -74,30 +110,70 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Label Content="Nombre" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
-            <Label Content="Direccion" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
-            <Label Content="Telefono" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
-            <Label Content="Contacto" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
-            <Label Content="Correo" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
+            <Label Content="Nombre" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
+            <Label Content="Apellidos" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
+            <Label Content="Direccion" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
+            <Label Content="Telefono" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
+            <Label Content="Correo" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
 
-            <TextBox Name="tb_p_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
-            <TextBox Name="tb_p_direccion" Text="{Binding Path= Direccion , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
-            <TextBox Name="tb_p_telefono" Text="{Binding Path= Telefono , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
-            <TextBox Name="tb_p_contacto" Text="{Binding Path= Contacto , Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
-            <TextBox Name="tb_p_correo" Text="{Binding Path= Correo , Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+            <TextBox Name="tb_c_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+            <TextBox Name="tb_c_apellidos" Text="{Binding Path= Apellidos , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+            <TextBox Name="tb_c_direccion" Text="{Binding Path= Direccion , Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+            <TextBox Name="tb_c_telefono" Text="{Binding Path= Telefono , Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+            <TextBox Name="tb_c_correo" Text="{Binding Path= Correo , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
 
-            <DataGrid Name="dg_proveedor" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="5" Margin="0,0,20,0" />
+            <DataGrid Name="dg_cliente" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="7" Margin="0,0,20,0" SelectionChanged="dg_cliente_SelectionChanged"/>
 
-            <Button Name="bt_p_añadir" Content="Añadir" Grid.Column="1" Grid.Row="6" Width="130" Height="30" VerticalAlignment="Center"/>
+            <Button Name="bt_c_añadir" Content="Añadir" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_c_añadir_Click"/>
+            <Button Name="bt_c_modificar" Content="Modificar" Visibility="Hidden" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Top" Margin="25" Click="bt_c_modificar_Click"/>
+            <Button Name="bt_c_nuevo" Content="Nuevo" Grid.Column="2" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_c_nuevo_Click"/>
+            <Button Name="bt_c_eliminar" Content="Eliminar" Visibility="Hidden" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Bottom" Margin="25" Click="bt_c_eliminar_Click" />
 
-            <UniformGrid Rows="2" Grid.Column="2" Grid.Row="6" Margin="20">
-                <Button Name="bt_p_modificar" Content="Modificar" Width="130" Height="30" VerticalAlignment="Top" />
-                <Button Name="bt_p_nuevo" Content="Nuevo" Width="130" Height="30" VerticalAlignment="Bottom"  />
-            </UniformGrid>
+        </Grid>
 
-            <Button Name="bt_p_eliminar" Content="Eliminar" Grid.Column="3" Grid.Row="6" Width="130" Height="30" VerticalAlignment="Center" />
+        <Grid Name="grid_proveedor" Visibility="Hidden" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Label Content="Nombre" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
+            <Label Content="Direccion" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
+            <Label Content="Telefono" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
+            <Label Content="Contacto" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
+            <Label Content="Correo" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
+
+            <TextBox Name="tb_p_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+            <TextBox Name="tb_p_direccion" Text="{Binding Path= Direccion , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+            <TextBox Name="tb_p_telefono" Text="{Binding Path= Telefono , Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+            <TextBox Name="tb_p_contacto" Text="{Binding Path= Contacto , Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+            <TextBox Name="tb_p_correo" Text="{Binding Path= Correo , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+
+            <DataGrid Name="dg_proveedor" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="7" Margin="0,0,20,0" SelectionChanged="dg_proveedor_SelectionChanged" />
+
+            <Button Name="bt_p_añadir" Content="Añadir" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_p_añadir_Click"/>
+            <Button Name="bt_p_modificar" Content="Modificar" Visibility="Hidden" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Top" Margin="25" Click="bt_p_modificar_Click"/>
+            <Button Name="bt_p_nuevo" Content="Nuevo" Grid.Column="2" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_p_nuevo_Click" />
+            <Button Name="bt_p_eliminar" Content="Eliminar" Visibility="Hidden" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Bottom" Margin="25" Click="bt_p_eliminar_Click" />
+       
         </Grid>
 
         <Grid Name="grid_empleado" Visibility="Hidden" Grid.Row="1">
@@ -139,14 +215,10 @@
 
             <DataGrid Name="dg_empleado" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="8" Margin="0,0,20,0" SelectionChanged="dg_empleado_SelectionChanged"/>
 
-            <Button Name="bt_e_añadir" Content="Añadir" Grid.Column="1" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_e_añadir_Click" />
-
-            <UniformGrid Rows="2" Grid.Column="2" Grid.Row="9" Margin="20">
-                          <Button Name="bt_e_modificar" Content="Modificar" Width="130" Height="30" VerticalAlignment="Top" Click="bt_e_modificar_Click" />
-                          <Button Name="bt_e_nuevo" Content="Nuevo" Width="130" Height="30" VerticalAlignment="Bottom"  Click="bt_e_nuevo_Click" />
-            </UniformGrid>
-
-            <Button Name="bt_e_eliminar" Content="Eliminar" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_e_eliminar_Click" />
+            <Button Name="bt_e_añadir" Content="Añadir" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_e_añadir_Click" />
+            <Button Name="bt_e_modificar" Content="Modificar" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Top" Margin="25" Click="bt_e_modificar_Click" />
+            <Button Name="bt_e_nuevo" Content="Nuevo" Grid.Column="2" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_e_nuevo_Click" />
+            <Button Name="bt_e_eliminar" Content="Eliminar" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Bottom" Margin="25"  Click="bt_e_eliminar_Click" />
             
 
         </Grid>

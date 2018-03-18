@@ -3,16 +3,16 @@ namespace Empresa_Fabricacion.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class modificacion : DbMigration
+    public partial class idempleado : DbMigration
     {
         public override void Up()
         {
-            AddColumn("dbo.Empleados", "TipoCuenta", c => c.String());
+            DropColumn("dbo.Fabricaciones", "EmpleadoId");
         }
         
         public override void Down()
         {
-            DropColumn("dbo.Empleados", "TipoCuenta");
+            AddColumn("dbo.Fabricaciones", "EmpleadoId", c => c.Int(nullable: false));
         }
     }
 }

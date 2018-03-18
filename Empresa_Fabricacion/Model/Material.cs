@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 namespace Empresa_Fabricacion.Model
 {
     [Table ("Materiales")]
-    public class Material
+    public class Material : PropertyValidateModel
     {
         [Key]
         public int MaterialId { get; set; }
         public string Nombre { get; set; }
         public double Precio { get; set; }
         public int Stock { get; set; }
-        public int FabricacionId { get; set; }
+        public int? FabricacionId { get; set; }
         public int ProveedorId { get; set; }
 
         public virtual Fabricacion Fabricaciones { get; set; }

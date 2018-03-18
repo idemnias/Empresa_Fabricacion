@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfApplication2.Model
+namespace Empresa_Fabricacion
 {
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public abstract class PropertyValidateModel : IDataErrorInfo
