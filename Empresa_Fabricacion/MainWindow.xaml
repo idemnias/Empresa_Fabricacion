@@ -21,19 +21,136 @@
             <Button Name="bt_empleado" Content="EMPLEADOS" Background="LightBlue" Margin="10" ToolTip="Boton para empleados" Click="bt_empleado_Click"/>
         </UniformGrid>
 
-        <Grid Name="grid_fabricacion" Grid.Row="1">
+        <Grid Name="grid_fabricacion" Visibility="Hidden" Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Label Name="lb_f_seleccionar" Visibility="Hidden" Content="Seleccione un cliente" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center"/>
+            <ComboBox Name="cb_f_producto" Visibility="Hidden" Grid.Column="2" Grid.Row="4" SelectionChanged="cb_f_producto_SelectionChanged" />
+            <Button Name="bt_f_seleccionar" Visibility="Hidden" Content="Seleccionar" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" Width="130" Click="bt_f_seleccionar_Click" />
+
+
+            <Label Name="lb1f" Content="Fecha de inicio" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Width="100"></Label>
+            <Label Name="lb2f" Content="Fecha final" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Width="100"></Label>
+            <Label Name="lb3f" Content="Fabricado" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" Width="100"></Label>
+
+            <DatePicker Name="tb_f_fechainicio" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <DatePicker Name="tb_f_fechafinal" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <CheckBox Name="cb_f_fabricado" IsChecked="{Binding Path=Fabricado , Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="170" Checked="cb_f_fabricado_Checked" />
+
+            <DataGrid Name="dg_fabricacion" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="7" Margin="0,0,20,0" SelectionChanged="dg_fabricacion_SelectionChanged" />
+
+            <Button Name="bt_f_añadir" Content="Añadir" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_f_añadir_Click" />
+            <Button Name="bt_f_modificar" Content="Modificar" Visibility="Visible" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Top" Margin="25" Click="bt_f_modificar_Click" />
+            <Button Name="bt_f_nuevo" Content="Nuevo" Grid.Column="2" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_f_nuevo_Click" />
+            <Button Name="bt_f_eliminar" Content="Eliminar" Visibility="Visible" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Bottom" Margin="25" Click="bt_f_eliminar_Click" />
+
+        </Grid>
+
+        <UniformGrid Name="grid_material" Visibility="Hidden" Columns="2" Grid.Row="1">
+            <Button Name="bt_m_gestion" Width="140" Height="140" Background="MediumSlateBlue" Click="bt_m_gestion_Click"/>
+            <Button Name="bt_m_utilizacion" Width="140" Height="140" Background="MediumSlateBlue" Click="bt_m_utilizacion_Click"/>
+        </UniformGrid>
+
+        <Grid Name="grid_material_utilizado" Visibility="Visible" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="220"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="200"/>
+            </Grid.RowDefinitions>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0">
+                <StackPanel Name="sp_proveedores" Grid.Column="0" Grid.Row="0" />
+            </ScrollViewer>
 
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1">
+                <WrapPanel Name="sp_materiales" Grid.Column="1" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </ScrollViewer>
+
+            <DataGrid Grid.Column="1" Grid.Row="1" Name="dg_material_aplicado" AutoGenerateColumns="False" DataContext="{Binding Source=Fabricacion.Materiales}" >
+                <DataGrid.Columns>
+    
+                    <DataGridTextColumn Header="Producto" Binding="{Binding Path=Nombre}"/>
+                    <DataGridTextColumn Header="Precio" Binding="{Binding Path=Precio}"/>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="buttonDeleteFila" Click="Click_delete">
+                                    <Image x:Name="delete" Stretch="None" Source="imagenes/delete.png" Height="19" Width="21"  />
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Label Content="FabricacionId" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <ComboBox Name="cb_fabricacionid" Grid.Column="0" Grid.Row="1" Width="150" Height="26" Margin="35,31,35,143" SelectionChanged="cb_fabricacionid_SelectionChanged"/>
+            <Button x:Name="bt_aplicar_fabricacion" Grid.Column="0" Grid.Row="1" Content="Aplicar Fabricacion" Height="30" Width="150" Click="bt_aplicar_fabricacion_Click" Margin="35,62,35,108"/>
+            <Button x:Name="bt_aplicarcambios" Grid.Column="0" Grid.Row="1" Content="Aplicar Cambios" Height="30" Width="150" VerticalAlignment="Bottom" Margin="35,0,35,59" Click="bt_aplicarcambios_Click"/>
+            <Button x:Name="bt_generar_materiales" Grid.Column="0" Grid.Row="1" Content="Generar Lista Materiales" Height="30" Width="150" VerticalAlignment="Bottom" Margin="35,0,35,10" Click="bt_generar_materiales_Click" />
+            
         </Grid>
 
-        <Grid Name="grid_material" Grid.Row="1">
+        <Grid Name="grid_material_gestion" Visibility="Hidden" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
 
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Label Content="Nombre" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
+            <Label Content="Precio" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
+            <Label Content="Stock" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
+            <Label Content="Proveedor" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
+            <Label Content="Foto" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
+
+            <TextBox Name="tb_m_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <TextBox Name="tb_m_precio" Text="{Binding Path= Precio , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <TextBox Name="tb_m_stock" Text="{Binding Path= Stock , Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <ComboBox Name="cb_m_proveedor" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="170" SelectionChanged="tb_m_proveedor_SelectionChanged"/>
+            <TextBox Name="tb_m_foto" Text="{Binding Path= Foto , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <Image Name="imagen_materiales" Grid.Row="8" Grid.Column="1" Width="130" Height="130" HorizontalAlignment="Left"/>
+            <Button x:Name="bt_m_elegir" Content="..." HorizontalAlignment="Right" Grid.Column="1" Grid.Row="6" Width="24" Height="23" Margin="0,0,12,0" Click="bt_m_elegir_Click"/>
+            
+            <DataGrid Name="dg_material" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="7" Margin="0,0,20,0" SelectionChanged="dg_material_SelectionChanged" />
+
+            <Button Name="bt_m_añadir" Content="Añadir" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_m_añadir_Click"/>
+            <Button Name="bt_m_modificar" Content="Modificar" Visibility="Visible" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Top" Margin="25" Click="bt_m_modificar_Click"/>
+            <Button Name="bt_m_nuevo" Content="Nuevo" Grid.Column="2" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_m_nuevo_Click"/>
+            <Button Name="bt_m_eliminar" Content="Eliminar" Visibility="Visible" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Bottom" Margin="25" Click="bt_m_eliminar_Click"/>
         </Grid>
 
-        <Grid Name="grid_producto" Grid.Row="1">
+        <Grid Name="grid_producto" Visibility="Hidden" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -60,13 +177,13 @@
             <Label Name="lb2" Content="Precio" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Width="100"></Label>
             <Label Name="lb3" Content="Vendido" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Width="100"></Label>
             <Label Name="lb4" Content="Fecha de venta" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" Width="100"></Label>
-            <Label Name="lb5" Content="Correo" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" Width="100"></Label>
+            <Label Name="lb5" Content="Descripcion" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" Width="100"></Label>
 
-            <TextBox Name="tb_pr_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
-            <TextBox Name="tb_pr_precio" Text="{Binding Path= Precio , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
-            <CheckBox Name="cb_pr_vendido" IsChecked="{Binding Path=Vendido ,  Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="150" Checked="cb_p_vendido_Checked" />
-            <DatePicker Name="tb_pr_fechaventa" Text="{Binding Path= FechaVenta , Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
-            <TextBox Name="tb_pr_Descripcion" Text="{Binding Path= Descripcion , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+            <TextBox Name="tb_pr_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <TextBox Name="tb_pr_precio" Text="{Binding Path= Precio , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <CheckBox Name="cb_pr_vendido" IsChecked="{Binding Path=Vendido ,  Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="170" Checked="cb_p_vendido_Checked" />
+            <DatePicker Name="tb_pr_fechaventa" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <TextBox Name="tb_pr_Descripcion" Text="{Binding Path= Descripcion , Mode=TwoWay}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.Row="6" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Left" Width="170" Height="auto"/>
 
             <DataGrid Name="dg_producto" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="7" Margin="0,0,20,0" SelectionChanged="dg_producto_SelectionChanged"/>
 
@@ -121,11 +238,11 @@
             <Label Content="Telefono" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
             <Label Content="Correo" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
 
-            <TextBox Name="tb_c_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
-            <TextBox Name="tb_c_apellidos" Text="{Binding Path= Apellidos , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
-            <TextBox Name="tb_c_direccion" Text="{Binding Path= Direccion , Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
-            <TextBox Name="tb_c_telefono" Text="{Binding Path= Telefono , Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
-            <TextBox Name="tb_c_correo" Text="{Binding Path= Correo , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+            <TextBox Name="tb_c_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <TextBox Name="tb_c_apellidos" Text="{Binding Path= Apellidos , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <TextBox Name="tb_c_direccion" Text="{Binding Path= Direccion , Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <TextBox Name="tb_c_telefono" Text="{Binding Path= Telefono , Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <TextBox Name="tb_c_correo" Text="{Binding Path= Correo , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
 
             <DataGrid Name="dg_cliente" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="7" Margin="0,0,20,0" SelectionChanged="dg_cliente_SelectionChanged"/>
 
@@ -161,11 +278,11 @@
             <Label Content="Contacto" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
             <Label Content="Correo" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
 
-            <TextBox Name="tb_p_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
-            <TextBox Name="tb_p_direccion" Text="{Binding Path= Direccion , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
-            <TextBox Name="tb_p_telefono" Text="{Binding Path= Telefono , Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
-            <TextBox Name="tb_p_contacto" Text="{Binding Path= Contacto , Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
-            <TextBox Name="tb_p_correo" Text="{Binding Path= Correo , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+            <TextBox Name="tb_p_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <TextBox Name="tb_p_direccion" Text="{Binding Path= Direccion , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <TextBox Name="tb_p_telefono" Text="{Binding Path= Telefono , Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <TextBox Name="tb_p_contacto" Text="{Binding Path= Contacto , Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <TextBox Name="tb_p_correo" Text="{Binding Path= Correo , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
 
             <DataGrid Name="dg_proveedor" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="7" Margin="0,0,20,0" SelectionChanged="dg_proveedor_SelectionChanged" />
 
@@ -204,14 +321,14 @@
             <Label Content="Contraseña" Grid.Row="7" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
             <Label Content="TipoCuenta" Grid.Row="8" Grid.Column="0" HorizontalAlignment="Center" Width="71"></Label>
 
-            <TextBox Name="tb_u_dni" Text="{Binding Path= Dni , Mode=TwoWay}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
-            <TextBox Name="tb_u_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
-            <TextBox Name="tb_u_apellidos" Text="{Binding Path= Apellidos , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
-            <TextBox Name="tb_u_direccion" Text="{Binding Path= Direccion , Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
-            <TextBox Name="tb_u_telefono" Text="{Binding Path= Telefono , Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
-            <TextBox Name="tb_u_usuario" Text="{Binding Path= Usuario , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
-            <TextBox Name="tb_u_contraseña" Text="{Binding Path= Contraseña , Mode=TwoWay}" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
-            <TextBox Name="tb_u_tipocuenta" Text="{Binding Path= TipoCuenta , Mode=TwoWay}" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left" Width="150"/>
+            <TextBox Name="tb_u_dni" Text="{Binding Path= Dni , Mode=TwoWay}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <TextBox Name="tb_u_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <TextBox Name="tb_u_apellidos" Text="{Binding Path= Apellidos , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <TextBox Name="tb_u_direccion" Text="{Binding Path= Direccion , Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <TextBox Name="tb_u_telefono" Text="{Binding Path= Telefono , Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <TextBox Name="tb_u_usuario" Text="{Binding Path= Usuario , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <TextBox Name="tb_u_contraseña" Text="{Binding Path= Contraseña , Mode=TwoWay}" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <TextBox Name="tb_u_tipocuenta" Text="{Binding Path= TipoCuenta , Mode=TwoWay}" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
 
             <DataGrid Name="dg_empleado" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="8" Margin="0,0,20,0" SelectionChanged="dg_empleado_SelectionChanged"/>
 

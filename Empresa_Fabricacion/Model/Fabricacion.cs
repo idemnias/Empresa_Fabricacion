@@ -21,6 +21,7 @@ namespace Empresa_Fabricacion.Model
         public int FabricacionId { get; set; }
         public DateTime FechaInicio { get; set; }
         public DateTime FechaAcaba { get; set; }
+        public bool Fabricado { get; set; }
 
         public int ProductoId { get; set; }
 
