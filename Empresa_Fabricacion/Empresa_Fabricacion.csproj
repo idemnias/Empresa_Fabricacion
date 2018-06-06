@@ -152,6 +152,9 @@
   <ItemGroup>
     <Resource Include="Imagenes\delete.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\47a36ac61716bbde04556ff60a4a823e.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.2.4.4\build\Fody.targets" Condition="Exists('..\packages\Fody.2.4.4\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

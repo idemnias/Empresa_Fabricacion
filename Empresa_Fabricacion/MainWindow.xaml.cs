@@ -33,6 +33,7 @@ namespace Empresa_Fabricacion
         Material material = new Material();
         int clienteseleccionado;
         int productoseleccionado;
+        int fabricacioneseleccionado=1;
         List<Cliente> listaclientes = new List<Cliente>();
         List<Proveedor> listaproveedores = new List<Proveedor>();
         Producto producto = new Producto();
@@ -47,6 +48,7 @@ namespace Empresa_Fabricacion
             InitializeComponent();
             LimpiarGrids();
             LimpiarBotones();
+            grid_inicio.Visibility = Visibility.Visible;
             bt_inicio.Content = CreacionBotones(rutainicial + "ICONO.png", "INICIO",80);
             bt_cliente.Content = CreacionBotones(rutainicial + "cliente.png", "CLIENTE",80);
             bt_material.Content = CreacionBotones(rutainicial + "Material.png", "MATERIAL",80);
@@ -194,6 +196,7 @@ namespace Empresa_Fabricacion
             lb3.Visibility = Visibility.Visible;
             lb4.Visibility = Visibility.Visible;
             lb5.Visibility = Visibility.Visible;
+            ug_producto.Visibility = Visibility.Visible;
             tb_pr_nombre.Visibility = Visibility.Visible;
             tb_pr_precio.Visibility = Visibility.Visible;
             tb_pr_fechaventa.Visibility = Visibility.Visible;
@@ -216,6 +219,7 @@ namespace Empresa_Fabricacion
             lb3.Visibility = Visibility.Hidden;
             lb4.Visibility = Visibility.Hidden;
             lb5.Visibility = Visibility.Hidden;
+            ug_producto.Visibility = Visibility.Hidden;
             tb_pr_nombre.Visibility = Visibility.Hidden;
             tb_pr_precio.Visibility = Visibility.Hidden;
             tb_pr_fechaventa.Visibility = Visibility.Hidden;
@@ -249,6 +253,7 @@ namespace Empresa_Fabricacion
             lb1f.Visibility = Visibility.Visible;
             lb2f.Visibility = Visibility.Visible;
             lb3f.Visibility = Visibility.Visible;
+            ug_fabricacion.Visibility = Visibility.Visible;
             cb_f_fabricado.Visibility = Visibility.Visible;
             tb_f_fechainicio.Visibility = Visibility.Visible;
             tb_f_fechafinal.Visibility = Visibility.Visible;
@@ -267,6 +272,7 @@ namespace Empresa_Fabricacion
             lb1f.Visibility = Visibility.Hidden;
             lb2f.Visibility = Visibility.Hidden;
             lb3f.Visibility = Visibility.Hidden;
+            ug_fabricacion.Visibility = Visibility.Hidden;
             cb_f_fabricado.Visibility = Visibility.Hidden;
             tb_f_fechainicio.Visibility = Visibility.Hidden;
             tb_f_fechafinal.Visibility = Visibility.Hidden;
@@ -421,21 +427,29 @@ namespace Empresa_Fabricacion
 
         private StackPanel CreacionBotones(string rutaimagen, string nombrelabel, int peso)
         {
-            StackPanel stackp = new StackPanel();
-            stackp.VerticalAlignment = VerticalAlignment.Center;
-            stackp.HorizontalAlignment = HorizontalAlignment.Stretch;
-            stackp.Orientation = Orientation.Vertical;
-            stackp.Width = peso;
-            stackp.Height = peso;
+            try
+            {
+                StackPanel stackp = new StackPanel();
+                stackp.VerticalAlignment = VerticalAlignment.Center;
+                stackp.HorizontalAlignment = HorizontalAlignment.Stretch;
+                stackp.Orientation = Orientation.Vertical;
+                stackp.Width = peso;
+                stackp.Height = peso;
 
-            Label l = new Label();
-            l.Content = nombrelabel;
-            l.HorizontalAlignment = HorizontalAlignment.Center;
-            l.FontSize = 10;
+                Label l = new Label();
+                l.Content = nombrelabel;
+                l.HorizontalAlignment = HorizontalAlignment.Center;
+                l.FontSize = 11;
 
-            stackp.Children.Add(EnseñarImagen(rutaimagen, peso-20));
-            stackp.Children.Add(l);
-            return stackp;
+                stackp.Children.Add(EnseñarImagen(rutaimagen, peso - 20));
+                stackp.Children.Add(l);
+                return stackp;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            
         }
 
         #endregion
@@ -680,7 +694,7 @@ namespace Empresa_Fabricacion
 
         #endregion
 
-//Productos
+//Fabricacion
 #region FABRICACION
 
         private void RellenarComboboxFabricacion()
@@ -789,7 +803,7 @@ namespace Empresa_Fabricacion
 
         #endregion
 
-        //Materiales
+//Materiales
 #region MATERIALES
 
         private void bt_m_gestion_Click(object sender, RoutedEventArgs e)
@@ -810,6 +824,7 @@ namespace Empresa_Fabricacion
             sp_proveedores.Children.Clear();
             GenerarBotones();
             RellenarComboboxFabricacionId();
+            if (cb_fabricacionid != null && listafabricaciones.Count != 0) cb_fabricacionid.SelectedIndex = 0;
         }
 
         private void RellenarComboboxFabricacionId()
@@ -821,7 +836,6 @@ namespace Empresa_Fabricacion
             {
                 cb_fabricacionid.Items.Add(item.FabricacionId);
             }
-            if (cb_fabricacionid != null) cb_fabricacionid.SelectedIndex = 0;
         }
 
         private BitmapImage EnseñarBit(string ruta)
@@ -844,7 +858,7 @@ namespace Empresa_Fabricacion
 
         #endregion
 
-
+//Materiales - Gestion
 #region MATERIALES - GESTION
 
         private void RellenarComboboxProveedores()
@@ -933,14 +947,14 @@ namespace Empresa_Fabricacion
 
         #endregion
 
-        #region MATERIALES - UTILIZADO
+//Materiales - Utilizado
+#region MATERIALES - UTILIZADO
 
         private void cb_fabricacionid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                int id = listafabricaciones.ElementAt(cb_fabricacionid.SelectedIndex).FabricacionId;
-                fabricacion = unit.RepositorioFabricacion.ObtenerUno(c => c.FabricacionId == id);
+                fabricacioneseleccionado = listafabricaciones.ElementAt(cb_fabricacionid.SelectedIndex).FabricacionId;
             }
             catch (Exception)
             {
@@ -1047,10 +1061,10 @@ namespace Empresa_Fabricacion
                         unit.RepositorioMaterial.Actualizar(material);
                         listamateriales.Add(material);
 
-                    fabricacion.Materiales = listamateriales;
+                    //fabricacion.Materiales = listamateriales;
 
                     dg_material_aplicado.ItemsSource = "";
-                    dg_material_aplicado.ItemsSource = fabricacion.Materiales;
+                    dg_material_aplicado.ItemsSource = listamateriales;
                 }
             }
         }
@@ -1063,13 +1077,14 @@ namespace Empresa_Fabricacion
                 if (MessageBox.Show("¿Desea eliminar el producto?", "Cancelar", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     Material materialaux = listamateriales.ElementAt(dg_material_aplicado.SelectedIndex);
+                    material = unit.RepositorioMaterial.ObtenerUno(c => c.MaterialId==materialaux.MaterialId);
+                    material.Stock--;
                     unit.RepositorioMaterial.Actualizar(materialaux);
                     listamateriales.RemoveAt(dg_material_aplicado.SelectedIndex);
-                    listamateriales.Add(material);
-
-                    fabricacion.Materiales = listamateriales;
+                    //listamateriales.Add(material);
+                    //fabricacion.Materiales = listamateriales;
                     dg_material_aplicado.ItemsSource = "";
-                    dg_material_aplicado.ItemsSource = fabricacion.Materiales;
+                    dg_material_aplicado.ItemsSource = listamateriales;
 
                 }
                 else
@@ -1120,16 +1135,24 @@ namespace Empresa_Fabricacion
         {
             listamateriales.Clear();
             dg_material_aplicado.ItemsSource = "";
-            dg_material_aplicado.ItemsSource = fabricacion.Materiales;
+            fabricacion = new Fabricacion();
+            fabricacion = unit.RepositorioFabricacion.ObtenerUno(c => c.FabricacionId == fabricacioneseleccionado);
+            // dg_material_aplicado.ItemsSource = fabricacion.Materiales;
             foreach (var item in fabricacion.Materiales)
             {
                 listamateriales.Add(item);
             }
+            dg_material_aplicado.ItemsSource = listamateriales;
+            listafabricaciones.Count();
         }
 
         private void bt_aplicarcambios_Click(object sender, RoutedEventArgs e)
         {
+            fabricacion.Materiales = listamateriales;
             unit.RepositorioFabricacion.Actualizar(fabricacion);
+            dg_material_aplicado.ItemsSource = "";
+            RellenarComboboxFabricacionId();
+            if (cb_fabricacionid != null && listafabricaciones.Count != 0) cb_fabricacionid.SelectedIndex = 0;
         }
 
         private void bt_generar_materiales_Click(object sender, RoutedEventArgs e)
