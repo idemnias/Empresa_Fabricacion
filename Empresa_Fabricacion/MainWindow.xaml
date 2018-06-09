@@ -84,25 +84,25 @@
             </Grid.RowDefinitions>
 
             <Label Name="lb_f_seleccionar" Visibility="Hidden" Content="Seleccione un Producto" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
-            <ComboBox Name="cb_f_producto" Visibility="Hidden" Grid.Column="2" Grid.Row="4" SelectionChanged="cb_f_producto_SelectionChanged" />
-            <Button Name="bt_f_seleccionar" Visibility="Hidden" Content="Seleccionar" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" Width="130" Click="bt_f_seleccionar_Click" />
+            <ComboBox Name="cb_f_producto" Visibility="Hidden" Grid.Column="2" Grid.Row="4" ToolTip="Eliga el producto" SelectionChanged="cb_f_producto_SelectionChanged" />
+            <Button Name="bt_f_seleccionar" Visibility="Hidden" Content="Seleccionar" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" ToolTip="Boton para confirmar el producto indicado" Width="130" Click="bt_f_seleccionar_Click" />
 
 
             <Label Name="lb1f" Content="Fecha de inicio" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"></Label>
             <Label Name="lb2f" Content="Fecha final" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"></Label>
             <Label Name="lb3f" Content="Fabricado" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"></Label>
 
-            <DatePicker Name="tb_f_fechainicio" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="170" Background="#50FFFFFF" HorizontalContentAlignment="Stretch"/>
-            <DatePicker Name="tb_f_fechafinal" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Width="170" Background="#50FFFFFF"/>
+            <DatePicker Name="tb_f_fechainicio" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Elija la fecha de inicio de fabricación" Width="170" Background="#50FFFFFF" HorizontalContentAlignment="Stretch"/>
+            <DatePicker Name="tb_f_fechafinal" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Elija la fecha final de fabricación" Width="170" Background="#50FFFFFF"/>
             <UniformGrid Name="ug_fabricacion" Columns="1" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="170" Background="#50FFFFFF">
-                <CheckBox Name="cb_f_fabricado" IsChecked="{Binding Path=Fabricado , Mode=TwoWay}" Width="15" Height="15" Checked="cb_f_fabricado_Checked"/>
+                <CheckBox Name="cb_f_fabricado" IsChecked="{Binding Path=Fabricado , Mode=TwoWay}" ToolTip="Marque la casilla si ya esta finalizada la fabricación del producto" Width="15" Height="15" Checked="cb_f_fabricado_Checked"/>
             </UniformGrid>
             <DataGrid Name="dg_fabricacion" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="7" Margin="0,0,20,0"  SelectionChanged="dg_fabricacion_SelectionChanged" />
 
-            <Button Name="bt_f_añadir" Content="Añadir" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_f_añadir_Click" />
-            <Button Name="bt_f_modificar" Content="Modificar" Visibility="Visible" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Top" Margin="25" Click="bt_f_modificar_Click" />
-            <Button Name="bt_f_nuevo" Content="Nuevo" Grid.Column="2" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_f_nuevo_Click" />
-            <Button Name="bt_f_eliminar" Content="Eliminar" Visibility="Visible" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Bottom" Margin="25" Click="bt_f_eliminar_Click" />
+            <Button Name="bt_f_añadir" Content="Añadir" Grid.Column="3" Grid.Row="9" ToolTip="Boton para añadir el producto" Width="130" Height="30" VerticalAlignment="Center" Click="bt_f_añadir_Click" />
+            <Button Name="bt_f_modificar" Content="Modificar" Visibility="Visible" Grid.Column="3" Grid.Row="9" Width="130" ToolTip="Boton para modificar  el producto" Height="30" VerticalAlignment="Top" Margin="25" Click="bt_f_modificar_Click" />
+            <Button Name="bt_f_nuevo" Content="Nuevo" Grid.Column="2" Grid.Row="9" ToolTip="Boton para crear un nuevo producto" Width="130" Height="30" VerticalAlignment="Center" Click="bt_f_nuevo_Click" />
+            <Button Name="bt_f_eliminar" Content="Eliminar" Visibility="Visible" Grid.Column="3" Grid.Row="9" ToolTip="Boton para eliminar el producto" Width="130" Height="30" VerticalAlignment="Bottom" Margin="25" Click="bt_f_eliminar_Click" />
 
         </Grid>
 
@@ -136,7 +136,7 @@
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="buttonDeleteFila" Click="Click_delete">
+                                <Button x:Name="buttonDeleteFila"  ToolTip="Boton para eliminar material de la fabricacion" Click="Click_delete">
                                     <Image x:Name="delete" Stretch="None" Source="imagenes/delete.png" Height="19" Width="21"  />
                                 </Button>
                             </DataTemplate>
@@ -146,10 +146,10 @@
             </DataGrid>
 
             <Label Content="FabricacionId" Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" Style="{StaticResource estilolabel}"/>
-            <ComboBox Name="cb_fabricacionid" Grid.Column="0" Grid.Row="1" Width="150" Height="26" Margin="35,31,35,143" SelectionChanged="cb_fabricacionid_SelectionChanged"/>
-            <Button x:Name="bt_aplicar_fabricacion" Grid.Column="0" Grid.Row="1" Content="Aplicar Fabricacion" Height="30" Width="150" Click="bt_aplicar_fabricacion_Click" Margin="35,62,35,108"/>
-            <Button x:Name="bt_aplicarcambios" Grid.Column="0" Grid.Row="1" Content="Aplicar Cambios" Height="30" Width="150" VerticalAlignment="Bottom" Margin="35,0,35,59" Click="bt_aplicarcambios_Click"/>
-            <Button x:Name="bt_generar_materiales" Grid.Column="0" Grid.Row="1" Content="Generar Lista Materiales" Height="30" Width="150" VerticalAlignment="Bottom" Margin="35,0,35,10" Click="bt_generar_materiales_Click" />
+            <ComboBox Name="cb_fabricacionid" Grid.Column="0" Grid.Row="1" ToolTip="Elija el identificador de fabricacion." Width="150" Height="26" Margin="35,31,35,143" SelectionChanged="cb_fabricacionid_SelectionChanged"/>
+            <Button x:Name="bt_aplicar_fabricacion" Grid.Column="0" Grid.Row="1" Content="Aplicar Fabricacion"  ToolTip="Boton para aplicar fabricación" Height="30" Width="150" Click="bt_aplicar_fabricacion_Click" Margin="35,62,35,108"/>
+            <Button x:Name="bt_aplicarcambios" Grid.Column="0" Grid.Row="1" Content="Aplicar Cambios" ToolTip="Boton para cambios en fabricación" Height="30" Width="150" VerticalAlignment="Bottom" Margin="35,0,35,59" Click="bt_aplicarcambios_Click"/>
+            <Button x:Name="bt_generar_materiales" Grid.Column="0" Grid.Row="1" Content="Generar Lista Materiales" ToolTip="Boton para generar listado de fabricación" Height="30" Width="150" VerticalAlignment="Bottom" Margin="35,0,35,10" Click="bt_generar_materiales_Click" />
 
         </Grid>
 
