@@ -45,6 +45,117 @@
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Background" Value="#cc0C2B6C"/>
         </Style>
+        <Style x:Key="botonverde" TargetType="Button">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF00CF00" Offset="0.496"/>
+                        <GradientStop Color="#FF4B614B" Offset="0.2"/>
+                        <GradientStop Color="#FF4B614B" Offset="0.8"/>
+                        <GradientStop Color="#FF1D282B"/>
+                        <GradientStop Color="#FF1D282B" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="#FF0A2476" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF00CF00" Offset="0.496"/>
+                                <GradientStop Color="#FF4B614B" Offset="0.025"/>
+                                <GradientStop Color="#FF4B614B" Offset="0.975"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Foreground" Value="#FF0A2476" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="botonazul" TargetType="Button">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF00C6FF" Offset="0.496"/>
+                        <GradientStop Color="#FF45575D" Offset="0.2"/>
+                        <GradientStop Color="#FF45575D" Offset="0.8"/>
+                        <GradientStop Color="#FF222D30"/>
+                        <GradientStop Color="#FF222D30" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="#FF0A2476" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF00C6FF" Offset="0.496"/>
+                                <GradientStop Color="#FF45575D" Offset="0.025"/>
+                                <GradientStop Color="#FF45575D" Offset="0.975"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Foreground" Value="#FF0A2476" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="botonrojo" TargetType="Button">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFD11515" Offset="0.5"/>
+                        <GradientStop Color="#FF641414" Offset="0.2"/>
+                        <GradientStop Color="#FF641414" Offset="0.8"/>
+                        <GradientStop Color="#FF3A0E0E"/>
+                        <GradientStop Color="#FF3A0E0E" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="#FF0A2476" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFD11515" Offset="0.496"/>
+                                <GradientStop Color="#FF641414" Offset="0.025"/>
+                                <GradientStop Color="#FF641414" Offset="0.975"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Foreground" Value="#FF0A2476" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.Background>
@@ -55,16 +166,19 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <UniformGrid Columns="7">
-            <Button Name="bt_fabricacion" Content="FABRICACIONES" Margin="10" ToolTip="Boton para fabricacion" Click="bt_fabricacion_Click" Style="{StaticResource botontemplate}"/>
-            <Button Name="bt_material" Content="MATERIALES" Margin="10" ToolTip="Boton para material" Click="bt_material_Click" Style="{StaticResource botontemplate}"/>
-            <Button Name="bt_producto" Content="PRODUCTOS" Margin="10" ToolTip="Boton para producto" Click="bt_producto_Click" Style="{StaticResource botontemplate}"/>
-            <Button Name="bt_inicio" Content="INICIO" Margin="10" ToolTip="Boton de inicio o finalice de sesion" Click="bt_inicio_Click" Style="{StaticResource botontemplate}"/>
-            <Button Name="bt_cliente" Content="CLIENTES" Margin="10" ToolTip="Boton para clientes" Click="bt_cliente_Click" Style="{StaticResource botontemplate}"/>
+            <Button Name="bt_fabricacion" Content="FABRICACIONES" Margin="10" ToolTip="Botón para fabricación" Click="bt_fabricacion_Click" Style="{StaticResource botontemplate}"/>
+            <Button Name="bt_material" Content="MATERIALES" Margin="10" ToolTip="Botón para material" Click="bt_material_Click" Style="{StaticResource botontemplate}"/>
+            <Button Name="bt_producto" Content="PRODUCTOS" Margin="10" ToolTip="Botón para producto" Click="bt_producto_Click" Style="{StaticResource botontemplate}"/>
+            <Button Name="bt_inicio" Content="INICIO" Margin="10" ToolTip="Botón de inicio o finalice de sesion" Click="bt_inicio_Click" Style="{StaticResource botontemplate}"/>
+            <Button Name="bt_cliente" Content="CLIENTES" Margin="10" ToolTip="Botón para clientes" Click="bt_cliente_Click" Style="{StaticResource botontemplate}"/>
             <Button Name="bt_proveedor" Content="PROVEEDORES" Margin="10" ToolTip="Boton para proveedores" Click="bt_proveedor_Click" Style="{StaticResource botontemplate}"/>
             <Button Name="bt_empleado" Content="EMPLEADOS" Margin="10" ToolTip="Boton para empleados" Click="bt_empleado_Click" Style="{StaticResource botontemplate}"/>
         </UniformGrid>
 
         <Grid Name="grid_fabricacion" Visibility="Hidden" Grid.Row="1">
+            <Grid.Background>
+                <ImageBrush/>
+            </Grid.Background>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -85,7 +199,7 @@
 
             <Label Name="lb_f_seleccionar" Visibility="Hidden" Content="Seleccione un Producto" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <ComboBox Name="cb_f_producto" Visibility="Hidden" Grid.Column="2" Grid.Row="4" ToolTip="Eliga el producto" SelectionChanged="cb_f_producto_SelectionChanged" />
-            <Button Name="bt_f_seleccionar" Visibility="Hidden" Content="Seleccionar" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" ToolTip="Boton para confirmar el producto indicado" Width="130" Click="bt_f_seleccionar_Click" />
+            <Button Name="bt_f_seleccionar" Visibility="Hidden" Content="Seleccionar" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" ToolTip="Confirmar el producto indicado" Width="130" Click="bt_f_seleccionar_Click" Style="{StaticResource botonverde}"/>
 
 
             <Label Name="lb1f" Content="Fecha de inicio" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"></Label>
@@ -99,16 +213,17 @@
             </UniformGrid>
             <DataGrid Name="dg_fabricacion" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="7" Margin="0,0,20,0"  SelectionChanged="dg_fabricacion_SelectionChanged" />
 
-            <Button Name="bt_f_añadir" Content="Añadir" Grid.Column="3" Grid.Row="9" ToolTip="Boton para añadir el producto" Width="130" Height="30" VerticalAlignment="Center" Click="bt_f_añadir_Click" />
-            <Button Name="bt_f_modificar" Content="Modificar" Visibility="Visible" Grid.Column="3" Grid.Row="9" Width="130" ToolTip="Boton para modificar  el producto" Height="30" VerticalAlignment="Top" Margin="25" Click="bt_f_modificar_Click" />
-            <Button Name="bt_f_nuevo" Content="Nuevo" Grid.Column="2" Grid.Row="9" ToolTip="Boton para crear un nuevo producto" Width="130" Height="30" VerticalAlignment="Center" Click="bt_f_nuevo_Click" />
-            <Button Name="bt_f_eliminar" Content="Eliminar" Visibility="Visible" Grid.Column="3" Grid.Row="9" ToolTip="Boton para eliminar el producto" Width="130" Height="30" VerticalAlignment="Bottom" Margin="25" Click="bt_f_eliminar_Click" />
-
+            <Button Name="bt_f_añadir" Content="Añadir" Grid.Column="3" Grid.Row="9" ToolTip="Añadir el producto" Width="130" Height="30" VerticalAlignment="Center" Click="bt_f_añadir_Click" Style="{StaticResource botonverde}"/>
+            <Button Name="bt_f_nuevo" Content="Nuevo" Grid.Column="2" Grid.Row="9" ToolTip="Crear un nuevo producto" Width="130" Height="30" VerticalAlignment="Center" Click="bt_f_nuevo_Click" Style="{StaticResource botonverde}"/>
+            <UniformGrid Grid.Column="3" Grid.Row="9" Columns="1">
+                <Button Name="bt_f_modificar" Content="Modificar" Visibility="Visible" Width="130" ToolTip="Modificar  el producto" Height="30" Style="{StaticResource botonazul}" Click="bt_f_modificar_Click" />
+                <Button Name="bt_f_eliminar" Content="Eliminar" Visibility="Visible" ToolTip="Eliminar el producto" Width="130" Height="30" Style="{StaticResource botonrojo}" Click="bt_f_eliminar_Click" />
+            </UniformGrid>
         </Grid>
 
         <UniformGrid Name="grid_material" Visibility="Hidden" Columns="2" Grid.Row="1">
-            <Button Name="bt_m_gestion" Width="140" Height="140"  Click="bt_m_gestion_Click" Style="{StaticResource botontemplate}"/>
-            <Button Name="bt_m_utilizacion" Width="140" Height="140"  Click="bt_m_utilizacion_Click" Style="{StaticResource botontemplate}"/>
+            <Button Name="bt_m_gestion" Width="140" Height="140" ToolTip="Botón para la gestión de materiales" Click="bt_m_gestion_Click" Style="{StaticResource botontemplate}"/>
+            <Button Name="bt_m_utilizacion" Width="140" Height="140" ToolTip="Botón para utilización de materiales de fabricación" Click="bt_m_utilizacion_Click" Style="{StaticResource botontemplate}"/>
         </UniformGrid>
 
         <Grid Name="grid_material_utilizado" Visibility="Hidden" Grid.Row="1">
@@ -136,7 +251,7 @@
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="buttonDeleteFila"  ToolTip="Boton para eliminar material de la fabricacion" Click="Click_delete">
+                                <Button x:Name="buttonDeleteFila"  ToolTip="Boton para eliminar material de la fabricacion" Click="Click_delete" >
                                     <Image x:Name="delete" Stretch="None" Source="imagenes/delete.png" Height="19" Width="21"  />
                                 </Button>
                             </DataTemplate>
@@ -146,10 +261,10 @@
             </DataGrid>
 
             <Label Content="FabricacionId" Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" Style="{StaticResource estilolabel}"/>
-            <ComboBox Name="cb_fabricacionid" Grid.Column="0" Grid.Row="1" ToolTip="Elija el identificador de fabricacion." Width="150" Height="26" Margin="35,31,35,143" SelectionChanged="cb_fabricacionid_SelectionChanged"/>
-            <Button x:Name="bt_aplicar_fabricacion" Grid.Column="0" Grid.Row="1" Content="Aplicar Fabricacion"  ToolTip="Boton para aplicar fabricación" Height="30" Width="150" Click="bt_aplicar_fabricacion_Click" Margin="35,62,35,108"/>
-            <Button x:Name="bt_aplicarcambios" Grid.Column="0" Grid.Row="1" Content="Aplicar Cambios" ToolTip="Boton para cambios en fabricación" Height="30" Width="150" VerticalAlignment="Bottom" Margin="35,0,35,59" Click="bt_aplicarcambios_Click"/>
-            <Button x:Name="bt_generar_materiales" Grid.Column="0" Grid.Row="1" Content="Generar Lista Materiales" ToolTip="Boton para generar listado de fabricación" Height="30" Width="150" VerticalAlignment="Bottom" Margin="35,0,35,10" Click="bt_generar_materiales_Click" />
+            <ComboBox Name="cb_fabricacionid" Grid.Column="0" Grid.Row="1" ToolTip="Elija el identificador de fabricación." Width="150" Height="26" Margin="35,31,35,143" SelectionChanged="cb_fabricacionid_SelectionChanged"/>
+            <Button x:Name="bt_aplicar_fabricacion" Grid.Column="0" Grid.Row="1" Content="Aplicar Fabricacion"  ToolTip="Botón para aplicar fabricación" Height="30" Width="150" Click="bt_aplicar_fabricacion_Click" Margin="35,62,35,108" Style="{StaticResource botonverde}"/>
+            <Button x:Name="bt_aplicarcambios" Grid.Column="0" Grid.Row="1" Content="Aplicar Cambios" ToolTip="Botón para cambios en fabricación" Height="30" Width="150" VerticalAlignment="Bottom" Margin="35,0,35,59" Click="bt_aplicarcambios_Click" Style="{StaticResource botonazul}"/>
+            <Button x:Name="bt_generar_materiales" Grid.Column="0" Grid.Row="1" Content="Generar Lista Materiales" ToolTip="Botón para generar listado de fabricación" Height="30" Width="150" VerticalAlignment="Bottom" Margin="35,0,35,10" Click="bt_generar_materiales_Click" Style="{StaticResource botonverde}"/>
 
         </Grid>
 
@@ -177,20 +292,22 @@
             <Label Content="Proveedor" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Content="Foto" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
 
-            <TextBox Name="tb_m_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
-            <TextBox Name="tb_m_precio" Text="{Binding Path= Precio , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
-            <TextBox Name="tb_m_stock" Text="{Binding Path= Stock , Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
-            <ComboBox Name="cb_m_proveedor" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="170" SelectionChanged="tb_m_proveedor_SelectionChanged"/>
-            <TextBox Name="tb_m_foto" Text="{Binding Path= Foto , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
-            <Image Name="imagen_materiales" Grid.Row="8" Grid.Column="1" Width="130" Height="130" HorizontalAlignment="Left"/>
-            <Button x:Name="bt_m_elegir" Content="..." HorizontalAlignment="Right" Grid.Column="1" Grid.Row="6" Width="24" Height="23" Margin="0,0,12,0" Click="bt_m_elegir_Click"/>
+            <TextBox Name="tb_m_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir nombre de material" Width="170"/>
+            <TextBox Name="tb_m_precio" Text="{Binding Path= Precio , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir precio del material" Width="170"/>
+            <TextBox Name="tb_m_stock" Text="{Binding Path= Stock , Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir stock de material" Width="170"/>
+            <ComboBox Name="cb_m_proveedor" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="170" ToolTip="Elija el proveedor" SelectionChanged="tb_m_proveedor_SelectionChanged"/>
+            <TextBox Name="tb_m_foto" Text="{Binding Path= Foto , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" ToolTip="Escribir ruta de la foto" HorizontalAlignment="Left" Width="170"/>
+            <Image Name="imagen_materiales" Grid.Row="8" Grid.Column="1" Width="130" Height="130" ToolTip="Imagen" HorizontalAlignment="Left"/>
+            <Button x:Name="bt_m_elegir" Content="..." HorizontalAlignment="Right" Grid.Column="1" Grid.Row="6" Width="24" Height="23" ToolTip="Elección de la imagen" Margin="0,0,12,0" Click="bt_m_elegir_Click" Style="{StaticResource botonverde}"/>
 
             <DataGrid Name="dg_material" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="7" Margin="0,0,20,0" SelectionChanged="dg_material_SelectionChanged" />
 
-            <Button Name="bt_m_añadir" Content="Añadir" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_m_añadir_Click"/>
-            <Button Name="bt_m_modificar" Content="Modificar" Visibility="Visible" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Top" Margin="25" Click="bt_m_modificar_Click"/>
-            <Button Name="bt_m_nuevo" Content="Nuevo" Grid.Column="2" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_m_nuevo_Click"/>
-            <Button Name="bt_m_eliminar" Content="Eliminar" Visibility="Visible" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Bottom" Margin="25" Click="bt_m_eliminar_Click"/>
+            <Button Name="bt_m_añadir" Content="Añadir" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" ToolTip="Añadir un producto" Click="bt_m_añadir_Click" Style="{StaticResource botonverde}"/>
+            <Button Name="bt_m_nuevo" Content="Nuevo" Grid.Column="2" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" ToolTip="Nuevo material" Click="bt_m_nuevo_Click" Style="{StaticResource botonverde}"/>
+            <UniformGrid Grid.Column="3" Grid.Row="9" Columns="1">
+                <Button Name="bt_m_modificar" Content="Modificar" Visibility="Visible" Width="130" Height="30" ToolTip="Modificar el material" Style="{StaticResource botonazul}" Click="bt_m_modificar_Click"/>
+                <Button Name="bt_m_eliminar" Content="Eliminar" Visibility="Visible" Width="130" Height="30" ToolTip="Eliminar el material" Style="{StaticResource botonrojo}" Click="bt_m_eliminar_Click"/>
+            </UniformGrid>
         </Grid>
 
         <Grid Name="grid_producto" Visibility="Hidden" Grid.Row="1">
@@ -213,8 +330,8 @@
             </Grid.RowDefinitions>
 
             <Label Name="lb_pr_seleccionar" Visibility="Hidden" Content="Seleccione un cliente" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
-            <ComboBox Name="cb_pr_cliente" Visibility="Hidden" Grid.Column="2" Grid.Row="4" SelectionChanged="cb_p_cliente_SelectionChanged"/>
-            <Button Name="bt_pr_seleccionar" Visibility="Hidden" Content="Seleccionar" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" Width="130" Click="bt_p_seleccionar_Click" />
+            <ComboBox Name="cb_pr_cliente" Visibility="Hidden" Grid.Column="2" Grid.Row="4" ToolTip="Elija el cliente" SelectionChanged="cb_p_cliente_SelectionChanged"/>
+            <Button Name="bt_pr_seleccionar" Visibility="Hidden" Content="Seleccionar" Grid.Column="1" Grid.Row="6" ToolTip="Confirmar el cliente seleccionado" Grid.ColumnSpan="2" Width="130" Click="bt_p_seleccionar_Click" Style="{StaticResource botonverde}"/>
 
             <Label Name="lb1" Content="Nombre" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Name="lb2" Content="Precio" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
@@ -222,21 +339,22 @@
             <Label Name="lb4" Content="Fecha de venta" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Name="lb5" Content="Descripcion" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
 
-            <TextBox Name="tb_pr_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
-            <TextBox Name="tb_pr_precio" Text="{Binding Path= Precio , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <TextBox Name="tb_pr_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" ToolTip="Escribir nombre del producto" HorizontalAlignment="Left" Width="170"/>
+            <TextBox Name="tb_pr_precio" Text="{Binding Path= Precio , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" ToolTip="Escribir precio del producto" HorizontalAlignment="Left" Width="170"/>
             <UniformGrid Name="ug_producto" Columns="1" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Width="170" Background="#50FFFFFF">
-                <CheckBox Name="cb_pr_vendido" IsChecked="{Binding Path=Vendido ,  Mode=TwoWay}" Width="15" Height="15" Checked="cb_p_vendido_Checked" />
+                <CheckBox Name="cb_pr_vendido" IsChecked="{Binding Path=Vendido ,  Mode=TwoWay}" Width="15" Height="15" ToolTip="Marque casilla para producto vendido" Checked="cb_p_vendido_Checked" />
             </UniformGrid>
-            <DatePicker Name="tb_pr_fechaventa" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="170" Background="#50FFFFFF"/>
-            <TextBox Name="tb_pr_Descripcion" Text="{Binding Path= Descripcion , Mode=TwoWay}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.Row="6" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Left" Width="170" Height="auto"/>
+            <DatePicker Name="tb_pr_fechaventa" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Elija la fecha de venta" Width="170" Background="#50FFFFFF"/>
+            <TextBox Name="tb_pr_Descripcion" Text="{Binding Path= Descripcion , Mode=TwoWay}" ToolTip="Escribir describa el producto" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.Row="6" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Left" Width="170" Height="auto"/>
 
             <DataGrid Name="dg_producto" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="7" Margin="0,0,20,0" SelectionChanged="dg_producto_SelectionChanged"/>
 
-            <Button Name="bt_pr_añadir" Content="Añadir" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_pr_añadir_Click"/>
-            <Button Name="bt_pr_modificar" Content="Modificar" Visibility="Visible" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Top" Margin="25" Click="bt_pr_modificar_Click"/>
-            <Button Name="bt_pr_nuevo" Content="Nuevo" Grid.Column="2" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_pr_nuevo_Click"/>
-            <Button Name="bt_pr_eliminar" Content="Eliminar" Visibility="Visible" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Bottom" Margin="25" Click="bt_pr_eliminar_Click"/>
-
+            <Button Name="bt_pr_añadir" Content="Añadir" Grid.Column="3" Grid.Row="9" Width="130" ToolTip="Añadir producto" Height="30" VerticalAlignment="Center" Click="bt_pr_añadir_Click" Style="{StaticResource botonverde}"/>
+            <Button Name="bt_pr_nuevo" Content="Nuevo" Grid.Column="2" Grid.Row="9" Width="130" Height="30" ToolTip="Nuevo producto" VerticalAlignment="Center" Click="bt_pr_nuevo_Click" Style="{StaticResource botonverde}"/>
+            <UniformGrid Grid.Column="3" Grid.Row="9" Columns="1">
+                <Button Name="bt_pr_modificar" Content="Modificar" Visibility="Visible" Width="130" Height="30" ToolTip="Modificar el producto" Style="{StaticResource botonazul}" Click="bt_pr_modificar_Click"/>
+                <Button Name="bt_pr_eliminar" Content="Eliminar" Visibility="Visible" Width="130" Height="30" ToolTip="Eliminar el producto"  Style="{StaticResource botonrojo}" Click="bt_pr_eliminar_Click"/>
+            </UniformGrid>
         </Grid>
 
         <Grid Name="grid_inicio" Visibility="Hidden" Grid.Row="1">
@@ -251,11 +369,11 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <Label Content="Usuario" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalContentAlignment="Center" Margin="0,0,46,0" FontSize="24" Foreground="White"/>
-            <TextBox Name="tb_usuario" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Width="150" Height="40" FontSize="24"/>
-            <Label Content="Contraseña" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" VerticalContentAlignment="Center" Margin="0,0,20,0" FontSize="24" Foreground="White"/>
-            <PasswordBox Name="tb_contraseña" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Width="150" Height="40" FontSize="24"/>
-            <Button Name="bt_acceder" Content="Acceder" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Height="50" Margin="20,10,0,0" Click="bt_acceder_Click" FontSize="24"/>
+            <Label Content="Usuario" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalContentAlignment="Center" Background="#cc0C2B6C" Width="160" Height="40" FontSize="24" Foreground="White"/>
+            <TextBox Name="tb_usuario" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Escribir usuario" Width="170" Height="40" FontSize="24"/>
+            <Label Content="Contraseña" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Background="#cc0C2B6C" VerticalContentAlignment="Center" Width="160" Height="40" FontSize="24" Foreground="White"/>
+            <PasswordBox Name="tb_contraseña" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Escribir contraseña" Width="170" Height="40" FontSize="24"/>
+            <Button Name="bt_acceder" Content="Acceder" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" ToolTip="Acceder al usuario" VerticalAlignment="Top" Width="100" Height="50" Margin="20,10,0,0" Click="bt_acceder_Click" FontSize="24" Style="{StaticResource botonverde}"/>
         </Grid>
 
         <Grid Name="grid_cliente" Visibility="Hidden" Grid.Row="1">
@@ -282,19 +400,20 @@
             <Label Content="Telefono" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Content="Correo" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
 
-            <TextBox Name="tb_c_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
-            <TextBox Name="tb_c_apellidos" Text="{Binding Path= Apellidos , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
-            <TextBox Name="tb_c_direccion" Text="{Binding Path= Direccion , Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
-            <TextBox Name="tb_c_telefono" Text="{Binding Path= Telefono , Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
-            <TextBox Name="tb_c_correo" Text="{Binding Path= Correo , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <TextBox Name="tb_c_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir nombre del cliente" Width="170"/>
+            <TextBox Name="tb_c_apellidos" Text="{Binding Path= Apellidos , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir apellidos del cliente" Width="170"/>
+            <TextBox Name="tb_c_direccion" Text="{Binding Path= Direccion , Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir dirección del cliente" Width="170"/>
+            <TextBox Name="tb_c_telefono" Text="{Binding Path= Telefono , Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir teléfono del cliente" Width="170"/>
+            <TextBox Name="tb_c_correo" Text="{Binding Path= Correo , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir correo del cliente" Width="170"/>
 
             <DataGrid Name="dg_cliente" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="7" Margin="0,0,20,0" SelectionChanged="dg_cliente_SelectionChanged"/>
 
-            <Button Name="bt_c_añadir" Content="Añadir" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_c_añadir_Click"/>
-            <Button Name="bt_c_modificar" Content="Modificar" Visibility="Hidden" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Top" Margin="25" Click="bt_c_modificar_Click"/>
-            <Button Name="bt_c_nuevo" Content="Nuevo" Grid.Column="2" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_c_nuevo_Click"/>
-            <Button Name="bt_c_eliminar" Content="Eliminar" Visibility="Hidden" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Bottom" Margin="25" Click="bt_c_eliminar_Click" />
-
+            <Button Name="bt_c_añadir" Content="Añadir" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" ToolTip="Añadir cliente" Click="bt_c_añadir_Click" Style="{StaticResource botonverde}"/>
+            <Button Name="bt_c_nuevo" Content="Nuevo" Grid.Column="2" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" ToolTip="Nuevo cliente" Click="bt_c_nuevo_Click" Style="{StaticResource botonverde}"/>
+            <UniformGrid Grid.Column="3" Grid.Row="9" Columns="1">
+                <Button Name="bt_c_modificar" Content="Modificar" Visibility="Hidden"  Width="130" Height="30" ToolTip="Modificar el cliente" Style="{StaticResource botonazul}" Click="bt_c_modificar_Click"/>
+                <Button Name="bt_c_eliminar" Content="Eliminar" Visibility="Hidden" Width="130" Height="30" ToolTip="Eliminar el cliente" Style="{StaticResource botonrojo}" Click="bt_c_eliminar_Click" />
+            </UniformGrid>
         </Grid>
 
         <Grid Name="grid_proveedor" Visibility="Hidden" Grid.Row="1">
@@ -321,22 +440,23 @@
             <Label Content="Contacto" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Content="Correo" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
 
-            <TextBox Name="tb_p_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
-            <TextBox Name="tb_p_direccion" Text="{Binding Path= Direccion , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
-            <TextBox Name="tb_p_telefono" Text="{Binding Path= Telefono , Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
-            <TextBox Name="tb_p_contacto" Text="{Binding Path= Contacto , Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
-            <TextBox Name="tb_p_correo" Text="{Binding Path= Correo , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <TextBox Name="tb_p_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir nombre del proveedor" Width="170"/>
+            <TextBox Name="tb_p_direccion" Text="{Binding Path= Direccion , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir dirección del proveedor" Width="170"/>
+            <TextBox Name="tb_p_telefono" Text="{Binding Path= Telefono , Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir teléfono del proveedor" Width="170"/>
+            <TextBox Name="tb_p_contacto" Text="{Binding Path= Contacto , Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir contacto del proveedor" Width="170"/>
+            <TextBox Name="tb_p_correo" Text="{Binding Path= Correo , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir correo del proveedor" Width="170"/>
 
             <DataGrid Name="dg_proveedor" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="7" Margin="0,0,20,0" SelectionChanged="dg_proveedor_SelectionChanged" />
 
-            <Button Name="bt_p_añadir" Content="Añadir" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_p_añadir_Click"/>
-            <Button Name="bt_p_modificar" Content="Modificar" Visibility="Hidden" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Top" Margin="25" Click="bt_p_modificar_Click"/>
-            <Button Name="bt_p_nuevo" Content="Nuevo" Grid.Column="2" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_p_nuevo_Click" />
-            <Button Name="bt_p_eliminar" Content="Eliminar" Visibility="Hidden" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Bottom" Margin="25" Click="bt_p_eliminar_Click" />
-
+            <Button Name="bt_p_añadir" Content="Añadir" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" ToolTip="Añadir proveedor" Click="bt_p_añadir_Click" Style="{StaticResource botonverde}"/>
+            <Button Name="bt_p_nuevo" Content="Nuevo" Grid.Column="2" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" ToolTip="Nuevo proveedor" Click="bt_p_nuevo_Click" Style="{StaticResource botonverde}"/>
+            <UniformGrid Grid.Column="3" Grid.Row="9" Columns="1">
+                <Button Name="bt_p_modificar" Content="Modificar" Visibility="Hidden"  Width="130" Height="30" ToolTip="Modificar el proveedor" Style="{StaticResource botonazul}" Click="bt_p_modificar_Click"/>
+                <Button Name="bt_p_eliminar" Content="Eliminar" Visibility="Hidden" Width="130" Height="30" ToolTip="Eliminar el proveedor" Style="{StaticResource botonrojo}" Click="bt_p_eliminar_Click" />
+            </UniformGrid>
         </Grid>
 
-        <Grid Name="grid_empleado" Visibility="Hidden" Grid.Row="1">
+        <Grid Name="grid_empleado" Visibility="Visible" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -364,22 +484,23 @@
             <Label Content="Contraseña" Grid.Row="7" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Content="TipoCuenta" Grid.Row="8" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
 
-            <TextBox Name="tb_u_dni" Text="{Binding Path= Dni , Mode=TwoWay}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
-            <TextBox Name="tb_u_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
-            <TextBox Name="tb_u_apellidos" Text="{Binding Path= Apellidos , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
-            <TextBox Name="tb_u_direccion" Text="{Binding Path= Direccion , Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
-            <TextBox Name="tb_u_telefono" Text="{Binding Path= Telefono , Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
-            <TextBox Name="tb_u_usuario" Text="{Binding Path= Usuario , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
-            <TextBox Name="tb_u_contraseña" Text="{Binding Path= Contraseña , Mode=TwoWay}" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
-            <TextBox Name="tb_u_tipocuenta" Text="{Binding Path= TipoCuenta , Mode=TwoWay}" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left" Width="170"/>
+            <TextBox Name="tb_u_dni" Text="{Binding Path= Dni , Mode=TwoWay}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir DNI del empleado" Width="170"/>
+            <TextBox Name="tb_u_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir nombre del empleado" Width="170"/>
+            <TextBox Name="tb_u_apellidos" Text="{Binding Path= Apellidos , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir apellidos del empleado" Width="170"/>
+            <TextBox Name="tb_u_direccion" Text="{Binding Path= Direccion , Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir dirección del empleado" Width="170"/>
+            <TextBox Name="tb_u_telefono" Text="{Binding Path= Telefono , Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir teléfono del empleado" Width="170"/>
+            <TextBox Name="tb_u_usuario" Text="{Binding Path= Usuario , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir usuario del empleado" Width="170"/>
+            <TextBox Name="tb_u_contraseña" Text="{Binding Path= Contraseña , Mode=TwoWay}" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir contraseña del empleado" Width="170"/>
+            <TextBox Name="tb_u_tipocuenta" Text="{Binding Path= TipoCuenta , Mode=TwoWay}" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Elija tipo de cuenta" Width="170"/>
 
             <DataGrid Name="dg_empleado" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="8" Margin="0,0,20,0" SelectionChanged="dg_empleado_SelectionChanged"/>
 
-            <Button Name="bt_e_añadir" Content="Añadir" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_e_añadir_Click" />
-            <Button Name="bt_e_modificar" Content="Modificar" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Top" Margin="25" Click="bt_e_modificar_Click" />
-            <Button Name="bt_e_nuevo" Content="Nuevo" Grid.Column="2" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_e_nuevo_Click" />
-            <Button Name="bt_e_eliminar" Content="Eliminar" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Bottom" Margin="25"  Click="bt_e_eliminar_Click" />
-
+            <Button Name="bt_e_añadir" Content="Añadir" Grid.Column="3" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" ToolTip="Añadir empleado" Click="bt_e_añadir_Click" Style="{StaticResource botonverde}"/>
+            <Button Name="bt_e_nuevo" Content="Nuevo" Grid.Column="2" Grid.Row="9" Width="130" Height="30" VerticalAlignment="Center" Click="bt_e_nuevo_Click" ToolTip="Nuevo empleado" Style="{StaticResource botonverde}"/>
+            <UniformGrid Grid.Column="3" Grid.Row="9" Columns="1" >
+                <Button Name="bt_e_modificar" Content="Modificar"  Width="130" Height="30" ToolTip="Modificar el empleado" Click="bt_e_modificar_Click" Style="{StaticResource botonazul}" />
+                <Button Name="bt_e_eliminar" Content="Eliminar" Width="130" Height="30" ToolTip="Eliminar el empleado" Click="bt_e_eliminar_Click" Style="{StaticResource botonrojo}"/>
+            </UniformGrid>
 
         </Grid>
 
