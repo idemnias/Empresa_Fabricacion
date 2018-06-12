@@ -49,9 +49,9 @@
             <Setter Property="Background">
                 <Setter.Value>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FF00CF00" Offset="0.496"/>
-                        <GradientStop Color="#FF4B614B" Offset="0.2"/>
-                        <GradientStop Color="#FF4B614B" Offset="0.8"/>
+                        <GradientStop Color="#FF00CF00" Offset="0.5"/>
+                        <GradientStop Color="#FF4B614B" Offset="0.15"/>
+                        <GradientStop Color="#FF4B614B" Offset="0.85"/>
                         <GradientStop Color="#FF1D282B"/>
                         <GradientStop Color="#FF1D282B" Offset="1"/>
                     </LinearGradientBrush>
@@ -86,9 +86,9 @@
             <Setter Property="Background">
                 <Setter.Value>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FF00C6FF" Offset="0.496"/>
-                        <GradientStop Color="#FF45575D" Offset="0.2"/>
-                        <GradientStop Color="#FF45575D" Offset="0.8"/>
+                        <GradientStop Color="#FF00C6FF" Offset="0.5"/>
+                        <GradientStop Color="#FF45575D" Offset="0.15"/>
+                        <GradientStop Color="#FF45575D" Offset="0.85"/>
                         <GradientStop Color="#FF222D30"/>
                         <GradientStop Color="#FF222D30" Offset="1"/>
                     </LinearGradientBrush>
@@ -124,8 +124,8 @@
                 <Setter.Value>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FFD11515" Offset="0.5"/>
-                        <GradientStop Color="#FF641414" Offset="0.2"/>
-                        <GradientStop Color="#FF641414" Offset="0.8"/>
+                        <GradientStop Color="#FF641414" Offset="0.15"/>
+                        <GradientStop Color="#FF641414" Offset="0.85"/>
                         <GradientStop Color="#FF3A0E0E"/>
                         <GradientStop Color="#FF3A0E0E" Offset="1"/>
                     </LinearGradientBrush>
@@ -165,7 +165,7 @@
             <RowDefinition Height="100"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <UniformGrid Columns="7">
+        <UniformGrid Columns="7" >
             <Button Name="bt_fabricacion" Content="FABRICACIONES" Margin="10" ToolTip="Botón para fabricación" Click="bt_fabricacion_Click" Style="{StaticResource botontemplate}"/>
             <Button Name="bt_material" Content="MATERIALES" Margin="10" ToolTip="Botón para material" Click="bt_material_Click" Style="{StaticResource botontemplate}"/>
             <Button Name="bt_producto" Content="PRODUCTOS" Margin="10" ToolTip="Botón para producto" Click="bt_producto_Click" Style="{StaticResource botontemplate}"/>
@@ -197,7 +197,7 @@
                 <RowDefinition Height="100*"/>
             </Grid.RowDefinitions>
 
-            <Label Name="lb_f_seleccionar" Visibility="Hidden" Content="Seleccione un Producto" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
+            <Label Name="lb_f_seleccionar" Visibility="Hidden" Content="Seleccione un Producto" Grid.Column="1" Grid.Row="4" Style="{StaticResource estilolabel}"/>
             <ComboBox Name="cb_f_producto" Visibility="Hidden" Grid.Column="2" Grid.Row="4" ToolTip="Eliga el producto" SelectionChanged="cb_f_producto_SelectionChanged" />
             <Button Name="bt_f_seleccionar" Visibility="Hidden" Content="Seleccionar" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" ToolTip="Confirmar el producto indicado" Width="130" Click="bt_f_seleccionar_Click" Style="{StaticResource botonverde}"/>
 
@@ -329,7 +329,7 @@
                 <RowDefinition Height="100*"/>
             </Grid.RowDefinitions>
 
-            <Label Name="lb_pr_seleccionar" Visibility="Hidden" Content="Seleccione un cliente" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
+            <Label Name="lb_pr_seleccionar" Visibility="Hidden" Content="Seleccione un cliente" Grid.Column="1" Grid.Row="4" Style="{StaticResource estilolabel}"/>
             <ComboBox Name="cb_pr_cliente" Visibility="Hidden" Grid.Column="2" Grid.Row="4" ToolTip="Elija el cliente" SelectionChanged="cb_p_cliente_SelectionChanged"/>
             <Button Name="bt_pr_seleccionar" Visibility="Hidden" Content="Seleccionar" Grid.Column="1" Grid.Row="6" ToolTip="Confirmar el cliente seleccionado" Grid.ColumnSpan="2" Width="130" Click="bt_p_seleccionar_Click" Style="{StaticResource botonverde}"/>
 
@@ -491,7 +491,7 @@
             <TextBox Name="tb_u_telefono" Text="{Binding Path= Telefono , Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir teléfono del empleado" Width="170"/>
             <TextBox Name="tb_u_usuario" Text="{Binding Path= Usuario , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir usuario del empleado" Width="170"/>
             <TextBox Name="tb_u_contraseña" Text="{Binding Path= Contraseña , Mode=TwoWay}" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir contraseña del empleado" Width="170"/>
-            <TextBox Name="tb_u_tipocuenta" Text="{Binding Path= TipoCuenta , Mode=TwoWay}" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Elija tipo de cuenta" Width="170"/>
+            <ComboBox Name="cb_u_tipocuenta" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Elija tipo de cuenta" Width="170"/>
 
             <DataGrid Name="dg_empleado" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="8" Margin="0,0,20,0" SelectionChanged="dg_empleado_SelectionChanged"/>
 

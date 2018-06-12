@@ -7,13 +7,13 @@ namespace Empresa_Fabricacion.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class _base : IMigrationMetadata
+    public sealed partial class patata : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(_base));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(patata));
         
         string IMigrationMetadata.Id
         {
-            get { return "201803191713469_base"; }
+            get { return "201806120844533_patata"; }
         }
         
         string IMigrationMetadata.Source

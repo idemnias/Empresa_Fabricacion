@@ -91,6 +91,7 @@ namespace Empresa_Fabricacion
             bt_producto.Visibility = Visibility.Visible;
             bt_cliente.Visibility = Visibility.Visible;
             bt_proveedor.Visibility = Visibility.Visible;
+            bt_empleado.Visibility = Visibility.Visible;
         }
 
         private void LimpiarInicio()
@@ -386,10 +387,20 @@ namespace Empresa_Fabricacion
                 {
                     PonerBotones();
                     if (aux.TipoCuenta.Equals("Administrador"))
-                    {
-                        bt_empleado.Visibility = Visibility.Visible;
-                        MessageBox.Show("Sesion iniciado correctamente con la cuenta de "+aux.Nombre +" "+aux.Apellidos);
+                    { 
                     }
+                    else if (aux.TipoCuenta.Equals("Trabajador"))
+                    {
+                        bt_empleado.Visibility = Visibility.Collapsed;
+                        bt_cliente.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        bt_empleado.Visibility = Visibility.Collapsed;
+                        bt_fabricacion.Visibility = Visibility.Collapsed;
+                        bt_proveedor.Visibility = Visibility.Collapsed;
+                    }
+                    MessageBox.Show("Sesion iniciado correctamente con la cuenta de " + aux.Nombre + " " + aux.Apellidos);
                     usuarioactivo = aux;
                 }
                 else
