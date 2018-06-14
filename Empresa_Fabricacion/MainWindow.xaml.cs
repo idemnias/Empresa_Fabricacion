@@ -665,6 +665,7 @@ namespace Empresa_Fabricacion
 
         private void bt_pr_añadir_Click(object sender, RoutedEventArgs e)
         {
+            if (producto == null) { producto = new Producto(); }
             producto.ClienteId = cliente.ClienteId;
             if (tb_pr_fechaventa.Text == "") { producto.FechaVenta = DateTime.Today; }
             else { producto.FechaVenta = Convert.ToDateTime(tb_pr_fechaventa.Text); }            
@@ -781,6 +782,7 @@ namespace Empresa_Fabricacion
 
         private void bt_f_añadir_Click(object sender, RoutedEventArgs e)
         {
+            if (fabricacion == null) { fabricacion = new Fabricacion(); }
             fabricacion.ProductoId = producto.ProductoId;
             if (tb_f_fechainicio.Text == "") { fabricacion.FechaInicio = DateTime.Today; }
             else { fabricacion.FechaInicio = Convert.ToDateTime(tb_f_fechainicio.Text); }
@@ -792,6 +794,7 @@ namespace Empresa_Fabricacion
                 usuarioactivo.FabricacionId = fabricacion.FabricacionId;
                 unit.RepositorioEmpleado.Actualizar(usuarioactivo);
             }
+            
             unit.RepositorioFabricacion.Crear(fabricacion);
             LimpiarFabricacion();
             DesactivarBotonesFabricacion();
@@ -823,8 +826,7 @@ namespace Empresa_Fabricacion
         }
 
         private void bt_f_eliminar_Click(object sender, RoutedEventArgs e)
-        {
-            fabricacion.ProductoId = producto.ProductoId;
+        { 
             if (tb_f_fechainicio.Text == "") { fabricacion.FechaInicio = DateTime.Today; }
             else { fabricacion.FechaInicio = Convert.ToDateTime(tb_f_fechainicio.Text); }
             if (tb_f_fechainicio.Text == "") { fabricacion.FechaInicio = DateTime.Today; }
@@ -1019,30 +1021,53 @@ namespace Empresa_Fabricacion
             
         }
 
+        private LinearGradientBrush GradienteBoton()
+        {
+            // Create a diagonal linear gradient with four stops.   
+            LinearGradientBrush myLinearGradientBrush =
+                new LinearGradientBrush();
+            myLinearGradientBrush.StartPoint = new Point(0.5, 0);
+            myLinearGradientBrush.EndPoint = new Point(0.5, 1);
+            myLinearGradientBrush.GradientStops.Add(
+                new GradientStop(Colors.DarkBlue, 0.0));
+            myLinearGradientBrush.GradientStops.Add(
+                new GradientStop(Colors.LightSteelBlue, 0.3));
+            myLinearGradientBrush.GradientStops.Add(
+               new GradientStop(Colors.White, 0.5));
+            myLinearGradientBrush.GradientStops.Add(
+                new GradientStop(Colors.LightSteelBlue, 0.7));
+            myLinearGradientBrush.GradientStops.Add(
+                new GradientStop(Colors.DarkBlue, 1.0));
+            return myLinearGradientBrush;
+        }
+
         //Creacion de botones de proveedores
         public void GenerarBotones()
         {
             try
 
             {
-
                 while ( sp_proveedores.Children.Count > 0)
                 {
                     sp_proveedores.Children.RemoveAt(sp_proveedores.Children.Count - 1);
                 }
+                Style estilo = this.FindResource("botonmaterial") as Style;
+
                 List<Proveedor> proveedores = new List<Proveedor>();
                 proveedores = unit.RepositorioProveedor.ObtenerTodo();
                 for (int i = 0; i < proveedores.Count; i++)
                 {
                     Button n = new Button();
+                    
                     n.Content = proveedores[i].Nombre;
                     n.Height = 40;
                     n.Width = 130;
-                    n.Background = Brushes.LightBlue;
                     n.Margin = new Thickness(2);
                     n.Click += proveedor_click;
-                    sp_proveedores.Children.Add(n);
 
+                    //n.Background = GradienteBoton();
+                    n.Style = estilo;
+                    sp_proveedores.Children.Add(n);
                 }
             }
             catch (Exception)
@@ -1051,6 +1076,7 @@ namespace Empresa_Fabricacion
                 throw;
             }
         }
+
         //Click  en una categoria y creacion de botones de productos
         private void proveedor_click(object sender, RoutedEventArgs e)
         {
@@ -1083,7 +1109,7 @@ namespace Empresa_Fabricacion
                     //mirar stock
                     if (listmateriales[i].Stock > 0)
                     {
-                        b.Background = Brushes.LightBlue;
+                        b.Background = GradienteBoton();
                     }
                     else
                     {
