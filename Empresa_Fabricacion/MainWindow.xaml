@@ -165,7 +165,7 @@
             <RowDefinition Height="100"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <UniformGrid Columns="7" >
+        <UniformGrid Columns="7">
             <Button Name="bt_fabricacion" Content="FABRICACIONES" Margin="10" ToolTip="Botón para fabricación" Click="bt_fabricacion_Click" Style="{StaticResource botontemplate}"/>
             <Button Name="bt_material" Content="MATERIALES" Margin="10" ToolTip="Botón para material" Click="bt_material_Click" Style="{StaticResource botontemplate}"/>
             <Button Name="bt_producto" Content="PRODUCTOS" Margin="10" ToolTip="Botón para producto" Click="bt_producto_Click" Style="{StaticResource botontemplate}"/>
@@ -175,7 +175,7 @@
             <Button Name="bt_empleado" Content="EMPLEADOS" Margin="10" ToolTip="Boton para empleados" Click="bt_empleado_Click" Style="{StaticResource botontemplate}"/>
         </UniformGrid>
 
-        <Grid Name="grid_fabricacion" Visibility="Hidden" Grid.Row="1">
+        <Grid Name="grid_fabricacion" Visibility="Visible" Grid.Row="1">
             <Grid.Background>
                 <ImageBrush/>
             </Grid.Background>
@@ -202,17 +202,23 @@
             <Button Name="bt_f_seleccionar" Visibility="Hidden" Content="Seleccionar" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" ToolTip="Confirmar el producto indicado" Width="130" Click="bt_f_seleccionar_Click" Style="{StaticResource botonverde}"/>
 
 
-            <Label Name="lb1f" Content="Fecha de inicio" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"></Label>
-            <Label Name="lb2f" Content="Fecha final" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"></Label>
-            <Label Name="lb3f" Content="Fabricado" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"></Label>
+            <Label Name="lb1f" Content="Fecha de inicio" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
+            <Label Name="lb2f" Content="Fecha final" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
+            <Label Name="lb3f" Content="Fabricado" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
+            <Label Name="lb4f" Content="Trabajador activo" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
 
             <DatePicker Name="tb_f_fechainicio" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Elija la fecha de inicio de fabricación" Width="170" Background="#50FFFFFF" HorizontalContentAlignment="Stretch"/>
             <DatePicker Name="tb_f_fechafinal" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Elija la fecha final de fabricación" Width="170" Background="#50FFFFFF"/>
             <UniformGrid Name="ug_fabricacion" Columns="1" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="170" Background="#50FFFFFF">
                 <CheckBox Name="cb_f_fabricado" IsChecked="{Binding Path=Fabricado , Mode=TwoWay}" ToolTip="Marque la casilla si ya esta finalizada la fabricación del producto" Width="15" Height="15" Checked="cb_f_fabricado_Checked"/>
             </UniformGrid>
-            <DataGrid Name="dg_fabricacion" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="7" Margin="0,0,20,0"  SelectionChanged="dg_fabricacion_SelectionChanged" />
+            <UniformGrid Name="ug_trabajador_activo" Columns="1" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Width="170" Background="#50FFFFFF">
+                <CheckBox Name="cb_f_trabajadoractivo" ToolTip="Marque la casilla si ya esta finalizada la fabricación del producto" Width="15" Height="15" />
+            </UniformGrid>
 
+            <DataGrid Name="dg_fabricacion" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="7" Margin="0,0,20,0"  SelectionChanged="dg_fabricacion_SelectionChanged" />
+            
+            
             <Button Name="bt_f_añadir" Content="Añadir" Grid.Column="3" Grid.Row="9" ToolTip="Añadir el producto" Width="130" Height="30" VerticalAlignment="Center" Click="bt_f_añadir_Click" Style="{StaticResource botonverde}"/>
             <Button Name="bt_f_nuevo" Content="Nuevo" Grid.Column="2" Grid.Row="9" ToolTip="Crear un nuevo producto" Width="130" Height="30" VerticalAlignment="Center" Click="bt_f_nuevo_Click" Style="{StaticResource botonverde}"/>
             <UniformGrid Grid.Column="3" Grid.Row="9" Columns="1">
@@ -456,7 +462,7 @@
             </UniformGrid>
         </Grid>
 
-        <Grid Name="grid_empleado" Visibility="Visible" Grid.Row="1">
+        <Grid Name="grid_empleado" Visibility="Hidden" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -491,7 +497,11 @@
             <TextBox Name="tb_u_telefono" Text="{Binding Path= Telefono , Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir teléfono del empleado" Width="170"/>
             <TextBox Name="tb_u_usuario" Text="{Binding Path= Usuario , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir usuario del empleado" Width="170"/>
             <TextBox Name="tb_u_contraseña" Text="{Binding Path= Contraseña , Mode=TwoWay}" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir contraseña del empleado" Width="170"/>
-            <ComboBox Name="cb_u_tipocuenta" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Elija tipo de cuenta" Width="170"/>
+            <ComboBox Name="cb_u_tipocuenta" Text="{Binding Path=TipoCuenta, Mode=TwoWay}" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Elija tipo de cuenta" Width="170">
+                <ComboBoxItem Content="Administrador"/>
+                <ComboBoxItem Content="Trabajador"/>
+                <ComboBoxItem Content="Vendedor"/>
+            </ComboBox>
 
             <DataGrid Name="dg_empleado" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="8" Margin="0,0,20,0" SelectionChanged="dg_empleado_SelectionChanged"/>
 

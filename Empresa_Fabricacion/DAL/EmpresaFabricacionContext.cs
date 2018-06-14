@@ -40,11 +40,11 @@ namespace Empresa_Fabricacion.DAL
                     new Proveedor { ProveedorId = 0004, Nombre="Crucial", Direccion="Ourense", Telefono="988225588", Contacto="Asunción", Correo="Asunción@crucial.com" }
                     );
                 context.Materiales.AddOrUpdate(
-                    new Material { MaterialId=1001, Nombre= "Asus ROG Strix Geforce GTX 1070 Ti Gaming Advance 8GB GDDR5", Precio=609.90, Stock=10, Foto="", ProveedorId=0001 },
-                    new Material { MaterialId = 1002, Nombre = "Asus Phoenix GeForce GTX 1060 3GB GDDR5", Precio = 255.90, Stock = 12, Foto = "", ProveedorId = 0001 },
-                    new Material { MaterialId = 1003, Nombre = "Intel Core i7-8700K 3.7Ghz BOX", Precio = 325.90, Stock = 5, Foto = "", ProveedorId = 0002 },
-                    new Material { MaterialId = 1004, Nombre = "Placa Base MSI X470 Gaming M7 AC", Precio = 274.90, Stock = 5, Foto = "", ProveedorId = 0003 },
-                    new Material { MaterialId = 1005, Nombre = "Memoria Ram Crucial Ballistix Sport LT Single Rank DDR4 2666 PC4 - 21300 16GB CL16", Precio = 169, Stock = 20, Foto = "", ProveedorId = 0004 }
+                    new Material { MaterialId=1001, Nombre= "Asus ROG Strix Geforce GTX 1070 Ti Gaming Advance 8GB GDDR5", Precio=609.90, Stock=10, Foto= Environment.CurrentDirectory + @"\Imagenes\tarjetagrafica_asus.png", ProveedorId=0001 },
+                    new Material { MaterialId = 1002, Nombre = "Asus Phoenix GeForce GTX 1060 3GB GDDR5", Precio = 255.90, Stock = 12, Foto = Environment.CurrentDirectory + @"\Imagenes\tarjetagrafica_asus.png", ProveedorId = 0001 },
+                    new Material { MaterialId = 1003, Nombre = "Intel Core i7-8700K 3.7Ghz BOX", Precio = 325.90, Stock = 5, Foto = Environment.CurrentDirectory + @"\Imagenes\proc-intel-core-i7-8700k-37ghz.png", ProveedorId = 0002 },
+                    new Material { MaterialId = 1004, Nombre = "Placa Base MSI X470 Gaming M7 AC", Precio = 274.90, Stock = 5, Foto = Environment.CurrentDirectory + @"\Imagenes\msi-placa-base-x470-gaming-pro-atx-am4.png", ProveedorId = 0003 },
+                    new Material { MaterialId = 1005, Nombre = "Memoria Ram Crucial Ballistix Sport LT Single Rank DDR4 2666 PC4 - 21300 16GB CL16", Precio = 169, Stock = 20, Foto = Environment.CurrentDirectory + @"\Imagenes\memorias-ram-crucial-ddr4-16gb-2400mhz-ballistix-sport-lt-red-1g.png", ProveedorId = 0004 }
                     );
                 context.Clientes.AddOrUpdate(
                     new Cliente { ClienteId=2001, Nombre="Pepe", Apellidos="Álvarez", Direccion="Polvorín", Telefono="664871512", Correo="Pepe@gmail.com"},

@@ -34,6 +34,7 @@ namespace Empresa_Fabricacion
         int clienteseleccionado;
         int productoseleccionado;
         int fabricacioneseleccionado=1;
+        bool trabajadoractivoboolean=false;
         List<Cliente> listaclientes = new List<Cliente>();
         List<Proveedor> listaproveedores = new List<Proveedor>();
         Producto producto = new Producto();
@@ -134,6 +135,7 @@ namespace Empresa_Fabricacion
             grid_fabricacion.DataContext = fabricacion;
             tb_f_fechainicio.Text = "";
             tb_f_fechafinal.Text = "";
+            cb_f_trabajadoractivo.IsChecked = false;
             dg_fabricacion.ItemsSource = unit.RepositorioFabricacion.ObtenerTodo().ToList();
         }
         private void LimpiarMaterial()
@@ -254,7 +256,9 @@ namespace Empresa_Fabricacion
             lb1f.Visibility = Visibility.Visible;
             lb2f.Visibility = Visibility.Visible;
             lb3f.Visibility = Visibility.Visible;
+            lb4f.Visibility = Visibility.Visible;
             ug_fabricacion.Visibility = Visibility.Visible;
+            ug_trabajador_activo.Visibility = Visibility.Visible;
             cb_f_fabricado.Visibility = Visibility.Visible;
             tb_f_fechainicio.Visibility = Visibility.Visible;
             tb_f_fechafinal.Visibility = Visibility.Visible;
@@ -263,6 +267,7 @@ namespace Empresa_Fabricacion
             bt_f_modificar.Visibility = Visibility.Visible;
             bt_f_eliminar.Visibility = Visibility.Visible;
             bt_f_nuevo.Visibility = Visibility.Visible;
+            cb_f_trabajadoractivo.Visibility = Visibility.Visible;
 
         }
         private void DesactivarFabricacionProducto()
@@ -273,6 +278,8 @@ namespace Empresa_Fabricacion
             lb1f.Visibility = Visibility.Hidden;
             lb2f.Visibility = Visibility.Hidden;
             lb3f.Visibility = Visibility.Hidden;
+            lb4f.Visibility = Visibility.Hidden;
+            ug_trabajador_activo.Visibility = Visibility.Hidden;
             ug_fabricacion.Visibility = Visibility.Hidden;
             cb_f_fabricado.Visibility = Visibility.Hidden;
             tb_f_fechainicio.Visibility = Visibility.Hidden;
@@ -282,6 +289,8 @@ namespace Empresa_Fabricacion
             bt_f_modificar.Visibility = Visibility.Hidden;
             bt_f_eliminar.Visibility = Visibility.Hidden;
             bt_f_nuevo.Visibility = Visibility.Hidden;
+            cb_f_trabajadoractivo.Visibility = Visibility.Hidden;
+
         }
 
         private void ActivarBotonesFabricacion()
@@ -369,6 +378,7 @@ namespace Empresa_Fabricacion
             LimpiarGrids();
             grid_empleado.Visibility = Visibility.Visible;
             LimpiarEmpleados();
+            cb_u_tipocuenta.SelectedIndex = 0;
             grid_empleado.DataContext = empleado;
             dg_empleado.ItemsSource = unit.RepositorioEmpleado.ObtenerTodo().ToList();
             DesactivarBotonesEmpleado();
@@ -387,19 +397,20 @@ namespace Empresa_Fabricacion
                 {
                     PonerBotones();
                     if (aux.TipoCuenta.Equals("Administrador"))
-                    { 
+                    {
                     }
                     else if (aux.TipoCuenta.Equals("Trabajador"))
                     {
-                        bt_empleado.Visibility = Visibility.Collapsed;
-                        bt_cliente.Visibility = Visibility.Collapsed;
+                        bt_empleado.Visibility = Visibility.Hidden;
+                        bt_cliente.Visibility = Visibility.Hidden;
                     }
-                    else
+                    else if (aux.TipoCuenta.Equals("Vendedor"))
                     {
-                        bt_empleado.Visibility = Visibility.Collapsed;
-                        bt_fabricacion.Visibility = Visibility.Collapsed;
-                        bt_proveedor.Visibility = Visibility.Collapsed;
+                        bt_empleado.Visibility = Visibility.Hidden;
+                        bt_fabricacion.Visibility = Visibility.Hidden;
+                        bt_proveedor.Visibility = Visibility.Hidden;
                     }
+                    else { }
                     MessageBox.Show("Sesion iniciado correctamente con la cuenta de " + aux.Nombre + " " + aux.Apellidos);
                     usuarioactivo = aux;
                 }
@@ -485,6 +496,7 @@ namespace Empresa_Fabricacion
         {
             empleado = new Empleado();
             grid_empleado.DataContext = empleado;
+            cb_u_tipocuenta.SelectedIndex = 0;
             DesactivarBotonesEmpleado();
         }
 
@@ -744,11 +756,25 @@ namespace Empresa_Fabricacion
             }
         }
 
+        private bool comprobarempleadoidenfabricacion(Fabricacion fabricacion)
+        {
+            bool estaempleado = false;
+            foreach (var item in fabricacion.Empleados)
+            {
+                if (item.EmpleadoId == usuarioactivo.EmpleadoId)
+                {
+                    estaempleado = true;
+                }
+            }
+            return estaempleado;
+        }
+
         private void bt_f_nuevo_Click(object sender, RoutedEventArgs e)
         {
             fabricacion = new Fabricacion();
             tb_f_fechainicio.Text = "";
             tb_f_fechafinal.Text = "";
+            cb_f_trabajadoractivo.IsChecked = false;
             grid_fabricacion.DataContext = fabricacion;
             DesactivarBotonesFabricacion();
         }
@@ -760,6 +786,12 @@ namespace Empresa_Fabricacion
             else { fabricacion.FechaInicio = Convert.ToDateTime(tb_f_fechainicio.Text); }
             if (tb_f_fechafinal.Text == "") { fabricacion.FechaAcaba = DateTime.Today; }
             else { fabricacion.FechaAcaba = Convert.ToDateTime(tb_f_fechafinal.Text); }
+            if (cb_f_trabajadoractivo.IsChecked == true)
+            {
+                fabricacion.Empleados.Add(usuarioactivo);
+                usuarioactivo.FabricacionId = fabricacion.FabricacionId;
+                unit.RepositorioEmpleado.Actualizar(usuarioactivo);
+            }
             unit.RepositorioFabricacion.Crear(fabricacion);
             LimpiarFabricacion();
             DesactivarBotonesFabricacion();
@@ -772,6 +804,17 @@ namespace Empresa_Fabricacion
             else { fabricacion.FechaInicio = Convert.ToDateTime(tb_f_fechainicio.Text); }
             if (tb_f_fechafinal.Text == "") { fabricacion.FechaAcaba = DateTime.Today; }
             else { fabricacion.FechaAcaba = Convert.ToDateTime(tb_f_fechafinal.Text); }
+            if (comprobarempleadoidenfabricacion(fabricacion) == false)
+            {
+                if (cb_f_trabajadoractivo.IsChecked == true)
+                {
+                    fabricacion.Empleados.Add(usuarioactivo);
+                    usuarioactivo.FabricacionId = fabricacion.FabricacionId;
+                }
+            }
+            else if(cb_f_trabajadoractivo.IsChecked == false){ usuarioactivo.FabricacionId = null; }
+
+            unit.RepositorioEmpleado.Actualizar(usuarioactivo);
             unit.RepositorioFabricacion.Actualizar(fabricacion);
             LimpiarFabricacion();
             DesactivarBotonesFabricacion();
@@ -800,6 +843,8 @@ namespace Empresa_Fabricacion
                 grid_fabricacion.DataContext = fabricacion;
                 tb_f_fechainicio.Text = fabricacion.FechaInicio.ToString();
                 tb_f_fechafinal.Text = fabricacion.FechaAcaba.ToString();
+                if (usuarioactivo.FabricacionId == fabricacion.FabricacionId) { cb_f_trabajadoractivo.IsChecked = true; }
+                else { cb_f_trabajadoractivo.IsChecked = false; }
                 ActivarBotonesFabricacion();
             }
             catch (Exception)
@@ -938,6 +983,7 @@ namespace Empresa_Fabricacion
                 material = (Material)dg_material.SelectedItem;
                 grid_material_gestion.DataContext = material;
                 imagen_materiales.Source = EnseñarBit(material.Foto);
+                cb_m_proveedor.SelectedIndex = material.ProveedorId-1;
                 ActivarBotonesMaterial();
             }
             catch (Exception)
@@ -1111,36 +1157,92 @@ namespace Empresa_Fabricacion
 
         //Crear Factura
         public void CrearFactura(Fabricacion fabricacion)
-        {    
-            StreamWriter escritura;
+        {   
             /*siempre se mira si existe*/
             String factura = "  Lista de Materiales de Fabricacion N " + fabricacion.FabricacionId + ".txt";
+            bool borrar = true;
             if (!File.Exists(factura))
             {
-                escritura = new StreamWriter(factura, true, Encoding.Default);
-                foreach (var item in fabricacion.Materiales)
-                {
-                    escritura.WriteLine("  Articulo------" + item.Nombre + "  Precio------" + item.Precio);
-                }
-                escritura.WriteLine("");
-                escritura.WriteLine("  Producto -------" + fabricacion.Productos.Nombre);
-                escritura.WriteLine("");
-                escritura.WriteLine("  Cliente -------" + fabricacion.Productos.Clientes.Nombre+" "+ fabricacion.Productos.Clientes.Apellidos);
-
-                /*escritura de lineas con WriteLine*/
-                /*IMPORTANTE al acabar de escribir el txt*/
-                escritura.Close();
-                Process proceso = new Process();
-                proceso.StartInfo.FileName = factura;
-                proceso.Start();
+                borrar = true;
+                EscribirDactura(fabricacion, factura,borrar);
             }
 
             else
             {
-                /*Error de que ya esta cargado*/
+                if (MessageBox.Show("¿Desea sobreescribir la factura?", "Cancelar", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    borrar = false;
+                EscribirDactura(fabricacion, factura, borrar);
+                }
+                else
+                {
+                    MessageBox.Show("Sobreescritura cancelada");
+                }
             }
         }
 
+        //creacion de txt de factura
+        private void EscribirDactura(Fabricacion fabricacion, string factura, bool borrar)
+        {
+            StreamWriter escritura;
+            escritura = new StreamWriter(factura, borrar, Encoding.Default);
+            double total = 0;
+
+            escritura.WriteLine("  Factura Nº" + fabricacion.FabricacionId+" con fecha "+DateTime.Today);
+            escritura.WriteLine("");
+            escritura.WriteLine("");
+
+            escritura.WriteLine("  Producto -------" + fabricacion.Productos.Nombre);
+            escritura.WriteLine("");
+            escritura.WriteLine("  Cliente -------" + fabricacion.Productos.Clientes.Nombre + " " + fabricacion.Productos.Clientes.Apellidos);
+            escritura.WriteLine("");
+            escritura.WriteLine("---------------------------------------------------------------------------------------------------------------------------------");
+            escritura.WriteLine("");
+            escritura.WriteLine("Listado de productos");
+            escritura.WriteLine("");
+
+            foreach (var item in fabricacion.Materiales)
+            {
+                escritura.WriteLine("  Articulo------" + item.Nombre +escribirespaciosenblanco(item.Nombre.Length)+ item.Precio+"€");
+                total = total + item.Precio;
+            }
+            escritura.WriteLine("");
+            escritura.WriteLine("  Servicios-----Montaje"+escribirespaciosenblanco(7)+ "200€");
+            escritura.WriteLine("");
+            escritura.WriteLine(escribirespaciosenblanco(0)+"   Total -------" + total+ "€");
+            escritura.WriteLine("");
+            escritura.WriteLine("---------------------------------------------------------------------------------------------------------------------------------");
+            escritura.WriteLine("");
+            escritura.WriteLine("  Número de trabajadores durante el proceso de fabricación --------" + fabricacion.Empleados.Count);
+            foreach (var item in fabricacion.Empleados)
+            {
+                escritura.WriteLine("");
+                escritura.WriteLine("  Trabajador --------" + item.Nombre + " con Id "+ item.EmpleadoId);
+            }
+           
+
+
+            /*escritura de lineas con WriteLine*/
+            /*IMPORTANTE al acabar de escribir el txt*/
+            escritura.Close();
+            Process proceso = new Process();
+            proceso.StartInfo.FileName = factura;
+            proceso.Start();
+        }
+
+        //Escribir espacios en blanco
+        private string escribirespaciosenblanco(int numero)
+        {
+            string espacios = "";
+            numero = 105 - numero;
+            for (int i= 0; i < numero; i++)
+            {
+                espacios = espacios + " ";
+            }
+            
+
+            return espacios;
+        }
 
         private void bt_aplicar_fabricacion_Click(object sender, RoutedEventArgs e)
         {
@@ -1171,5 +1273,7 @@ namespace Empresa_Fabricacion
             CrearFactura(fabricacion);
         }
         #endregion
+
+        
     }
 }
