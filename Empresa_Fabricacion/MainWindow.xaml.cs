@@ -34,7 +34,7 @@ namespace Empresa_Fabricacion
         int clienteseleccionado;
         int productoseleccionado;
         int fabricacioneseleccionado=1;
-        bool trabajadoractivoboolean=false;
+        Style estilo;
         List<Cliente> listaclientes = new List<Cliente>();
         List<Proveedor> listaproveedores = new List<Proveedor>();
         Producto producto = new Producto();
@@ -788,14 +788,18 @@ namespace Empresa_Fabricacion
             else { fabricacion.FechaInicio = Convert.ToDateTime(tb_f_fechainicio.Text); }
             if (tb_f_fechafinal.Text == "") { fabricacion.FechaAcaba = DateTime.Today; }
             else { fabricacion.FechaAcaba = Convert.ToDateTime(tb_f_fechafinal.Text); }
+
             if (cb_f_trabajadoractivo.IsChecked == true)
             {
                 fabricacion.Empleados.Add(usuarioactivo);
+                unit.RepositorioFabricacion.Crear(fabricacion);
                 usuarioactivo.FabricacionId = fabricacion.FabricacionId;
                 unit.RepositorioEmpleado.Actualizar(usuarioactivo);
             }
-            
-            unit.RepositorioFabricacion.Crear(fabricacion);
+            else
+            {
+                unit.RepositorioFabricacion.Crear(fabricacion);
+            }
             LimpiarFabricacion();
             DesactivarBotonesFabricacion();
             dg_fabricacion.ItemsSource = unit.RepositorioFabricacion.ObtenerVarios(c => c.ProductoId == producto.ProductoId).ToList();
@@ -1021,25 +1025,25 @@ namespace Empresa_Fabricacion
             
         }
 
-        private LinearGradientBrush GradienteBoton()
-        {
-            // Create a diagonal linear gradient with four stops.   
-            LinearGradientBrush myLinearGradientBrush =
-                new LinearGradientBrush();
-            myLinearGradientBrush.StartPoint = new Point(0.5, 0);
-            myLinearGradientBrush.EndPoint = new Point(0.5, 1);
-            myLinearGradientBrush.GradientStops.Add(
-                new GradientStop(Colors.DarkBlue, 0.0));
-            myLinearGradientBrush.GradientStops.Add(
-                new GradientStop(Colors.LightSteelBlue, 0.3));
-            myLinearGradientBrush.GradientStops.Add(
-               new GradientStop(Colors.White, 0.5));
-            myLinearGradientBrush.GradientStops.Add(
-                new GradientStop(Colors.LightSteelBlue, 0.7));
-            myLinearGradientBrush.GradientStops.Add(
-                new GradientStop(Colors.DarkBlue, 1.0));
-            return myLinearGradientBrush;
-        }
+        //private LinearGradientBrush GradienteBoton()
+        //{
+        ////    Create a diagonal linear gradient with four stops.   
+        //    LinearGradientBrush myLinearGradientBrush =
+        //        new LinearGradientBrush();
+        //    myLinearGradientBrush.StartPoint = new Point(0.5, 0);
+        //    myLinearGradientBrush.EndPoint = new Point(0.5, 1);
+        //    myLinearGradientBrush.GradientStops.Add(
+        //        new GradientStop(Colors.DarkBlue, 0.0));
+        //    myLinearGradientBrush.GradientStops.Add(
+        //        new GradientStop(Colors.LightSteelBlue, 0.3));
+        //    myLinearGradientBrush.GradientStops.Add(
+        //       new GradientStop(Colors.White, 0.5));
+        //    myLinearGradientBrush.GradientStops.Add(
+        //        new GradientStop(Colors.LightSteelBlue, 0.7));
+        //    myLinearGradientBrush.GradientStops.Add(
+        //        new GradientStop(Colors.DarkBlue, 1.0));
+        //    return myLinearGradientBrush;
+        //}
 
         //Creacion de botones de proveedores
         public void GenerarBotones()
@@ -1051,7 +1055,7 @@ namespace Empresa_Fabricacion
                 {
                     sp_proveedores.Children.RemoveAt(sp_proveedores.Children.Count - 1);
                 }
-                Style estilo = this.FindResource("botonmaterial") as Style;
+                estilo = this.FindResource("botonazul") as Style;
 
                 List<Proveedor> proveedores = new List<Proveedor>();
                 proveedores = unit.RepositorioProveedor.ObtenerTodo();
@@ -1084,7 +1088,8 @@ namespace Empresa_Fabricacion
             List<Material> listmateriales = new List<Material>();
             Proveedor cat = new Proveedor();
 
-
+            estilo = this.FindResource("botonverde") as Style;
+           Style estilo2 = this.FindResource("botonrojo") as Style;
 
             this.sp_materiales.Children.Clear();
             var aux = e.OriginalSource;
@@ -1096,7 +1101,7 @@ namespace Empresa_Fabricacion
 
                 for (int i = 0; i < listmateriales.Count; i++)
                 {
-
+                    
                     //crear boton
                     Button b = new Button();
                     b.Width = 125;
@@ -1109,11 +1114,11 @@ namespace Empresa_Fabricacion
                     //mirar stock
                     if (listmateriales[i].Stock > 0)
                     {
-                        b.Background = GradienteBoton();
+                        b.Style = estilo;
                     }
                     else
                     {
-                        b.Background = Brushes.LightSalmon;
+                        b.Style = estilo2;
                     }
 
                     this.sp_materiales.Children.Add(b);
