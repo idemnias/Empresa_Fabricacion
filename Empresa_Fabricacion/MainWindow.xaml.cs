@@ -1,5 +1,9 @@
 ﻿using Empresa_Fabricacion.DAL;
 using Empresa_Fabricacion.Model;
+using iText.IO.Image;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -34,7 +38,7 @@ namespace Empresa_Fabricacion
         int clienteseleccionado;
         int productoseleccionado;
         int fabricacioneseleccionado=1;
-        Style estilo;
+        System.Windows.Style estilo;
         List<Cliente> listaclientes = new List<Cliente>();
         List<Proveedor> listaproveedores = new List<Proveedor>();
         Producto producto = new Producto();
@@ -240,12 +244,14 @@ namespace Empresa_Fabricacion
             bt_pr_añadir.Visibility = Visibility.Hidden;
             bt_pr_modificar.Visibility = Visibility.Visible;
             bt_pr_eliminar.Visibility = Visibility.Visible;
+            bt_pr_generarfactura.Visibility = Visibility.Visible;
         }
         private void DesactivarBotonesProductos()
         {
             bt_pr_añadir.Visibility = Visibility.Visible;
             bt_pr_modificar.Visibility = Visibility.Hidden;
             bt_pr_eliminar.Visibility = Visibility.Hidden;
+            bt_pr_generarfactura.Visibility = Visibility.Hidden;
         }
 
         private void ActivarFabricacionProducto()
@@ -426,11 +432,11 @@ namespace Empresa_Fabricacion
             LimpiarInicio();
         }
 
-        private Image EnseñarImagen(string ruta, int peso)
+        private System.Windows.Controls.Image EnseñarImagen(string ruta, int peso)
         {
             try
             {
-                Image imagen = new Image();
+                System.Windows.Controls.Image imagen = new System.Windows.Controls.Image();
                 BitmapImage bit = new BitmapImage();
                 bit.BeginInit();
                 bit.UriSource = new Uri(ruta);
@@ -715,6 +721,14 @@ namespace Empresa_Fabricacion
             producto.Vendido = (bool) cb_pr_vendido.IsChecked;
         }
 
+        private void bt_pr_generarfactura_Click(object sender, RoutedEventArgs e)
+        {
+            fabricacion = unit.RepositorioFabricacion.ObtenerUno(x => x.ProductoId == producto.ProductoId);
+            GenerarFactura();
+            LimpiarProductos();
+            DesactivarBotonesProductos();
+            dg_producto.ItemsSource = unit.RepositorioProducto.ObtenerVarios(c => c.ClienteId == cliente.ClienteId).ToList();
+        }
 
         #endregion
 
@@ -1055,7 +1069,7 @@ namespace Empresa_Fabricacion
                 {
                     sp_proveedores.Children.RemoveAt(sp_proveedores.Children.Count - 1);
                 }
-                estilo = this.FindResource("botonazul") as Style;
+                estilo = this.FindResource("botonazul") as System.Windows.Style;
 
                 List<Proveedor> proveedores = new List<Proveedor>();
                 proveedores = unit.RepositorioProveedor.ObtenerTodo();
@@ -1088,8 +1102,8 @@ namespace Empresa_Fabricacion
             List<Material> listmateriales = new List<Material>();
             Proveedor cat = new Proveedor();
 
-            estilo = this.FindResource("botonverde") as Style;
-           Style estilo2 = this.FindResource("botonrojo") as Style;
+            estilo = this.FindResource("botonverde") as System.Windows.Style;
+            System.Windows.Style estilo2 = this.FindResource("botonrojo") as System.Windows.Style;
 
             this.sp_materiales.Children.Clear();
             var aux = e.OriginalSource;
@@ -1303,6 +1317,234 @@ namespace Empresa_Fabricacion
         {
             CrearFactura(fabricacion);
         }
+        #endregion
+
+#region PDF
+        private void GenerarFactura()
+        {
+            String imgFile = Environment.CurrentDirectory + @"\Imagenes\iconofactura.png";
+            String imgFileAgua = Environment.CurrentDirectory + @"\Imagenes\marca de agua2.png";
+            ImageData data = ImageDataFactory.Create(imgFile);
+            ImageData dataAgua = ImageDataFactory.Create(imgFileAgua);
+            iText.Layout.Element.Image image = new iText.Layout.Element.Image(data);
+            iText.Layout.Element.Image imageAgua = new iText.Layout.Element.Image(dataAgua);
+
+
+            string carpetaDestino = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string nombreArchivo = "Factura" + DateTime.Today.Day.ToString() + "-" + DateTime.Today.Month.ToString() + "-" + DateTime.Today.Year.ToString() + "-"
+               + DateTime.Today.Hour.ToString() + ";" + DateTime.Today.Minute.ToString() + "-" + cliente.Apellidos + cliente.Nombre;
+
+            if (!File.Exists(nombreArchivo))
+            {
+                string archivo = System.IO.Path.Combine(carpetaDestino, nombreArchivo + ".pdf");
+
+                try
+                {
+                    using (var writer = new PdfWriter(archivo))
+                    {
+                        using (var pdf = new PdfDocument(writer))
+                        {
+                            var doc = new Document(pdf);
+
+                            //marca de agua
+                            imageAgua.SetFixedPosition(0, 0);
+                            imageAgua.ScaleToFit(595, 842);
+                            doc.Add(imageAgua);
+
+                            //Tabla para poder poner la imagen con el titulo en la misma linea
+                            iText.Layout.Element.Table t = new iText.Layout.Element.Table(2);
+                            Cell cell = new Cell();
+                            cell.SetBorder(null);
+                            iText.Layout.Element.Paragraph p = new iText.Layout.Element.Paragraph();
+                            iText.Layout.Element.Paragraph c = new iText.Layout.Element.Paragraph();
+                            t.SetBorder(null);
+                            p.SetFontColor(iText.Kernel.Colors.ColorConstants.RED);
+                            p.SetBold();
+                            p.SetFontSize(20);
+                            p.SetUnderline();
+                            p.Add("Custom Computer");
+                            c.SetFontSize(10);
+                            c.Add("\nDavid Blanco Cortiñas");
+                            c.Add("\n"+@" Direccion: C\ lepando Nº3");
+                            cell.Add(p);
+                            cell.Add(c);
+                            t.AddCell(cell);
+
+                            Cell cell2 = new Cell();
+                            cell2.SetBorder(null);
+                            image.SetMarginLeft(280);
+                            image.SetHeight(40);
+                            image.SetWidth(40);
+                            cell2.Add(image);
+                            t.AddCell(cell2);
+                            doc.Add(t);
+
+                            //Cabeceras
+                            iText.Layout.Element.Paragraph v = new iText.Layout.Element.Paragraph();
+                            v.SetFontSize(13);
+                            v.SetBold();
+                            v.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+                            v.Add("\nDatos del vendedor, cliente y producto");
+                            doc.Add(v);
+
+                            //Datos vendedor 
+                            iText.Layout.Element.Table t3 = new iText.Layout.Element.Table(2);
+                            t3.SetBorder(null);
+                            Cell cell4 = new Cell();
+                            cell4.SetBorder(null);
+                            iText.Layout.Element.Paragraph z = new iText.Layout.Element.Paragraph();
+                            z.SetFontSize(12);
+                            z.Add("Empleado: " + usuarioactivo.Nombre + " " + usuarioactivo.Apellidos + "\n");
+                            z.Add("DNI: " + usuarioactivo.Dni + "\n");
+                            z.Add("Fecha: " + producto.FechaVenta.ToShortDateString());
+                            cell4.Add(z);
+                            t3.AddCell(cell4);
+
+                            Cell cell5 = new Cell();
+                            cell5.SetBorder(null);
+                            iText.Layout.Element.Paragraph z1 = new iText.Layout.Element.Paragraph();
+                            z1.SetFontSize(12);
+                            z1.SetMarginLeft(210);
+                            z1.Add("Cliente: " + cliente.Nombre + " " + cliente.Apellidos + "\n");
+                            if (producto.Vendido == true)
+                            {
+                                z1.Add("Producto entregado: "+ "'" + producto.Nombre+"'" + "\n");
+                            }
+                            else
+                            {
+                                z1.Add("Producto no entregado "+ "'"+ producto.Nombre + "'" + "\n");
+                            }
+
+                            z1.Add("Precio Final: " + producto.Precio + " €");
+                            cell5.Add(z1);
+                            t3.AddCell(cell5);
+                            doc.Add(t3);
+
+                            iText.Layout.Element.Paragraph r = new iText.Layout.Element.Paragraph();
+                            r.SetFontSize(13);
+                            r.SetBold();
+                            r.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+                            r.Add("\nDetalle de la compra");
+                            doc.Add(r);
+
+                            //Tabla datos venta
+                            iText.Layout.Element.Paragraph l;
+                            iText.Layout.Element.Table t2 = new iText.Layout.Element.Table(3);
+                            t2.SetWidth(520);
+                            t2.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+
+                            Cell cell3 = new Cell();
+                            l = new iText.Layout.Element.Paragraph();
+                            l.SetBold();
+                            l.Add("Nombre");
+                            cell3.SetBackgroundColor(iText.Kernel.Colors.WebColors.GetRGBColor("#DDDDDD"));
+                            cell3.Add(l);
+
+                            cell3.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+
+                            Cell cell6 = new Cell();
+                            l = new iText.Layout.Element.Paragraph();
+                            l.SetBold();
+                            l.Add("Proveedor");
+                            cell6.SetBackgroundColor(iText.Kernel.Colors.WebColors.GetRGBColor("#DDDDDD"));
+                            cell6.Add(l);
+                            cell6.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+
+                            Cell cell7 = new Cell();
+                            l = new iText.Layout.Element.Paragraph();
+                            l.SetBold();
+                            l.Add("Precio");
+                            cell7.SetBackgroundColor(iText.Kernel.Colors.WebColors.GetRGBColor("#DDDDDD"));
+                            cell7.Add(l);
+                            cell7.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+
+                            //Cell cell8 = new Cell();
+                            //l = new iText.Layout.Element.Paragraph();
+                            //l.SetBold();
+                            //l.Add("Nombre");
+                            //cell8.SetBackgroundColor(iText.Kernel.Colors.WebColors.GetRGBColor("#DDDDDD"));
+                            //cell8.Add(l);
+                            //cell8.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+
+                            //Cell cell9 = new Cell();
+                            //l = new iText.Layout.Element.Paragraph();
+                            //l.SetBold();
+                            //l.Add("Dirección");
+                            //cell9.SetBackgroundColor(iText.Kernel.Colors.WebColors.GetRGBColor("#DDDDDD"));
+                            //cell9.Add(l);
+                            //cell9.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+
+                            t2.AddHeaderCell(cell3);
+                            t2.AddHeaderCell(cell6);
+                            t2.AddHeaderCell(cell7);
+                            //t2.AddHeaderCell(cell8);
+                            //t2.AddHeaderCell(cell9);
+
+                            double preciototalproductos = 0;
+                      
+                            foreach (var item in fabricacion.Materiales)
+                            {
+                                iText.Layout.Element.Paragraph nombreproducto = new iText.Layout.Element.Paragraph();
+                                nombreproducto.SetFontColor(iText.Kernel.Colors.ColorConstants.BLUE);
+                                nombreproducto.Add(item.Nombre);
+                                iText.Layout.Element.Paragraph precioproducto = new iText.Layout.Element.Paragraph();
+                                precioproducto.SetBold();
+                                precioproducto.Add(item.Precio + " €");
+                                t2.AddCell(nombreproducto);                                
+                                t2.AddCell(item.Proveedores.Nombre);
+                                t2.AddCell(precioproducto);
+                                preciototalproductos = preciototalproductos + item.Precio;
+                            }
+                            double manodeobra=0;
+                            //mano de obra o descuento
+                            manodeobra = producto.Precio - preciototalproductos;
+                            iText.Layout.Element.Paragraph textomanodeobra = new iText.Layout.Element.Paragraph();
+                            textomanodeobra.SetFontColor(iText.Kernel.Colors.ColorConstants.BLUE);
+                            textomanodeobra.Add("Mano de obra");
+                            iText.Layout.Element.Paragraph moanodeobradescuento = new iText.Layout.Element.Paragraph();
+                            moanodeobradescuento.SetBold();
+                            moanodeobradescuento.Add(manodeobra + " €");
+                            if (manodeobra > 0) { t2.AddCell(textomanodeobra); }
+                            else { t2.AddCell("Descuento"); }
+                            t2.AddCell("");
+                            t2.AddCell(moanodeobradescuento);
+
+
+                            doc.Add(t2);
+
+                            //Precio total e iva
+
+                            iText.Layout.Element.Table t4 = new iText.Layout.Element.Table(2);
+                            t4.SetMarginTop(50);
+                            t4.SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.RIGHT);
+                            Cell cellivaytotal = new Cell();
+                            iText.Layout.Element.Paragraph a = new iText.Layout.Element.Paragraph();
+                            a.SetBold();
+                            a.SetFontSize(12);
+                            //calcular iva
+                            double iva= preciototalproductos*0.21;
+
+                            a.Add("21% IVA:                  " + iva +" €"+"\n");
+                            a.Add("Total sin IVA            " + (producto.Precio - iva) + " €" + "\n");
+                            a.Add("Total con IVA :         " + producto.Precio + " €" + "\n");
+                            cellivaytotal.Add(a);
+                            t4.AddCell(cellivaytotal);
+
+                            doc.Add(t4);
+
+                            doc.Close();
+
+                            Process.Start(archivo);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Debes cerrar el pdf con el mismo nombre primero.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
         #endregion
 
         
