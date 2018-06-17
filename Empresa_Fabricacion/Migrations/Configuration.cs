@@ -9,7 +9,7 @@ namespace Empresa_Fabricacion.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(Empresa_Fabricacion.DAL.EmpresaFabricacionContext context)

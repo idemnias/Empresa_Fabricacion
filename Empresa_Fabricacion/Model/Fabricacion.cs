@@ -24,6 +24,7 @@ namespace Empresa_Fabricacion.Model
         public bool Fabricado { get; set; }
 
         public int ProductoId { get; set; }
+        public int? ClienteId { get; set; }
 
         public virtual Producto Productos { get; set; }
         public virtual ICollection<Empleado> Empleados { get; set; }

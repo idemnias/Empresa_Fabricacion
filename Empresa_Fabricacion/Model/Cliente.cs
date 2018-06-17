@@ -14,6 +14,7 @@ namespace Empresa_Fabricacion.Model
         public Cliente()
         {
             Productos = new HashSet<Producto>();
+            Fabricaciones = new HashSet<Fabricacion>();
         }
 
         [Key]
@@ -24,7 +25,9 @@ namespace Empresa_Fabricacion.Model
         public string Telefono { get; set; }
         public string Correo { get; set; }
 
+
         public virtual ICollection<Producto> Productos { get; set; }
+        public virtual ICollection<Fabricacion> Fabricaciones { get; set; }
 
     }
 }

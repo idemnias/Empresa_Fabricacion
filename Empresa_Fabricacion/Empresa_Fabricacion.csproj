@@ -108,9 +108,9 @@
     <Compile Include="DAL\EmpresaFabricacionContext.cs" />
     <Compile Include="DAL\RepositorioGenerico.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
-    <Compile Include="Migrations\201806120844533_patata.cs" />
-    <Compile Include="Migrations\201806120844533_patata.Designer.cs">
-      <DependentUpon>201806120844533_patata.cs</DependentUpon>
+    <Compile Include="Migrations\201806170022172_Migracion.cs" />
+    <Compile Include="Migrations\201806170022172_Migracion.Designer.cs">
+      <DependentUpon>201806170022172_Migracion.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Cliente.cs" />
@@ -153,8 +153,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201806120844533_patata.resx">
-      <DependentUpon>201806120844533_patata.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201806170022172_Migracion.resx">
+      <DependentUpon>201806170022172_Migracion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

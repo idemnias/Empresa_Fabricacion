@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Empresa_Fabricacion.Model
 {
-    [Table ("Materiales")]
+    [Table("Materiales")]
     public class Material : PropertyValidateModel
     {
         public Material()
@@ -21,11 +21,18 @@ namespace Empresa_Fabricacion.Model
         public string Nombre { get; set; }
         public double Precio { get; set; }
         public int Stock { get; set; }
+        public int Cantidad { get; set; } = 0;
+        public double PrecioTotal { get; set; } = 0;
         public string Foto { get; set; }
 
         public int ProveedorId { get; set; }
 
         public virtual Proveedor Proveedores { get; set; }
         public virtual ICollection<Fabricacion> Fabricaciones { get; set; }
+
+        public void Calcularpreciototal()
+        {
+            PrecioTotal = Precio * Cantidad;
+        }
     }
 }

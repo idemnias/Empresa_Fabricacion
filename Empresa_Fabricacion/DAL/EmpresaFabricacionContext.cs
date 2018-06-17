@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Empresa_Fabricacion.Model;
-using Empresa_Fabricacion.Migrations;
 using System.Data.Entity.Migrations;
+using Empresa_Fabricacion.Migrations;
 
 namespace Empresa_Fabricacion.DAL
 {
@@ -40,7 +40,7 @@ namespace Empresa_Fabricacion.DAL
                     new Proveedor { ProveedorId = 0004, Nombre="Crucial", Direccion="Ourense", Telefono="988225588", Contacto="Asunción", Correo="Asunción@crucial.com" }
                     );
                 context.Materiales.AddOrUpdate(
-                    new Material { MaterialId=1001, Nombre= "Asus ROG Strix Geforce GTX 1070 Ti Gaming Advance 8GB GDDR5", Precio=609.90, Stock=10, Foto= Environment.CurrentDirectory + @"\Imagenes\tarjetagrafica_asus.png", ProveedorId=0001 },
+                    new Material { MaterialId = 1001, Nombre= "Asus ROG Strix Geforce GTX 1070 Ti Gaming Advance 8GB GDDR5", Precio=609.90, Stock=10, Foto= Environment.CurrentDirectory + @"\Imagenes\tarjetagrafica_asus.png", ProveedorId=0001 },
                     new Material { MaterialId = 1002, Nombre = "Asus Phoenix GeForce GTX 1060 3GB GDDR5", Precio = 255.90, Stock = 12, Foto = Environment.CurrentDirectory + @"\Imagenes\tarjetagrafica_asus.png", ProveedorId = 0001 },
                     new Material { MaterialId = 1003, Nombre = "Intel Core i7-8700K 3.7Ghz BOX", Precio = 325.90, Stock = 5, Foto = Environment.CurrentDirectory + @"\Imagenes\proc-intel-core-i7-8700k-37ghz.png", ProveedorId = 0002 },
                     new Material { MaterialId = 1004, Nombre = "Placa Base MSI X470 Gaming M7 AC", Precio = 274.90, Stock = 5, Foto = Environment.CurrentDirectory + @"\Imagenes\msi-placa-base-x470-gaming-pro-atx-am4.png", ProveedorId = 0003 },
@@ -58,7 +58,7 @@ namespace Empresa_Fabricacion.DAL
                         Descripcion ="Ordenador gaming creado con las mejores piezas del mercado y con apariencia de una nevera",ClienteId=2003}
                     );
                 context.Fabricaciones.AddOrUpdate(
-                    new Fabricacion { FabricacionId=4001,FechaInicio=new DateTime(2018,07,13), FechaAcaba=DateTime.Today ,Fabricado=false,ProductoId=3001}
+                    new Fabricacion { FabricacionId=4001,FechaInicio=new DateTime(2018,07,13), FechaAcaba=DateTime.Today ,Fabricado=false,ProductoId=3001,ClienteId=2001}
                     );
             }
         } 

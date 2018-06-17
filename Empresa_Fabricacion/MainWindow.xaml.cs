@@ -39,6 +39,7 @@ namespace Empresa_Fabricacion
         int productoseleccionado;
         int fabricacioneseleccionado=1;
         System.Windows.Style estilo;
+        bool materialencontrado = false;
         List<Cliente> listaclientes = new List<Cliente>();
         List<Proveedor> listaproveedores = new List<Proveedor>();
         Producto producto = new Producto();
@@ -263,6 +264,7 @@ namespace Empresa_Fabricacion
             lb2f.Visibility = Visibility.Visible;
             lb3f.Visibility = Visibility.Visible;
             lb4f.Visibility = Visibility.Visible;
+            lb5f.Visibility = Visibility.Visible;
             ug_fabricacion.Visibility = Visibility.Visible;
             ug_trabajador_activo.Visibility = Visibility.Visible;
             cb_f_fabricado.Visibility = Visibility.Visible;
@@ -274,6 +276,7 @@ namespace Empresa_Fabricacion
             bt_f_eliminar.Visibility = Visibility.Visible;
             bt_f_nuevo.Visibility = Visibility.Visible;
             cb_f_trabajadoractivo.Visibility = Visibility.Visible;
+            cb_f_clienteid.Visibility = Visibility.Visible;
 
         }
         private void DesactivarFabricacionProducto()
@@ -285,6 +288,7 @@ namespace Empresa_Fabricacion
             lb2f.Visibility = Visibility.Hidden;
             lb3f.Visibility = Visibility.Hidden;
             lb4f.Visibility = Visibility.Hidden;
+            lb5f.Visibility = Visibility.Hidden;
             ug_trabajador_activo.Visibility = Visibility.Hidden;
             ug_fabricacion.Visibility = Visibility.Hidden;
             cb_f_fabricado.Visibility = Visibility.Hidden;
@@ -296,6 +300,7 @@ namespace Empresa_Fabricacion
             bt_f_eliminar.Visibility = Visibility.Hidden;
             bt_f_nuevo.Visibility = Visibility.Hidden;
             cb_f_trabajadoractivo.Visibility = Visibility.Hidden;
+            cb_f_clienteid.Visibility = Visibility.Hidden;
 
         }
 
@@ -735,6 +740,7 @@ namespace Empresa_Fabricacion
 //Fabricacion
 #region FABRICACION
 
+        //rellenar combobox de fabricacion
         private void RellenarComboboxFabricacion()
         {
             cb_f_producto.Items.Clear();
@@ -745,6 +751,44 @@ namespace Empresa_Fabricacion
                 cb_f_producto.Items.Add(item.Nombre);
             }
             if (cb_f_producto != null) cb_f_producto.SelectedIndex = 0;
+        }
+
+        //rellenar combobox de cliente
+        private void RellenarComboboxClienteId()
+        {
+            cb_f_clienteid.Items.Clear();
+            listaclientes = new List<Cliente>();
+            listaclientes = unit.RepositorioCliente.ObtenerTodo();
+            foreach (var item in listaclientes)
+            {
+                cb_f_clienteid.Items.Add(item.Nombre + " " + item.Apellidos);
+            }
+            if (cb_f_clienteid != null)
+            {
+                clienteseleccionado = Regresarcliente();
+                cliente = listaclientes[clienteseleccionado];
+                cb_f_clienteid.SelectedIndex = clienteseleccionado;
+            }
+        }
+
+        //Devolver posicion de cliente preseleccionado en producto
+        private int Regresarcliente()
+        {
+            int clientedeproducto = 0;
+            cliente = unit.RepositorioCliente.ObtenerUno(c => c.ClienteId == producto.ClienteId);
+            for (int i = 0; i < listaclientes.Count; i++)
+            {
+                if (listaclientes[i].ClienteId == producto.ClienteId)
+                {
+                    clientedeproducto = i;
+                }
+            }
+            return clientedeproducto;
+        }
+
+        private void cb_f_clienteid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cliente = listaclientes[cb_f_clienteid.SelectedIndex];
         }
 
         private void cb_f_producto_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -760,6 +804,7 @@ namespace Empresa_Fabricacion
                 int numeroid = listaproductos[productoseleccionado].ProductoId;
                 producto = unit.RepositorioProducto.ObtenerUno(c => c.ProductoId == producto.ProductoId);
                 LimpiarFabricacion();
+                RellenarComboboxClienteId();
                 ActivarFabricacionProducto();
                 DesactivarBotonesFabricacion();
                 grid_fabricacion.DataContext = fabricacion;
@@ -771,6 +816,7 @@ namespace Empresa_Fabricacion
             }
         }
 
+        //Comprobar empleado si esta en la fabricacion
         private bool comprobarempleadoidenfabricacion(Fabricacion fabricacion)
         {
             bool estaempleado = false;
@@ -790,6 +836,7 @@ namespace Empresa_Fabricacion
             tb_f_fechainicio.Text = "";
             tb_f_fechafinal.Text = "";
             cb_f_trabajadoractivo.IsChecked = false;
+            cb_f_clienteid.SelectedIndex = clienteseleccionado;
             grid_fabricacion.DataContext = fabricacion;
             DesactivarBotonesFabricacion();
         }
@@ -798,11 +845,13 @@ namespace Empresa_Fabricacion
         {
             if (fabricacion == null) { fabricacion = new Fabricacion(); }
             fabricacion.ProductoId = producto.ProductoId;
+            fabricacion.ClienteId = cliente.ClienteId;
             if (tb_f_fechainicio.Text == "") { fabricacion.FechaInicio = DateTime.Today; }
             else { fabricacion.FechaInicio = Convert.ToDateTime(tb_f_fechainicio.Text); }
             if (tb_f_fechafinal.Text == "") { fabricacion.FechaAcaba = DateTime.Today; }
             else { fabricacion.FechaAcaba = Convert.ToDateTime(tb_f_fechafinal.Text); }
 
+            //agregar fabricacion a empleado
             if (cb_f_trabajadoractivo.IsChecked == true)
             {
                 fabricacion.Empleados.Add(usuarioactivo);
@@ -815,6 +864,7 @@ namespace Empresa_Fabricacion
                 unit.RepositorioFabricacion.Crear(fabricacion);
             }
             LimpiarFabricacion();
+            cb_f_clienteid.SelectedIndex = clienteseleccionado;
             DesactivarBotonesFabricacion();
             dg_fabricacion.ItemsSource = unit.RepositorioFabricacion.ObtenerVarios(c => c.ProductoId == producto.ProductoId).ToList();
         }
@@ -825,6 +875,9 @@ namespace Empresa_Fabricacion
             else { fabricacion.FechaInicio = Convert.ToDateTime(tb_f_fechainicio.Text); }
             if (tb_f_fechafinal.Text == "") { fabricacion.FechaAcaba = DateTime.Today; }
             else { fabricacion.FechaAcaba = Convert.ToDateTime(tb_f_fechafinal.Text); }
+            fabricacion.ClienteId = cliente.ClienteId;
+
+            //agregar fabricacion a empleado
             if (comprobarempleadoidenfabricacion(fabricacion) == false)
             {
                 if (cb_f_trabajadoractivo.IsChecked == true)
@@ -838,6 +891,7 @@ namespace Empresa_Fabricacion
             unit.RepositorioEmpleado.Actualizar(usuarioactivo);
             unit.RepositorioFabricacion.Actualizar(fabricacion);
             LimpiarFabricacion();
+            cb_f_clienteid.SelectedIndex = clienteseleccionado;
             DesactivarBotonesFabricacion();
             dg_fabricacion.ItemsSource = unit.RepositorioFabricacion.ObtenerVarios(c => c.ProductoId == producto.ProductoId).ToList();
         
@@ -851,6 +905,7 @@ namespace Empresa_Fabricacion
             else { fabricacion.FechaInicio = Convert.ToDateTime(tb_f_fechainicio.Text); }
             unit.RepositorioFabricacion.Eliminar(fabricacion);
             LimpiarFabricacion();
+            cb_f_clienteid.SelectedIndex = clienteseleccionado;
             DesactivarBotonesFabricacion();
             dg_fabricacion.ItemsSource = unit.RepositorioFabricacion.ObtenerVarios(c => c.ProductoId == producto.ProductoId).ToList();
         }
@@ -863,6 +918,14 @@ namespace Empresa_Fabricacion
                 grid_fabricacion.DataContext = fabricacion;
                 tb_f_fechainicio.Text = fabricacion.FechaInicio.ToString();
                 tb_f_fechafinal.Text = fabricacion.FechaAcaba.ToString();
+                for (int i = 0; i < listaclientes.Count; i++)
+                {
+                    if(fabricacion.ClienteId == listaclientes[i].ClienteId)
+                    {
+                        cliente = listaclientes[i];
+                    }
+                }
+                cb_f_clienteid.Text = cliente.Nombre+" "+cliente.Apellidos;
                 if (usuarioactivo.FabricacionId == fabricacion.FabricacionId) { cb_f_trabajadoractivo.IsChecked = true; }
                 else { cb_f_trabajadoractivo.IsChecked = false; }
                 ActivarBotonesFabricacion();
@@ -899,8 +962,12 @@ namespace Empresa_Fabricacion
             sp_materiales.Children.Clear();
             sp_proveedores.Children.Clear();
             GenerarBotones();
-            RellenarComboboxFabricacionId();
-            if (cb_fabricacionid != null && listafabricaciones.Count != 0) cb_fabricacionid.SelectedIndex = 0;
+            RellenarComboboxFabricacionId();          
+            if (cb_fabricacionid != null && listafabricaciones.Count != 0)
+            {
+                cb_fabricacionid.SelectedIndex = 0;
+            }
+            
         }
 
         private void RellenarComboboxFabricacionId()
@@ -929,8 +996,8 @@ namespace Empresa_Fabricacion
                 return null;
             }
             
-            
-        }       
+        }
+        
 
         #endregion
 
@@ -1035,8 +1102,7 @@ namespace Empresa_Fabricacion
             }
             catch (Exception)
             {
-            }
-            
+            }            
         }
 
         //private LinearGradientBrush GradienteBoton()
@@ -1159,10 +1225,24 @@ namespace Empresa_Fabricacion
                 }
                 else
                 {
-                        material.Stock--;
-                        unit.RepositorioMaterial.Actualizar(material);
+                    material.Stock--;
+                    unit.RepositorioMaterial.Actualizar(material);
+                    materialencontrado = false;
+                    foreach (var item in listamateriales)
+                    {
+                        if(item.MaterialId == material.MaterialId)
+                        {
+                            materialencontrado = true;
+                            item.Cantidad++;
+                            material.Calcularpreciototal();
+                        }
+                    }
+                    if (materialencontrado == false)
+                    {
+                        material.Cantidad=1;
+                        material.PrecioTotal=material.Precio;
                         listamateriales.Add(material);
-
+                    }
                     //fabricacion.Materiales = listamateriales;
 
                     dg_material_aplicado.ItemsSource = "";
@@ -1182,7 +1262,11 @@ namespace Empresa_Fabricacion
                     material = unit.RepositorioMaterial.ObtenerUno(c => c.MaterialId==materialaux.MaterialId);
                     material.Stock--;
                     unit.RepositorioMaterial.Actualizar(materialaux);
-                    listamateriales.RemoveAt(dg_material_aplicado.SelectedIndex);
+                    if (listamateriales.ElementAt(dg_material_aplicado.SelectedIndex).Cantidad == 1)
+                    {
+                        listamateriales.RemoveAt(dg_material_aplicado.SelectedIndex);
+                    }
+                    else { listamateriales.ElementAt(dg_material_aplicado.SelectedIndex).Cantidad--; }
                     //listamateriales.Add(material);
                     //fabricacion.Materiales = listamateriales;
                     dg_material_aplicado.ItemsSource = "";
@@ -1201,7 +1285,7 @@ namespace Empresa_Fabricacion
         }
 
         //Crear Factura
-        public void CrearFactura(Fabricacion fabricacion)
+        public void CrearRecibo(Fabricacion fabricacion)
         {   
             /*siempre se mira si existe*/
             String factura = "  Lista de Materiales de Fabricacion N " + fabricacion.FabricacionId + ".txt";
@@ -1209,7 +1293,7 @@ namespace Empresa_Fabricacion
             if (!File.Exists(factura))
             {
                 borrar = true;
-                EscribirDactura(fabricacion, factura,borrar);
+                EscribirRecibo(fabricacion, factura,borrar);
             }
 
             else
@@ -1217,7 +1301,7 @@ namespace Empresa_Fabricacion
                 if (MessageBox.Show("¿Desea sobreescribir la factura?", "Cancelar", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     borrar = false;
-                EscribirDactura(fabricacion, factura, borrar);
+                EscribirRecibo(fabricacion, factura, borrar);
                 }
                 else
                 {
@@ -1227,7 +1311,7 @@ namespace Empresa_Fabricacion
         }
 
         //creacion de txt de factura
-        private void EscribirDactura(Fabricacion fabricacion, string factura, bool borrar)
+        private void EscribirRecibo(Fabricacion fabricacion, string factura, bool borrar)
         {
             StreamWriter escritura;
             escritura = new StreamWriter(factura, borrar, Encoding.Default);
@@ -1248,8 +1332,8 @@ namespace Empresa_Fabricacion
 
             foreach (var item in fabricacion.Materiales)
             {
-                escritura.WriteLine("  Articulo------" + item.Nombre +escribirespaciosenblanco(item.Nombre.Length)+ item.Precio+"€");
-                total = total + item.Precio;
+                escritura.WriteLine(item.Cantidad+" Articulo------" + item.Nombre +escribirespaciosenblanco(item.Nombre.Length)+ item.PrecioTotal + "€");
+                total = total + item.PrecioTotal;
             }
             escritura.WriteLine("");
             escritura.WriteLine("  Servicios-----Montaje"+escribirespaciosenblanco(7)+ "200€");
@@ -1295,11 +1379,13 @@ namespace Empresa_Fabricacion
             dg_material_aplicado.ItemsSource = "";
             fabricacion = new Fabricacion();
             fabricacion = unit.RepositorioFabricacion.ObtenerUno(c => c.FabricacionId == fabricacioneseleccionado);
+            cliente = unit.RepositorioCliente.ObtenerUno(c => c.ClienteId == fabricacion.ClienteId);
             // dg_material_aplicado.ItemsSource = fabricacion.Materiales;
             foreach (var item in fabricacion.Materiales)
             {
                 listamateriales.Add(item);
             }
+            
             dg_material_aplicado.ItemsSource = listamateriales;
             listafabricaciones.Count();
         }
@@ -1315,8 +1401,9 @@ namespace Empresa_Fabricacion
 
         private void bt_generar_materiales_Click(object sender, RoutedEventArgs e)
         {
-            CrearFactura(fabricacion);
+            CrearRecibo(fabricacion);
         }
+
         #endregion
 
 #region PDF
@@ -1497,17 +1584,16 @@ namespace Empresa_Fabricacion
                             }
                             double manodeobra=0;
                             //mano de obra o descuento
-                            manodeobra = producto.Precio - preciototalproductos;
+                            preciototalproductos = producto.Precio - preciototalproductos;
                             iText.Layout.Element.Paragraph textomanodeobra = new iText.Layout.Element.Paragraph();
                             textomanodeobra.SetFontColor(iText.Kernel.Colors.ColorConstants.BLUE);
                             textomanodeobra.Add("Mano de obra");
-                            iText.Layout.Element.Paragraph moanodeobradescuento = new iText.Layout.Element.Paragraph();
-                            moanodeobradescuento.SetBold();
-                            moanodeobradescuento.Add(manodeobra + " €");
-                            if (manodeobra > 0) { t2.AddCell(textomanodeobra); }
-                            else { t2.AddCell("Descuento"); }
+                            iText.Layout.Element.Paragraph moanodeobra = new iText.Layout.Element.Paragraph();
+                            moanodeobra.SetBold();
+                            moanodeobra.Add(preciototalproductos + " €");
+                            t2.AddCell(textomanodeobra);
                             t2.AddCell("");
-                            t2.AddCell(moanodeobradescuento);
+                            t2.AddCell(moanodeobra);
 
 
                             doc.Add(t2);
@@ -1544,6 +1630,8 @@ namespace Empresa_Fabricacion
                 }
             }
         }
+
+
 
         #endregion
 
