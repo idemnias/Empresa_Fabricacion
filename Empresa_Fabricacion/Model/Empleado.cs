@@ -16,7 +16,7 @@ namespace Empresa_Fabricacion.Model
         public string Dni { get; set; }
         public string Nombre { get; set; }
         public string Apellidos { get; set; }
-        public string Direccion { get; set; }
+        public string Correo { get; set; }
         public string Telefono { get; set; }
         public string TipoCuenta { get; set; }
         public string Usuario { get; set; }

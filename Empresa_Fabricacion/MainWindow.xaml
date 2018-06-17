@@ -166,10 +166,10 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <UniformGrid Columns="7">
+            <Button Name="bt_inicio" Content="INICIO" Margin="10" ToolTip="Botón de inicio o finalice de sesion" Click="bt_inicio_Click" Style="{StaticResource botontemplate}"/>
             <Button Name="bt_fabricacion" Content="FABRICACIONES" Margin="10" ToolTip="Botón para fabricación" Click="bt_fabricacion_Click" Style="{StaticResource botontemplate}"/>
             <Button Name="bt_material" Content="MATERIALES" Margin="10" ToolTip="Botón para material" Click="bt_material_Click" Style="{StaticResource botontemplate}"/>
             <Button Name="bt_producto" Content="PRODUCTOS" Margin="10" ToolTip="Botón para producto" Click="bt_producto_Click" Style="{StaticResource botontemplate}"/>
-            <Button Name="bt_inicio" Content="INICIO" Margin="10" ToolTip="Botón de inicio o finalice de sesion" Click="bt_inicio_Click" Style="{StaticResource botontemplate}"/>
             <Button Name="bt_cliente" Content="CLIENTES" Margin="10" ToolTip="Botón para clientes" Click="bt_cliente_Click" Style="{StaticResource botontemplate}"/>
             <Button Name="bt_proveedor" Content="PROVEEDORES" Margin="10" ToolTip="Boton para proveedores" Click="bt_proveedor_Click" Style="{StaticResource botontemplate}"/>
             <Button Name="bt_empleado" Content="EMPLEADOS" Margin="10" ToolTip="Boton para empleados" Click="bt_empleado_Click" Style="{StaticResource botontemplate}"/>
@@ -234,7 +234,7 @@
             <Button Name="bt_m_utilizacion" Width="140" Height="140" ToolTip="Botón para utilización de materiales de fabricación" Click="bt_m_utilizacion_Click" Style="{StaticResource botontemplate}"/>
         </UniformGrid>
 
-        <Grid Name="grid_material_utilizado" Visibility="Visible" Grid.Row="1">
+        <Grid Name="grid_material_utilizado" Visibility="Hidden" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="220"/>
                 <ColumnDefinition />
@@ -308,7 +308,7 @@
             <ComboBox Name="cb_m_proveedor" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="170" ToolTip="Elija el proveedor" SelectionChanged="tb_m_proveedor_SelectionChanged"/>
             <TextBox Name="tb_m_foto" Text="{Binding Path= Foto , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" ToolTip="Escribir ruta de la foto" HorizontalAlignment="Left" Width="170"/>
             <Image Name="imagen_materiales" Grid.Row="8" Grid.Column="1" Width="130" Height="130" ToolTip="Imagen" HorizontalAlignment="Left"/>
-            <Button x:Name="bt_m_elegir" Content="..." HorizontalAlignment="Right" Grid.Column="1" Grid.Row="6" Width="24" Height="23" ToolTip="Elección de la imagen" Margin="0,0,12,0" Click="bt_m_elegir_Click" Style="{StaticResource botonverde}"/>
+            <Button x:Name="bt_m_elegir" Content="..." HorizontalAlignment="Left" Grid.Column="1" Grid.Row="6" Width="24" Height="23" ToolTip="Elección de la imagen" Margin="188,0,0,0" Click="bt_m_elegir_Click" Style="{StaticResource botonverde}"/>
 
             <DataGrid Name="dg_material" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="7" Margin="0,0,20,0" SelectionChanged="dg_material_SelectionChanged" />
 
@@ -368,7 +368,7 @@
             </UniformGrid>
         </Grid>
 
-        <Grid Name="grid_inicio" Visibility="Hidden" Grid.Row="1">
+        <Grid Name="grid_inicio" Visibility="Visible" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -385,6 +385,7 @@
             <Label Content="Contraseña" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Background="#cc0C2B6C" VerticalContentAlignment="Center" Width="160" Height="40" FontSize="24" Foreground="White"/>
             <PasswordBox Name="tb_contraseña" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Escribir contraseña" Width="170" Height="40" FontSize="24"/>
             <Button Name="bt_acceder" Content="Acceder" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" ToolTip="Acceder al usuario" VerticalAlignment="Top" Width="100" Height="50" Margin="20,10,0,0" Click="bt_acceder_Click" FontSize="24" Style="{StaticResource botonverde}"/>
+            <Label Name="bt_olvidocontraseña" Content="¿Olvidaste la contraseña?" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" ToolTip="Clic al olvidar usuario o contraseña" Foreground="White" VerticalContentAlignment="Center" VerticalAlignment="Bottom" Width="220" Height="35" Margin="20,0,0,10"  FontSize="18" MouseDown="OlvidarContraseña"/>
         </Grid>
 
         <Grid Name="grid_cliente" Visibility="Hidden" Grid.Row="1">

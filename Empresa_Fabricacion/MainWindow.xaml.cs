@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,6 +29,7 @@ namespace Empresa_Fabricacion
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         UnitOfWork unit = new UnitOfWork();
         Empleado empleado = new Empleado();
         Empleado usuarioactivo = new Empleado();
@@ -46,6 +48,7 @@ namespace Empresa_Fabricacion
         List<Producto> listaproductos = new List<Producto>();
         List<Material> listamateriales = new List<Material>();
         List<Fabricacion> listafabricaciones = new List<Fabricacion>();
+        
 
         string rutainicial = Environment.CurrentDirectory + @"\Imagenes\";
 
@@ -215,6 +218,7 @@ namespace Empresa_Fabricacion
             bt_pr_modificar.Visibility = Visibility.Visible;
             bt_pr_eliminar.Visibility = Visibility.Visible;
             bt_pr_nuevo.Visibility = Visibility.Visible;
+            bt_pr_generarfactura.Visibility = Visibility.Visible;
 
         }
         private void DesactivarProductosCliente()
@@ -238,6 +242,7 @@ namespace Empresa_Fabricacion
             bt_pr_modificar.Visibility = Visibility.Hidden;
             bt_pr_eliminar.Visibility = Visibility.Hidden;
             bt_pr_nuevo.Visibility = Visibility.Hidden;
+            bt_pr_generarfactura.Visibility = Visibility.Hidden;
         }
 
         private void ActivarBotonesProductos()
@@ -399,6 +404,7 @@ namespace Empresa_Fabricacion
 
 //Inicio
 #region INICIO
+        //acceder al inicio
         private void bt_acceder_Click(object sender, RoutedEventArgs e)
         {
             Empleado aux = unit.RepositorioEmpleado.ObtenerUno(c => c.Usuario.Equals(tb_usuario.Text));
@@ -412,14 +418,14 @@ namespace Empresa_Fabricacion
                     }
                     else if (aux.TipoCuenta.Equals("Trabajador"))
                     {
-                        bt_empleado.Visibility = Visibility.Hidden;
-                        bt_cliente.Visibility = Visibility.Hidden;
+                        bt_empleado.Visibility = Visibility.Collapsed;
+                        bt_cliente.Visibility = Visibility.Collapsed;
                     }
                     else if (aux.TipoCuenta.Equals("Vendedor"))
                     {
-                        bt_empleado.Visibility = Visibility.Hidden;
-                        bt_fabricacion.Visibility = Visibility.Hidden;
-                        bt_proveedor.Visibility = Visibility.Hidden;
+                        bt_empleado.Visibility = Visibility.Collapsed;
+                        bt_fabricacion.Visibility = Visibility.Collapsed;
+                        bt_proveedor.Visibility = Visibility.Collapsed;
                     }
                     else { }
                     MessageBox.Show("Sesion iniciado correctamente con la cuenta de " + aux.Nombre + " " + aux.Apellidos);
@@ -437,6 +443,7 @@ namespace Empresa_Fabricacion
             LimpiarInicio();
         }
 
+        //Enseñar imagen
         private System.Windows.Controls.Image EnseñarImagen(string ruta, int peso)
         {
             try
@@ -458,6 +465,7 @@ namespace Empresa_Fabricacion
 
         }
 
+        //metodo para crear stackpanel
         private StackPanel CreacionBotones(string rutaimagen, string nombrelabel, int peso)
         {
             try
@@ -482,14 +490,23 @@ namespace Empresa_Fabricacion
             {
                 return null;
             }
-            
+
         }
 
-        #endregion
+        //Olvidar usuario o contraseña
+        private void OlvidarContraseña(object sender, MouseButtonEventArgs e)
+        {
+            VentanaCorreo ventana = new VentanaCorreo();
+            ventana.Show();
+        }
+
+        
+
+#endregion
 
 //Empleados
 #region EMPLEADOS
-        private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
+private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
         {
             unit.RepositorioEmpleado.Crear(empleado);
             LimpiarEmpleados();
@@ -1316,6 +1333,9 @@ namespace Empresa_Fabricacion
             StreamWriter escritura;
             escritura = new StreamWriter(factura, borrar, Encoding.Default);
             double total = 0;
+            producto = new Producto();
+            producto = unit.RepositorioProducto.ObtenerUno(c => c.ProductoId == fabricacion.ProductoId);
+            Material montaje = new Material();
 
             escritura.WriteLine("  Factura Nº" + fabricacion.FabricacionId+" con fecha "+DateTime.Today);
             escritura.WriteLine("");
@@ -1332,13 +1352,32 @@ namespace Empresa_Fabricacion
 
             foreach (var item in fabricacion.Materiales)
             {
-                escritura.WriteLine(item.Cantidad+" Articulo------" + item.Nombre +escribirespaciosenblanco(item.Nombre.Length)+ item.PrecioTotal + "€");
+                if (item.Nombre != "Montaje")
+                {
+                    escritura.WriteLine(item.Cantidad + " Articulo------" + item.Nombre + escribirespaciosenblanco(item.Nombre.Length) + item.PrecioTotal + "€");
+                }
+                else
+                {
+                    montaje = item;
+                }
                 total = total + item.PrecioTotal;
             }
             escritura.WriteLine("");
-            escritura.WriteLine("  Servicios-----Montaje"+escribirespaciosenblanco(7)+ "200€");
+            escritura.WriteLine("  Servicios-----Montaje" + escribirespaciosenblanco(7) + montaje.PrecioTotal + "€");
+            if (producto.Precio<=total)
+            {
+                if (MessageBox.Show("¿El precio del producto y el total de recibo no coinciden, quiere modificarlo?", "Cancelar", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    producto.Precio = total;
+                    unit.RepositorioProducto.Actualizar(producto);
+                }
+                else
+                {
+                    MessageBox.Show("Precio de producto no modificado");
+                }
+            }
             escritura.WriteLine("");
-            escritura.WriteLine(escribirespaciosenblanco(0)+"   Total -------" + total+ "€");
+            escritura.WriteLine(escribirespaciosenblanco(0)+"   Total -------" + producto.Precio+ "€");
             escritura.WriteLine("");
             escritura.WriteLine("---------------------------------------------------------------------------------------------------------------------------------");
             escritura.WriteLine("");
@@ -1452,7 +1491,7 @@ namespace Empresa_Fabricacion
                             p.Add("Custom Computer");
                             c.SetFontSize(10);
                             c.Add("\nDavid Blanco Cortiñas");
-                            c.Add("\n"+@" Direccion: C\ lepando Nº3");
+                            c.Add("\n" + @" Direccion: C\ lepando Nº3");
                             cell.Add(p);
                             cell.Add(c);
                             t.AddCell(cell);
@@ -1495,11 +1534,11 @@ namespace Empresa_Fabricacion
                             z1.Add("Cliente: " + cliente.Nombre + " " + cliente.Apellidos + "\n");
                             if (producto.Vendido == true)
                             {
-                                z1.Add("Producto entregado: "+ "'" + producto.Nombre+"'" + "\n");
+                                z1.Add("Producto entregado: " + "'" + producto.Nombre + "'" + "\n");
                             }
                             else
                             {
-                                z1.Add("Producto no entregado "+ "'"+ producto.Nombre + "'" + "\n");
+                                z1.Add("Producto no entregado " + "'" + producto.Nombre + "'" + "\n");
                             }
 
                             z1.Add("Precio Final: " + producto.Precio + " €");
@@ -1516,14 +1555,14 @@ namespace Empresa_Fabricacion
 
                             //Tabla datos venta
                             iText.Layout.Element.Paragraph l;
-                            iText.Layout.Element.Table t2 = new iText.Layout.Element.Table(3);
+                            iText.Layout.Element.Table t2 = new iText.Layout.Element.Table(5);
                             t2.SetWidth(520);
                             t2.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
 
                             Cell cell3 = new Cell();
                             l = new iText.Layout.Element.Paragraph();
                             l.SetBold();
-                            l.Add("Nombre");
+                            l.Add("Cantidad");
                             cell3.SetBackgroundColor(iText.Kernel.Colors.WebColors.GetRGBColor("#DDDDDD"));
                             cell3.Add(l);
 
@@ -1532,7 +1571,7 @@ namespace Empresa_Fabricacion
                             Cell cell6 = new Cell();
                             l = new iText.Layout.Element.Paragraph();
                             l.SetBold();
-                            l.Add("Proveedor");
+                            l.Add("Nombre");
                             cell6.SetBackgroundColor(iText.Kernel.Colors.WebColors.GetRGBColor("#DDDDDD"));
                             cell6.Add(l);
                             cell6.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
@@ -1540,61 +1579,68 @@ namespace Empresa_Fabricacion
                             Cell cell7 = new Cell();
                             l = new iText.Layout.Element.Paragraph();
                             l.SetBold();
-                            l.Add("Precio");
+                            l.Add("Proveedor");
                             cell7.SetBackgroundColor(iText.Kernel.Colors.WebColors.GetRGBColor("#DDDDDD"));
                             cell7.Add(l);
                             cell7.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
 
-                            //Cell cell8 = new Cell();
-                            //l = new iText.Layout.Element.Paragraph();
-                            //l.SetBold();
-                            //l.Add("Nombre");
-                            //cell8.SetBackgroundColor(iText.Kernel.Colors.WebColors.GetRGBColor("#DDDDDD"));
-                            //cell8.Add(l);
-                            //cell8.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+                            Cell cell8 = new Cell();
+                            l = new iText.Layout.Element.Paragraph();
+                            l.SetBold();
+                            l.Add("Precio");
+                            cell8.SetBackgroundColor(iText.Kernel.Colors.WebColors.GetRGBColor("#DDDDDD"));
+                            cell8.Add(l);
+                            cell8.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
 
-                            //Cell cell9 = new Cell();
-                            //l = new iText.Layout.Element.Paragraph();
-                            //l.SetBold();
-                            //l.Add("Dirección");
-                            //cell9.SetBackgroundColor(iText.Kernel.Colors.WebColors.GetRGBColor("#DDDDDD"));
-                            //cell9.Add(l);
-                            //cell9.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+                            Cell cell9 = new Cell();
+                            l = new iText.Layout.Element.Paragraph();
+                            l.SetBold();
+                            l.Add("Precio Total");
+                            cell9.SetBackgroundColor(iText.Kernel.Colors.WebColors.GetRGBColor("#DDDDDD"));
+                            cell9.Add(l);
+                            cell9.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
 
                             t2.AddHeaderCell(cell3);
                             t2.AddHeaderCell(cell6);
                             t2.AddHeaderCell(cell7);
-                            //t2.AddHeaderCell(cell8);
-                            //t2.AddHeaderCell(cell9);
+                            t2.AddHeaderCell(cell8);
+                            t2.AddHeaderCell(cell9);
 
-                            double preciototalproductos = 0;
-                      
+                            Material montaje = new Material();
                             foreach (var item in fabricacion.Materiales)
                             {
                                 iText.Layout.Element.Paragraph nombreproducto = new iText.Layout.Element.Paragraph();
                                 nombreproducto.SetFontColor(iText.Kernel.Colors.ColorConstants.BLUE);
                                 nombreproducto.Add(item.Nombre);
-                                iText.Layout.Element.Paragraph precioproducto = new iText.Layout.Element.Paragraph();
-                                precioproducto.SetBold();
-                                precioproducto.Add(item.Precio + " €");
-                                t2.AddCell(nombreproducto);                                
-                                t2.AddCell(item.Proveedores.Nombre);
-                                t2.AddCell(precioproducto);
-                                preciototalproductos = preciototalproductos + item.Precio;
+                                iText.Layout.Element.Paragraph precioproductototal = new iText.Layout.Element.Paragraph();
+                                precioproductototal.SetBold();
+                                precioproductototal.Add(item.PrecioTotal + " €");
+                                if (item.Nombre != "Montaje")
+                                {
+                                    t2.AddCell(item.Cantidad.ToString());
+                                    t2.AddCell(nombreproducto);
+                                    t2.AddCell(item.Proveedores.Nombre);
+                                    t2.AddCell(item.Precio.ToString());
+                                    t2.AddCell(precioproductototal);
+                                }
+                                else { montaje = item; }
                             }
-                            double manodeobra=0;
-                            //mano de obra o descuento
-                            preciototalproductos = producto.Precio - preciototalproductos;
-                            iText.Layout.Element.Paragraph textomanodeobra = new iText.Layout.Element.Paragraph();
-                            textomanodeobra.SetFontColor(iText.Kernel.Colors.ColorConstants.BLUE);
-                            textomanodeobra.Add("Mano de obra");
-                            iText.Layout.Element.Paragraph moanodeobra = new iText.Layout.Element.Paragraph();
-                            moanodeobra.SetBold();
-                            moanodeobra.Add(preciototalproductos + " €");
-                            t2.AddCell(textomanodeobra);
-                            t2.AddCell("");
-                            t2.AddCell(moanodeobra);
+                       
+                            for (int i = 0; i < 5; i++){ t2.AddCell(""); }
 
+                            //mano de obra o descuento
+                            iText.Layout.Element.Paragraph nombremanodeobra = new iText.Layout.Element.Paragraph();
+                            nombremanodeobra.SetFontColor(iText.Kernel.Colors.ColorConstants.BLUE);
+                            nombremanodeobra.Add(montaje.Nombre);
+                            iText.Layout.Element.Paragraph preciototalmontaje = new iText.Layout.Element.Paragraph();
+                            preciototalmontaje.SetBold();
+                            preciototalmontaje.Add(montaje.PrecioTotal + " €");
+                            t2.AddCell(montaje.Cantidad.ToString());
+                            t2.AddCell(nombremanodeobra);
+                            t2.AddCell(montaje.Proveedores.Nombre);
+                            t2.AddCell(montaje.Precio.ToString());
+                            t2.AddCell(preciototalmontaje);
+                            
 
                             doc.Add(t2);
 
@@ -1608,10 +1654,10 @@ namespace Empresa_Fabricacion
                             a.SetBold();
                             a.SetFontSize(12);
                             //calcular iva
-                            double iva= preciototalproductos*0.21;
+                            double iva= producto.Precio*0.21;
 
-                            a.Add("21% IVA:                  " + iva +" €"+"\n");
                             a.Add("Total sin IVA            " + (producto.Precio - iva) + " €" + "\n");
+                            a.Add("21% IVA:                  " + iva +" €"+"\n");
                             a.Add("Total con IVA :         " + producto.Precio + " €" + "\n");
                             cellivaytotal.Add(a);
                             t4.AddCell(cellivaytotal);
@@ -1626,10 +1672,11 @@ namespace Empresa_Fabricacion
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("Debes cerrar el pdf con el mismo nombre primero.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Pdf con mismo nombre abierto. Cierrelo primero.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
+
 
 
 

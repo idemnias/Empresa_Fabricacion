@@ -26,20 +26,22 @@ namespace Empresa_Fabricacion.DAL
         }
         class creardb : CreateDatabaseIfNotExists<EmpresaFabricacionContext>
         {
-            protected override void Seed(Empresa_Fabricacion.DAL.EmpresaFabricacionContext context)
+            protected override void Seed(EmpresaFabricacionContext context)
             {
                 context.Empleados.AddOrUpdate(
-                    new Empleado { EmpleadoId = 001, Dni = "44457148b", Nombre = "David", Apellidos = "Blanco", Direccion = "Ervedelo", Telefono = "669554433", TipoCuenta = "Administrador", Usuario = "d", Contraseña = "d" },
-                    new Empleado { EmpleadoId = 002, Dni = "44457147c", Nombre = "Manolo", Apellidos = "Barbosa", Direccion = "Av.Portugal", Telefono = "669889966", TipoCuenta = "Trabajador", Usuario = "s", Contraseña = "s" },
-                    new Empleado { EmpleadoId = 003, Dni = "44457146a", Nombre = "Dosinda", Apellidos = "Cortiñas", Direccion = "Ramón Cabanillas", Telefono = "654436598", TipoCuenta = "Vendedor", Usuario = "a", Contraseña = "a" }
+                    new Empleado { EmpleadoId = 001, Dni = "44457148b", Nombre = "David", Apellidos = "Blanco", Correo = "idemnias@gmail.com", Telefono = "669554433", TipoCuenta = "Administrador", Usuario = "d", Contraseña = "d" },
+                    new Empleado { EmpleadoId = 002, Dni = "44457147c", Nombre = "Manolo", Apellidos = "Barbosa", Correo = "customcomputerdam@gmail.com", Telefono = "669889966", TipoCuenta = "Trabajador", Usuario = "s", Contraseña = "s" },
+                    new Empleado { EmpleadoId = 003, Dni = "44457146a", Nombre = "Dosinda", Apellidos = "Cortiñas", Correo = "prueba3@gmail.com", Telefono = "654436598", TipoCuenta = "Vendedor", Usuario = "a", Contraseña = "a" }
                     );
                 context.Proveedores.AddOrUpdate(
                     new Proveedor { ProveedorId = 0001, Nombre="Asus", Direccion="Madrid", Telefono="91456878", Contacto="Pablo", Correo="Pablo@asus.com"},
                     new Proveedor { ProveedorId = 0002, Nombre="Intel", Direccion="Madrid", Telefono="91789455", Contacto="Javier", Correo="Javier@intel.com"},
                     new Proveedor { ProveedorId = 0003, Nombre="Msi", Direccion="Barcelona", Telefono="935565588", Contacto="Xavi", Correo="Xavi@msi.com"},
-                    new Proveedor { ProveedorId = 0004, Nombre="Crucial", Direccion="Ourense", Telefono="988225588", Contacto="Asunción", Correo="Asunción@crucial.com" }
+                    new Proveedor { ProveedorId = 0004, Nombre="Crucial", Direccion="Ourense", Telefono="988225588", Contacto="Asunción", Correo="Asunción@crucial.com" },
+                    new Proveedor { ProveedorId = 0005, Nombre="Custom Computer", Direccion="", Telefono="", Contacto="", Correo="Customcomputerdam@gmail.com" }
                     );
                 context.Materiales.AddOrUpdate(
+                    new Material { MaterialId = 1000, Nombre= "Montaje", Precio=50, Stock=1000, Foto= Environment.CurrentDirectory + @"\Imagenes\fabricacion.png", ProveedorId=0005 },
                     new Material { MaterialId = 1001, Nombre= "Asus ROG Strix Geforce GTX 1070 Ti Gaming Advance 8GB GDDR5", Precio=609.90, Stock=10, Foto= Environment.CurrentDirectory + @"\Imagenes\tarjetagrafica_asus.png", ProveedorId=0001 },
                     new Material { MaterialId = 1002, Nombre = "Asus Phoenix GeForce GTX 1060 3GB GDDR5", Precio = 255.90, Stock = 12, Foto = Environment.CurrentDirectory + @"\Imagenes\tarjetagrafica_asus.png", ProveedorId = 0001 },
                     new Material { MaterialId = 1003, Nombre = "Intel Core i7-8700K 3.7Ghz BOX", Precio = 325.90, Stock = 5, Foto = Environment.CurrentDirectory + @"\Imagenes\proc-intel-core-i7-8700k-37ghz.png", ProveedorId = 0002 },
