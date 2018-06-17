@@ -497,7 +497,7 @@ namespace Empresa_Fabricacion
         private void OlvidarContraseña(object sender, MouseButtonEventArgs e)
         {
             VentanaCorreo ventana = new VentanaCorreo();
-            ventana.Show();
+            ventana.ShowDialog();
         }
 
         
@@ -1185,8 +1185,8 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             List<Material> listmateriales = new List<Material>();
             Proveedor cat = new Proveedor();
 
-            estilo = this.FindResource("botonverde") as System.Windows.Style;
-            System.Windows.Style estilo2 = this.FindResource("botonrojo") as System.Windows.Style;
+            estilo = this.FindResource("botonproductosi") as System.Windows.Style;
+            System.Windows.Style estilo2 = this.FindResource("botonproductono") as System.Windows.Style;
 
             this.sp_materiales.Children.Clear();
             var aux = e.OriginalSource;
@@ -1363,8 +1363,8 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
                 total = total + item.PrecioTotal;
             }
             escritura.WriteLine("");
-            escritura.WriteLine("  Servicios-----Montaje" + escribirespaciosenblanco(7) + montaje.PrecioTotal + "€");
-            if (producto.Precio<=total)
+            escritura.WriteLine(montaje.Cantidad +" Servicios-----Montaje" + escribirespaciosenblanco(7) + montaje.PrecioTotal + "€");
+            if (producto.Precio<total)
             {
                 if (MessageBox.Show("¿El precio del producto y el total de recibo no coinciden, quiere modificarlo?", "Cancelar", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
@@ -1385,7 +1385,7 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             foreach (var item in fabricacion.Empleados)
             {
                 escritura.WriteLine("");
-                escritura.WriteLine("  Trabajador --------" + item.Nombre + " con Id "+ item.EmpleadoId);
+                escritura.WriteLine("  Trabajador --------" + item.Nombre + " "+ item.Apellidos);
             }
            
 
@@ -1491,6 +1491,7 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
                             p.Add("Custom Computer");
                             c.SetFontSize(10);
                             c.Add("\nDavid Blanco Cortiñas");
+                            c.Add("\nCIF G-541565487");
                             c.Add("\n" + @" Direccion: C\ lepando Nº3");
                             cell.Add(p);
                             cell.Add(c);
@@ -1521,7 +1522,6 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
                             iText.Layout.Element.Paragraph z = new iText.Layout.Element.Paragraph();
                             z.SetFontSize(12);
                             z.Add("Empleado: " + usuarioactivo.Nombre + " " + usuarioactivo.Apellidos + "\n");
-                            z.Add("DNI: " + usuarioactivo.Dni + "\n");
                             z.Add("Fecha: " + producto.FechaVenta.ToShortDateString());
                             cell4.Add(z);
                             t3.AddCell(cell4);
@@ -1532,6 +1532,7 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
                             z1.SetFontSize(12);
                             z1.SetMarginLeft(210);
                             z1.Add("Cliente: " + cliente.Nombre + " " + cliente.Apellidos + "\n");
+                            z1.Add("NIF: " + cliente.NIF);
                             if (producto.Vendido == true)
                             {
                                 z1.Add("Producto entregado: " + "'" + producto.Nombre + "'" + "\n");
@@ -1571,7 +1572,7 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
                             Cell cell6 = new Cell();
                             l = new iText.Layout.Element.Paragraph();
                             l.SetBold();
-                            l.Add("Nombre");
+                            l.Add("Concepto");
                             cell6.SetBackgroundColor(iText.Kernel.Colors.WebColors.GetRGBColor("#DDDDDD"));
                             cell6.Add(l);
                             cell6.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
@@ -1587,7 +1588,7 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
                             Cell cell8 = new Cell();
                             l = new iText.Layout.Element.Paragraph();
                             l.SetBold();
-                            l.Add("Precio");
+                            l.Add("Precio/unidad");
                             cell8.SetBackgroundColor(iText.Kernel.Colors.WebColors.GetRGBColor("#DDDDDD"));
                             cell8.Add(l);
                             cell8.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
@@ -1656,9 +1657,9 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
                             //calcular iva
                             double iva= producto.Precio*0.21;
 
-                            a.Add("Total sin IVA            " + (producto.Precio - iva) + " €" + "\n");
+                            a.Add("Base imponible            " + (producto.Precio - iva) + " €" + "\n");
                             a.Add("21% IVA:                  " + iva +" €"+"\n");
-                            a.Add("Total con IVA :         " + producto.Precio + " €" + "\n");
+                            a.Add("Total factura :         " + producto.Precio + " €" + "\n");
                             cellivaytotal.Add(a);
                             t4.AddCell(cellivaytotal);
 

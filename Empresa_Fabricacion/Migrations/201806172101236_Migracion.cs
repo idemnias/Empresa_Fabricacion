@@ -14,6 +14,7 @@ namespace Empresa_Fabricacion.Migrations
                         ClienteId = c.Int(nullable: false, identity: true),
                         Nombre = c.String(),
                         Apellidos = c.String(),
+                        NIF = c.String(),
                         Direccion = c.String(),
                         Telefono = c.String(),
                         Correo = c.String(),

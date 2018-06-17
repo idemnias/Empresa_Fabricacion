@@ -43,8 +43,8 @@ namespace Empresa_Fabricacion
 
                 mail.Subject = "Olvido de usuario o contraseña";
                 mail.SubjectEncoding = Encoding.UTF8;
-                mail.Body = "<body><h1>Envio de usuario</h1></p><h2>"+empleado.Usuario+"</h2></body>"+
-                    "<body><h2>Envio de contraseña</h2></p><h3>"+empleado.Contraseña+"</h3></body>";
+                mail.Body = "<body><h1>Usuario:</h1></p><h2>"+empleado.Usuario+"</h2>" +
+                    "<h2>Contraseña:</h2></p><h3>"+empleado.Contraseña+"</h3></body>";
                 mail.IsBodyHtml = true;
                 mail.BodyEncoding = Encoding.UTF8;
                 mail.To.Add(empleado.Correo);

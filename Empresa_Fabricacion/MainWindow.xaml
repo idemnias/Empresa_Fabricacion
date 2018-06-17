@@ -8,6 +8,7 @@
         Title="Empresa de Fabricacion de Ordenadores Custom" Height="581.373" Width="917.157" Icon="Imagenes/Nishad2m8-Hologram-Dock-My-computer.ico" MinWidth="917.157" MinHeight="581.373" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="botontemplate" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Background">
                 <Setter.Value>
                     <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
@@ -46,6 +47,7 @@
             <Setter Property="Background" Value="#cc0C2B6C"/>
         </Style>
         <Style x:Key="botonverde" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Background">
                 <Setter.Value>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -83,6 +85,7 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="botonazul" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Background">
                 <Setter.Value>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -120,6 +123,7 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="botonrojo" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Background">
                 <Setter.Value>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -153,6 +157,76 @@
                         </Setter.Value>
                     </Setter>
                     <Setter Property="Foreground" Value="#FF0A2476" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="botonproductosi" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                        <GradientStop Color="#FF3DF910" Offset="0.988"/>
+                        <GradientStop Color="#FF408B16" Offset="0.531"/>
+                        <GradientStop Color="#FF3C6122" Offset="0.004"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                <GradientStop Color="#FF3DF910" Offset="0.988"/>
+                                <GradientStop Color="#FF408B16" Offset="0.531"/>
+                                <GradientStop Color="#FF3DF910" Offset="0.004"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="botonproductono" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                        <GradientStop Color="#FFFD0202" Offset="0.988"/>
+                        <GradientStop Color="#FFB64646" Offset="0.527"/>
+                        <GradientStop Color="#FF382020" Offset="0.008"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                <GradientStop Color="#FFFD0202" Offset="0.988"/>
+                                <GradientStop Color="#FFB64646" Offset="0.527"/>
+                                <GradientStop Color="#FFFD0202" Offset="0.008"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Foreground" Value="White"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -385,7 +459,8 @@
             <Label Content="Contraseña" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Background="#cc0C2B6C" VerticalContentAlignment="Center" Width="160" Height="40" FontSize="24" Foreground="White"/>
             <PasswordBox Name="tb_contraseña" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Escribir contraseña" Width="170" Height="40" FontSize="24"/>
             <Button Name="bt_acceder" Content="Acceder" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" ToolTip="Acceder al usuario" VerticalAlignment="Top" Width="100" Height="50" Margin="20,10,0,0" Click="bt_acceder_Click" FontSize="24" Style="{StaticResource botonverde}"/>
-            <Label Name="bt_olvidocontraseña" Content="¿Olvidaste la contraseña?" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" ToolTip="Clic al olvidar usuario o contraseña" Foreground="White" VerticalContentAlignment="Center" VerticalAlignment="Bottom" Width="220" Height="35" Margin="20,0,0,10"  FontSize="18" MouseDown="OlvidarContraseña"/>
+            <Label Name="bt_olvidocontraseña" Content="¿Olvidaste la contraseña?" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" ToolTip="Clic al olvidar usuario o contraseña" Foreground="White" VerticalContentAlignment="Center"
+                   VerticalAlignment="Bottom" Width="220" Height="35" Margin="20,0,0,10" Cursor="Hand" FontSize="18" MouseDown="OlvidarContraseña"/>
         </Grid>
 
         <Grid Name="grid_cliente" Visibility="Hidden" Grid.Row="1">

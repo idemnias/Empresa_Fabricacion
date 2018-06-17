@@ -49,9 +49,9 @@ namespace Empresa_Fabricacion.DAL
                     new Material { MaterialId = 1005, Nombre = "Memoria Ram Crucial Ballistix Sport LT Single Rank DDR4 2666 PC4 - 21300 16GB CL16", Precio = 169, Stock = 20, Foto = Environment.CurrentDirectory + @"\Imagenes\memorias-ram-crucial-ddr4-16gb-2400mhz-ballistix-sport-lt-red-1g.png", ProveedorId = 0004 }
                     );
                 context.Clientes.AddOrUpdate(
-                    new Cliente { ClienteId=2001, Nombre="Pepe", Apellidos="Álvarez", Direccion="Polvorín", Telefono="664871512", Correo="Pepe@gmail.com"},
-                    new Cliente { ClienteId=2002, Nombre="Ariadna", Apellidos="Perez", Direccion="Av.Habana", Telefono="699845782", Correo="Ariadna@gmail.com"},
-                    new Cliente { ClienteId=2003, Nombre="Mónica", Apellidos="Naranjo", Direccion="Juan XXIII", Telefono="655784848", Correo="Monica@gmail.com"}
+                    new Cliente { ClienteId=2001, Nombre="Pepe", Apellidos="Álvarez", NIF="44456148f", Direccion="Polvorín", Telefono="664871512", Correo="Pepe@gmail.com"},
+                    new Cliente { ClienteId=2002, Nombre="Ariadna", Apellidos="Perez", NIF = "65145454s", Direccion ="Av.Habana", Telefono="699845782", Correo="Ariadna@gmail.com"},
+                    new Cliente { ClienteId=2003, Nombre="Mónica", Apellidos="Naranjo", NIF = "444665588d", Direccion ="Juan XXIII", Telefono="655784848", Correo="Monica@gmail.com"}
                     );
                 context.Productos.AddOrUpdate(
                     new Producto { ProductoId=3001, Nombre="La pecera", Precio=1800, Vendido=true, FechaVenta= new DateTime(2018, 06, 13),
