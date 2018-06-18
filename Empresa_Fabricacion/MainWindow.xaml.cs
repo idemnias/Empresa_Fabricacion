@@ -983,6 +983,7 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             if (cb_fabricacionid != null && listafabricaciones.Count != 0)
             {
                 cb_fabricacionid.SelectedIndex = 0;
+                fabricacioneseleccionado = listafabricaciones.ElementAt(cb_fabricacionid.SelectedIndex).FabricacionId;
             }
             
         }
@@ -1414,10 +1415,11 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
 
         private void bt_aplicar_fabricacion_Click(object sender, RoutedEventArgs e)
         {
-            listamateriales.Clear();
+            listamateriales = new List<Material>();
             dg_material_aplicado.ItemsSource = "";
             fabricacion = new Fabricacion();
-            fabricacion = unit.RepositorioFabricacion.ObtenerUno(c => c.FabricacionId == fabricacioneseleccionado);
+            //fabricacion = unit.RepositorioFabricacion.ObtenerUno(c => c.FabricacionId == fabricacioneseleccionado);
+            fabricacion = listafabricaciones.Where(c => c.FabricacionId == fabricacioneseleccionado).FirstOrDefault();
             cliente = unit.RepositorioCliente.ObtenerUno(c => c.ClienteId == fabricacion.ClienteId);
             // dg_material_aplicado.ItemsSource = fabricacion.Materiales;
             foreach (var item in fabricacion.Materiales)
@@ -1435,7 +1437,11 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             unit.RepositorioFabricacion.Actualizar(fabricacion);
             dg_material_aplicado.ItemsSource = "";
             RellenarComboboxFabricacionId();
-            if (cb_fabricacionid != null && listafabricaciones.Count != 0) cb_fabricacionid.SelectedIndex = 0;
+            if (cb_fabricacionid != null && listafabricaciones.Count != 0)
+            {
+                cb_fabricacionid.SelectedIndex = 0;
+                fabricacioneseleccionado = listafabricaciones.ElementAt(cb_fabricacionid.SelectedIndex).FabricacionId;
+            }
         }
 
         private void bt_generar_materiales_Click(object sender, RoutedEventArgs e)

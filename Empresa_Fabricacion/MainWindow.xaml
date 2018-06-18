@@ -233,7 +233,7 @@
     </Window.Resources>
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="Imagenes/47a36ac61716bbde04556ff60a4a823e.jpg"/>
+            <ImageBrush ImageSource="Imagenes/background.png"/>
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
@@ -442,7 +442,7 @@
             </UniformGrid>
         </Grid>
 
-        <Grid Name="grid_inicio" Visibility="Visible" Grid.Row="1">
+        <Grid Name="grid_inicio" Visibility="Hidden" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
