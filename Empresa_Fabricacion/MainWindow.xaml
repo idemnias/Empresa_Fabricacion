@@ -46,6 +46,23 @@
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Background" Value="#cc0C2B6C"/>
         </Style>
+        <Style x:Key="titulos" TargetType="Label">
+            <Setter Property="Foreground">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF003CFF" Offset="0.206"/>
+                        <GradientStop Color="#FF003CFF" Offset="0.811"/>
+                        <GradientStop Color="#FF003CFF" Offset="0.502"/>
+                        <GradientStop Color="Red" Offset="0.469"/>
+                        <GradientStop Color="Red" Offset="0.547"/>
+                        <GradientStop Color="Red" Offset="0.77"/>
+                        <GradientStop Color="Red" Offset="0.819"/>
+                        <GradientStop Color="Red" Offset="0.251"/>
+                        <GradientStop Color="Red" Offset="0.173"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="botonverde" TargetType="Button">
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Background">
@@ -186,7 +203,7 @@
                         <Setter.Value>
                             <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
                                 <GradientStop Color="#FF3DF910" Offset="0.988"/>
-                                <GradientStop Color="#FF408B16" Offset="0.531"/>
+                                <GradientStop Color="#FF53B020" Offset="0.531"/>
                                 <GradientStop Color="#FF3DF910" Offset="0.004"/>
                             </LinearGradientBrush>
                         </Setter.Value>
@@ -220,8 +237,8 @@
                     <Setter Property="Background">
                         <Setter.Value>
                             <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                                <GradientStop Color="#FFFD0202" Offset="0.988"/>
-                                <GradientStop Color="#FFB64646" Offset="0.527"/>
+                                <GradientStop Color="#FFFD0202" Offset="1"/>
+                                <GradientStop Color="#FFEC3737" Offset="0.527"/>
                                 <GradientStop Color="#FFFD0202" Offset="0.008"/>
                             </LinearGradientBrush>
                         </Setter.Value>
@@ -271,10 +288,11 @@
                 <RowDefinition Height="100*"/>
             </Grid.RowDefinitions>
 
+            <Label Content="FABRICACION" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" FontFamily="impact" FontSize="60" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource titulos}"/>
+
             <Label Name="lb_f_seleccionar" Visibility="Hidden" Content="Seleccione un Producto" Grid.Column="1" Grid.Row="4" Style="{StaticResource estilolabel}"/>
             <ComboBox Name="cb_f_producto" Visibility="Hidden" Grid.Column="2" Grid.Row="4" ToolTip="Eliga el producto" SelectionChanged="cb_f_producto_SelectionChanged" />
             <Button Name="bt_f_seleccionar" Visibility="Hidden" Content="Seleccionar" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" ToolTip="Confirmar el producto indicado" Width="130" Click="bt_f_seleccionar_Click" Style="{StaticResource botonverde}"/>
-
 
             <Label Name="lb1f" Content="Fecha de inicio" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Name="lb2f" Content="Fecha final" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
@@ -293,8 +311,8 @@
             <ComboBox Name="cb_f_clienteid" Grid.Column="1" Grid.Row="6" Width="170" HorizontalAlignment="Left" ToolTip="Eliga el cliente" SelectionChanged="cb_f_clienteid_SelectionChanged"/>
 
             <DataGrid Name="dg_fabricacion" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="7" Margin="0,0,20,0"  SelectionChanged="dg_fabricacion_SelectionChanged" />
-            
-            
+
+
             <Button Name="bt_f_añadir" Content="Añadir" Grid.Column="3" Grid.Row="9" ToolTip="Añadir el producto" Width="130" Height="30" VerticalAlignment="Center" Click="bt_f_añadir_Click" Style="{StaticResource botonverde}"/>
             <Button Name="bt_f_nuevo" Content="Nuevo" Grid.Column="2" Grid.Row="9" ToolTip="Crear un nuevo producto" Width="130" Height="30" VerticalAlignment="Center" Click="bt_f_nuevo_Click" Style="{StaticResource botonverde}"/>
             <UniformGrid Grid.Column="3" Grid.Row="9" Columns="1">
@@ -303,10 +321,19 @@
             </UniformGrid>
         </Grid>
 
-        <UniformGrid Name="grid_material" Visibility="Hidden" Columns="2" Grid.Row="1">
-            <Button Name="bt_m_gestion" Width="140" Height="140" ToolTip="Botón para la gestión de materiales" Click="bt_m_gestion_Click" Style="{StaticResource botontemplate}"/>
-            <Button Name="bt_m_utilizacion" Width="140" Height="140" ToolTip="Botón para utilización de materiales de fabricación" Click="bt_m_utilizacion_Click" Style="{StaticResource botontemplate}"/>
-        </UniformGrid>
+        <Grid Name="grid_material" Visibility="Hidden" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="370*"/>
+            </Grid.RowDefinitions>
+            <Label Content="MATERIAL" FontFamily="impact" FontSize="60" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource titulos}"/>
+            <Button Name="bt_m_gestion" Width="140" Height="140" Grid.Column="0" Grid.Row="1" ToolTip="Botón para la gestión de materiales" Click="bt_m_gestion_Click" Style="{StaticResource botontemplate}"/>
+            <Button Name="bt_m_utilizacion" Width="140" Height="140" Grid.Column="1" Grid.Row="1" ToolTip="Botón para utilización de materiales de fabricación" Click="bt_m_utilizacion_Click" Style="{StaticResource botontemplate}"/>
+        </Grid>
 
         <Grid Name="grid_material_utilizado" Visibility="Hidden" Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -370,6 +397,8 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="100*"/>
             </Grid.RowDefinitions>
+
+            <Label Content="GESTION DE MATERIAL" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" FontFamily="impact" FontSize="60" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource titulos}"/>
             <Label Content="Nombre" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Content="Precio" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Content="Stock" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
@@ -413,6 +442,7 @@
                 <RowDefinition Height="100*"/>
             </Grid.RowDefinitions>
 
+            <Label Content="PRODUCTO" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" FontFamily="impact" FontSize="60" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource titulos}"/>
             <Label Name="lb_pr_seleccionar" Visibility="Hidden" Content="Seleccione un cliente" Grid.Column="1" Grid.Row="4" Style="{StaticResource estilolabel}"/>
             <ComboBox Name="cb_pr_cliente" Visibility="Hidden" Grid.Column="2" Grid.Row="4" ToolTip="Elija el cliente" SelectionChanged="cb_p_cliente_SelectionChanged"/>
             <Button Name="bt_pr_seleccionar" Visibility="Hidden" Content="Seleccionar" Grid.Column="1" Grid.Row="6" ToolTip="Confirmar el cliente seleccionado" Grid.ColumnSpan="2" Width="130" Click="bt_p_seleccionar_Click" Style="{StaticResource botonverde}"/>
@@ -432,7 +462,7 @@
             <TextBox Name="tb_pr_Descripcion" Text="{Binding Path= Descripcion , Mode=TwoWay}" ToolTip="Escribir describa el producto" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.Row="6" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Left" Width="170" Height="auto"/>
 
             <DataGrid Name="dg_producto" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="7" Margin="0,0,20,0" SelectionChanged="dg_producto_SelectionChanged"/>
-            
+
             <Button Name="bt_pr_nuevo" Content="Nuevo" Grid.Column="2" Grid.Row="9" Width="130" Height="30" ToolTip="Nuevo producto" VerticalAlignment="Center" Click="bt_pr_nuevo_Click" Style="{StaticResource botonverde}"/>
             <Button Name="bt_pr_añadir" Content="Añadir" Grid.Column="3" Grid.Row="9" Width="130" ToolTip="Añadir producto" Height="30" VerticalAlignment="Center" Click="bt_pr_añadir_Click" Style="{StaticResource botonverde}"/>
             <Button Name="bt_pr_generarfactura" Content="Generar factura" Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" Width="130" Height="30" ToolTip="Generar Factura" VerticalAlignment="Center" Style="{StaticResource botonverde}" Click="bt_pr_generarfactura_Click"/>
@@ -442,7 +472,7 @@
             </UniformGrid>
         </Grid>
 
-        <Grid Name="grid_inicio" Visibility="Hidden" Grid.Row="1">
+        <Grid Name="grid_inicio" Visibility="Visible" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -454,12 +484,16 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
+            <Label Content="CUSTOM" Grid.Row="0" Grid.Column="0" FontFamily="impact" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="60" Style="{StaticResource titulos}"/>
+            <Label Content="    COMPUTER" Grid.Row="0" Grid.Column="1" FontFamily="impact" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="60" Style="{StaticResource titulos}"/>
+            <Image Name="imagen_inicio" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Width="130" Height="130" ToolTip="Imagen"/>
             <Label Content="Usuario" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalContentAlignment="Center" Background="#cc0C2B6C" Width="160" Height="40" FontSize="24" Foreground="White"/>
             <TextBox Name="tb_usuario" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Escribir usuario" Width="170" Height="40" FontSize="24"/>
             <Label Content="Contraseña" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Background="#cc0C2B6C" VerticalContentAlignment="Center" Width="160" Height="40" FontSize="24" Foreground="White"/>
             <PasswordBox Name="tb_contraseña" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Escribir contraseña" Width="170" Height="40" FontSize="24"/>
             <Button Name="bt_acceder" Content="Acceder" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" ToolTip="Acceder al usuario" VerticalAlignment="Top" Width="100" Height="50" Margin="20,10,0,0" Click="bt_acceder_Click" FontSize="24" Style="{StaticResource botonverde}"/>
-            <Label Name="bt_olvidocontraseña" Content="¿Olvidaste la contraseña?" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" ToolTip="Clic al olvidar usuario o contraseña" Foreground="White" VerticalContentAlignment="Center"
+            <Label Name="bt_olvidocontraseña" Content="¿Olvidaste la contraseña?" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" 
+                   ToolTip="Clic al olvidar usuario o contraseña" Foreground="White" VerticalContentAlignment="Center"
                    VerticalAlignment="Bottom" Width="220" Height="35" Margin="20,0,0,10" Cursor="Hand" FontSize="18" MouseDown="OlvidarContraseña"/>
         </Grid>
 
@@ -481,6 +515,8 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="100*"/>
             </Grid.RowDefinitions>
+
+            <Label Content="CLIENTE" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" FontFamily="impact" FontSize="60" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource titulos}"/>
             <Label Content="Nombre" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Content="Apellidos" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Content="Direccion" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
@@ -521,6 +557,8 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="100*"/>
             </Grid.RowDefinitions>
+
+            <Label Content="PROVEEDOR" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" FontFamily="impact" FontSize="60" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource titulos}"/>
             <Label Content="Nombre" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Content="Direccion" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Content="Telefono" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
@@ -562,6 +600,8 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="80*"/>
             </Grid.RowDefinitions>
+
+            <Label Content="EMPLEADO" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" FontFamily="impact" FontSize="60" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource titulos}"/>
             <Label Content="Dni" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Content="Nombre" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Content="Apellidos" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>

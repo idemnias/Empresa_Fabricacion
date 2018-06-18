@@ -42,6 +42,7 @@ namespace Empresa_Fabricacion
         int fabricacioneseleccionado=1;
         System.Windows.Style estilo;
         bool materialencontrado = false;
+        bool fabricacionaplicada = false;
         List<Cliente> listaclientes = new List<Cliente>();
         List<Proveedor> listaproveedores = new List<Proveedor>();
         Producto producto = new Producto();
@@ -67,6 +68,7 @@ namespace Empresa_Fabricacion
             bt_proveedor.Content = CreacionBotones(rutainicial + "proveedor.png", "PROVEEDOR",80);
             bt_m_gestion.Content = CreacionBotones(rutainicial + "materialgestion.png", "MATERIAL GESTION",110);
             bt_m_utilizacion.Content = CreacionBotones(rutainicial + "materialutilizado.png", "UTILIZAR MATERIAL",110);
+            imagen_inicio.Source = EnseñarBit(rutainicial + "iconofactura.png");
         }
 
 //Limpiar grids y botones
@@ -985,6 +987,10 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
                 cb_fabricacionid.SelectedIndex = 0;
                 fabricacioneseleccionado = listafabricaciones.ElementAt(cb_fabricacionid.SelectedIndex).FabricacionId;
             }
+            bt_aplicarcambios.Visibility = Visibility.Hidden;
+            bt_generar_materiales.Visibility = Visibility.Hidden;
+            dg_material_aplicado.ItemsSource = "";
+            fabricacionaplicada = false;
             
         }
 
@@ -1117,6 +1123,10 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             try
             {
                 fabricacioneseleccionado = listafabricaciones.ElementAt(cb_fabricacionid.SelectedIndex).FabricacionId;
+                bt_aplicarcambios.Visibility = Visibility.Hidden;
+                bt_generar_materiales.Visibility = Visibility.Hidden;
+                fabricacionaplicada = false;
+            
             }
             catch (Exception)
             {
@@ -1227,46 +1237,50 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
         //Cuando clickamos a un producto para añadirlo a lineaventa
         private void producto_click(object sender, RoutedEventArgs e)
         {
-
-            var aux = e.OriginalSource;
-            if (aux.GetType() == typeof(Button))
+            if (fabricacionaplicada == true)
             {
-                Button b = (Button)aux;
 
-                String[] btname = b.Name.Split('_');
-                int cx = Convert.ToInt32(btname[1].Trim());
-                material = unit.RepositorioMaterial.ObtenerUno(c => c.MaterialId == cx);
+                var aux = e.OriginalSource;
+                if (aux.GetType() == typeof(Button))
+                {
+                    Button b = (Button)aux;
 
-                if (material.Stock < 1)
-                {
-                    MessageBox.Show("El producto no tiene stock", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop);
-                }
-                else
-                {
-                    material.Stock--;
-                    unit.RepositorioMaterial.Actualizar(material);
-                    materialencontrado = false;
-                    foreach (var item in listamateriales)
+                    String[] btname = b.Name.Split('_');
+                    int cx = Convert.ToInt32(btname[1].Trim());
+                    material = unit.RepositorioMaterial.ObtenerUno(c => c.MaterialId == cx);
+
+                    if (material.Stock < 1)
                     {
-                        if(item.MaterialId == material.MaterialId)
+                        MessageBox.Show("El producto no tiene stock", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop);
+                    }
+                    else
+                    {
+                        material.Stock--;
+                        unit.RepositorioMaterial.Actualizar(material);
+                        materialencontrado = false;
+                        foreach (var item in listamateriales)
                         {
-                            materialencontrado = true;
-                            item.Cantidad++;
-                            material.Calcularpreciototal();
+                            if (item.MaterialId == material.MaterialId)
+                            {
+                                materialencontrado = true;
+                                item.Cantidad++;
+                                material.Calcularpreciototal();
+                            }
                         }
-                    }
-                    if (materialencontrado == false)
-                    {
-                        material.Cantidad=1;
-                        material.PrecioTotal=material.Precio;
-                        listamateriales.Add(material);
-                    }
-                    //fabricacion.Materiales = listamateriales;
+                        if (materialencontrado == false)
+                        {
+                            material.Cantidad = 1;
+                            material.PrecioTotal = material.Precio;
+                            listamateriales.Add(material);
+                        }
+                        //fabricacion.Materiales = listamateriales;
 
-                    dg_material_aplicado.ItemsSource = "";
-                    dg_material_aplicado.ItemsSource = listamateriales;
+                        dg_material_aplicado.ItemsSource = "";
+                        dg_material_aplicado.ItemsSource = listamateriales;
+                    }
                 }
             }
+            else { MessageBox.Show("Tiene que estar en una fabricacion"); }
         }
 
         //Clickar en delete en datagrid
@@ -1365,7 +1379,7 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             }
             escritura.WriteLine("");
             escritura.WriteLine(montaje.Cantidad +" Servicios-----Montaje" + escribirespaciosenblanco(7) + montaje.PrecioTotal + "€");
-            if (producto.Precio<total)
+            if (producto.Precio!=total)
             {
                 if (MessageBox.Show("¿El precio del producto y el total de recibo no coinciden, quiere modificarlo?", "Cancelar", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
@@ -1428,7 +1442,9 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             }
             
             dg_material_aplicado.ItemsSource = listamateriales;
-            listafabricaciones.Count();
+            bt_aplicarcambios.Visibility = Visibility.Visible;
+            bt_generar_materiales.Visibility = Visibility.Visible;
+            fabricacionaplicada = true;
         }
 
         private void bt_aplicarcambios_Click(object sender, RoutedEventArgs e)
@@ -1442,6 +1458,9 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
                 cb_fabricacionid.SelectedIndex = 0;
                 fabricacioneseleccionado = listafabricaciones.ElementAt(cb_fabricacionid.SelectedIndex).FabricacionId;
             }
+            fabricacionaplicada = false;
+            MessageBox.Show("Cambios aplicados");
+
         }
 
         private void bt_generar_materiales_Click(object sender, RoutedEventArgs e)
