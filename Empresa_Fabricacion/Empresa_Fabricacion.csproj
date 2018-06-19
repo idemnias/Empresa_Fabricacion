@@ -105,11 +105,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Migrations\201806172101236_Migracion.cs" />
-    <Compile Include="Migrations\201806172101236_Migracion.Designer.cs">
-      <DependentUpon>201806172101236_Migracion.cs</DependentUpon>
+    <Compile Include="Migrations\201806190904183_Migracion.cs" />
+    <Compile Include="Migrations\201806190904183_Migracion.Designer.cs">
+      <DependentUpon>201806190904183_Migracion.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Model\Categoria.cs" />
+    <Compile Include="Repositorios\RepositorioCategoria.cs" />
+    <Compile Include="VentanaCategorias.xaml.cs">
+      <DependentUpon>VentanaCategorias.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VentanaCorreo.xaml.cs">
       <DependentUpon>VentanaCorreo.xaml</DependentUpon>
     </Compile>
@@ -129,6 +134,10 @@
     <Compile Include="Repositorios\RepositorioMaterial.cs" />
     <Compile Include="Repositorios\RepositorioProducto.cs" />
     <Compile Include="Repositorios\RepositorioProveedor.cs" />
+    <Page Include="VentanaCategorias.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="VentanaCorreo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -160,8 +169,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201806172101236_Migracion.resx">
-      <DependentUpon>201806172101236_Migracion.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201806190904183_Migracion.resx">
+      <DependentUpon>201806190904183_Migracion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -31,7 +31,7 @@ namespace Empresa_Fabricacion
         }
 
 
-        //Enviar correo
+        //Método de enviar correo
         private void EnviarCorreo(Empleado empleado)
         {
             try
@@ -39,9 +39,9 @@ namespace Empresa_Fabricacion
                 MailMessage mail = new MailMessage();
                 SmtpClient smtserver = new SmtpClient("smtp.gmail.com", 587);
 
-                mail.From = new MailAddress("CustomComputerdam@gmail.com", "Custom Commputer", Encoding.UTF8);
+                mail.From = new MailAddress("CustomComputerdam@gmail.com", "Custom Computer", Encoding.UTF8);
 
-                mail.Subject = "Olvido de usuario o contraseña";
+                mail.Subject = "Recordatorio de usuario y contraseña";
                 mail.SubjectEncoding = Encoding.UTF8;
                 mail.Body = "<body><h1>Usuario:</h1></p><h2>"+empleado.Usuario+"</h2>" +
                     "<h2>Contraseña:</h2></p><h3>"+empleado.Contraseña+"</h3></body>";
@@ -60,6 +60,7 @@ namespace Empresa_Fabricacion
             }
         }
 
+        //clic en enviar correo
         private void bt_enviarcorreo_Click(object sender, RoutedEventArgs e)
         {
             empleado = new Empleado();

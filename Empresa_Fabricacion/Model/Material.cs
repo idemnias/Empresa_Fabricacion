@@ -26,8 +26,10 @@ namespace Empresa_Fabricacion.Model
         public string Foto { get; set; }
 
         public int ProveedorId { get; set; }
+        public int CategoriaId { get; set; }
 
         public virtual Proveedor Proveedores { get; set; }
+        public virtual Categoria Categorias { get; set; }
         public virtual ICollection<Fabricacion> Fabricaciones { get; set; }
 
         public void Calcularpreciototal()

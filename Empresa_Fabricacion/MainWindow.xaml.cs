@@ -37,14 +37,17 @@ namespace Empresa_Fabricacion
         Proveedor proveedor = new Proveedor();
         Cliente cliente = new Cliente();
         Material material = new Material();
+        Categoria categoria = new Categoria();
         int clienteseleccionado;
         int productoseleccionado;
+        int categoriaseleccionado;
         int fabricacioneseleccionado=1;
         System.Windows.Style estilo;
         bool materialencontrado = false;
         bool fabricacionaplicada = false;
         List<Cliente> listaclientes = new List<Cliente>();
         List<Proveedor> listaproveedores = new List<Proveedor>();
+        List<Categoria> listacategorias = new List<Categoria>();
         Producto producto = new Producto();
         List<Producto> listaproductos = new List<Producto>();
         List<Material> listamateriales = new List<Material>();
@@ -73,6 +76,8 @@ namespace Empresa_Fabricacion
 
 //Limpiar grids y botones
 #region LIMPIAR GRIDS Y BOTONES
+        
+
         private void LimpiarGrids()
         {
             grid_fabricacion.Visibility = Visibility.Hidden;
@@ -155,6 +160,7 @@ namespace Empresa_Fabricacion
             BitmapImage bit = new BitmapImage();
             imagen_materiales.Source = bit;
             RellenarComboboxProveedores();
+            RellenarComboboxCategoria();
             dg_material.ItemsSource = unit.RepositorioMaterial.ObtenerTodo().ToList();
         }
 
@@ -341,12 +347,15 @@ namespace Empresa_Fabricacion
 //Clicks Clases
 #region CLICKS CLASES
 
+        //inicio
         private void bt_inicio_Click(object sender, RoutedEventArgs e)
         {
             LimpiarGrids();
             grid_inicio.Visibility = Visibility.Visible;
             LimpiarBotones();
         }
+        
+        //fabricacion
         private void bt_fabricacion_Click(object sender, RoutedEventArgs e)
         {
             LimpiarGrids();
@@ -356,12 +365,14 @@ namespace Empresa_Fabricacion
             RellenarComboboxFabricacion();
         }
 
+        //material
         private void bt_material_Click(object sender, RoutedEventArgs e)
         {
             LimpiarGrids();
             grid_material .Visibility = Visibility.Visible;
         }
 
+        //producto
         private void bt_producto_Click(object sender, RoutedEventArgs e)
         {
             LimpiarGrids();
@@ -371,6 +382,7 @@ namespace Empresa_Fabricacion
             RellenarComboboxClientes();
         }
 
+        //cliente
         private void bt_cliente_Click(object sender, RoutedEventArgs e)
         {
             LimpiarGrids();
@@ -381,6 +393,7 @@ namespace Empresa_Fabricacion
             DesactivarBotonesCliente();
         }
 
+        //proveedor
         private void bt_proveedor_Click(object sender, RoutedEventArgs e)
         {
             LimpiarGrids();
@@ -391,6 +404,7 @@ namespace Empresa_Fabricacion
             DesactivarBotonesEmpleado();
         }
 
+        //empleado
         private void bt_empleado_Click(object sender, RoutedEventArgs e)
         {
             LimpiarGrids();
@@ -502,26 +516,14 @@ namespace Empresa_Fabricacion
             ventana.ShowDialog();
         }
 
-        
 
-#endregion
+
+        #endregion
 
 //Empleados
 #region EMPLEADOS
-private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
-        {
-            unit.RepositorioEmpleado.Crear(empleado);
-            LimpiarEmpleados();
-            DesactivarBotonesEmpleado();
-        }
 
-        private void bt_e_modificar_Click(object sender, RoutedEventArgs e)
-        {
-            unit.RepositorioEmpleado.Actualizar(empleado);
-            LimpiarEmpleados();
-            DesactivarBotonesEmpleado();
-        }
-
+        //nuevo empleado
         private void bt_e_nuevo_Click(object sender, RoutedEventArgs e)
         {
             empleado = new Empleado();
@@ -530,13 +532,38 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             DesactivarBotonesEmpleado();
         }
 
-        private void bt_e_eliminar_Click(object sender, RoutedEventArgs e)
+        //añadir empleado
+        private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
         {
-            unit.RepositorioEmpleado.Eliminar(empleado);
+            unit.RepositorioEmpleado.Crear(empleado);
             LimpiarEmpleados();
             DesactivarBotonesEmpleado();
+            MessageBox.Show("Empleado nuevo añadido");
         }
 
+        //modificar empleado
+        private void bt_e_modificar_Click(object sender, RoutedEventArgs e)
+        {
+            unit.RepositorioEmpleado.Actualizar(empleado);
+            LimpiarEmpleados();
+            DesactivarBotonesEmpleado();
+            MessageBox.Show("Empleado modificado");
+        }
+
+        //eliminar empleado
+        private void bt_e_eliminar_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("¿Desea eliminar el empleado?", "Cancelar", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                unit.RepositorioEmpleado.Eliminar(empleado);
+                LimpiarEmpleados();
+                DesactivarBotonesEmpleado();
+            }
+            else { MessageBox.Show("Eliminación de empleado cancelada"); }
+            
+        }
+
+        //clic en datagrid de empleado
         private void dg_empleado_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -555,36 +582,45 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
 //Proveedores
 #region PROVEEDORES
 
-       
-
+        //nuevo proveedor
         private void bt_p_nuevo_Click(object sender, RoutedEventArgs e)
         {
             proveedor = new Proveedor();
             grid_proveedor.DataContext = proveedor;
             DesactivarBotonesProveedor();
         }
-
+        
+        //añadir proveedor
         private void bt_p_añadir_Click(object sender, RoutedEventArgs e)
         {
             unit.RepositorioProveedor.Crear(proveedor);
             LimpiarProveedores();
             DesactivarBotonesProveedor();
+            MessageBox.Show("Proveedor nuevo añadido");
         }
 
+        //modificar proveedor
         private void bt_p_modificar_Click(object sender, RoutedEventArgs e)
         {
             unit.RepositorioProveedor.Actualizar(proveedor);
             LimpiarProveedores();
             DesactivarBotonesProveedor();
+            MessageBox.Show("Proveedor modificado");
         }
 
+        //eliminar proveedor
         private void bt_p_eliminar_Click(object sender, RoutedEventArgs e)
         {
-            unit.RepositorioProveedor.Eliminar(proveedor);
-            LimpiarProveedores();
-            DesactivarBotonesProveedor();
+            if (MessageBox.Show("¿Desea eliminar el proveedor?", "Cancelar", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                unit.RepositorioProveedor.Eliminar(proveedor);
+                LimpiarProveedores();
+                DesactivarBotonesProveedor();
+            }
+            else { MessageBox.Show("Eliminación de proveedor cancelada"); }
         }
 
+        //clic en datagrid de proveedor
         private void dg_proveedor_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -603,6 +639,7 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
 //Clientes
 #region CLIENTES
 
+        //nuevo cliente
         private void bt_c_nuevo_Click(object sender, RoutedEventArgs e)
         {
             cliente = new Cliente();
@@ -610,27 +647,37 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             DesactivarBotonesCliente();
         }
 
+        //añadir nuevo cliente
         private void bt_c_añadir_Click(object sender, RoutedEventArgs e)
         {
             unit.RepositorioCliente.Crear(cliente);
             LimpiarCliente();
             DesactivarBotonesCliente();
+            MessageBox.Show("Cliente nuevo añadido");
         }
 
+        //modificar cliente
         private void bt_c_modificar_Click(object sender, RoutedEventArgs e)
         {
             unit.RepositorioCliente.Actualizar(cliente);
             LimpiarCliente();
             DesactivarBotonesCliente();
+            MessageBox.Show("Cliente modificado");
         }
 
+        //eliminar cliente
         private void bt_c_eliminar_Click(object sender, RoutedEventArgs e)
         {
-            unit.RepositorioCliente.Eliminar(cliente);
-            LimpiarCliente();
-            DesactivarBotonesCliente();
+            if (MessageBox.Show("¿Desea eliminar el cliente?", "Cancelar", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                unit.RepositorioCliente.Eliminar(cliente);
+                LimpiarCliente();
+                DesactivarBotonesCliente();
+            }
+            else { MessageBox.Show("Eliminación de cliente cancelada"); }
         }
 
+        //clic en datagrid de cliente
         private void dg_cliente_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -648,6 +695,7 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
 //Productos
 #region PRODUCTOS
 
+        //rellenar combobox de clientes
         private void RellenarComboboxClientes()
         {
             cb_pr_cliente.Items.Clear();
@@ -660,6 +708,7 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             if (cb_pr_cliente != null) cb_pr_cliente.SelectedIndex = 0;
         }
 
+        //aceptar cliente
         private void bt_p_seleccionar_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -680,11 +729,13 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             
         }
 
+        //clic en combobox de clientes
         private void cb_p_cliente_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             clienteseleccionado = cb_pr_cliente.SelectedIndex;
         }
 
+        //nuevo producto
         private void bt_pr_nuevo_Click(object sender, RoutedEventArgs e)
         {
             producto = new Producto();
@@ -693,39 +744,54 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             DesactivarBotonesProductos();
         }
 
+        //añadir producto
         private void bt_pr_añadir_Click(object sender, RoutedEventArgs e)
         {
             if (producto == null) { producto = new Producto(); }
             producto.ClienteId = cliente.ClienteId;
+
             if (tb_pr_fechaventa.Text == "") { producto.FechaVenta = DateTime.Today; }
-            else { producto.FechaVenta = Convert.ToDateTime(tb_pr_fechaventa.Text); }            
+            else { producto.FechaVenta = Convert.ToDateTime(tb_pr_fechaventa.Text); }   
+            
             unit.RepositorioProducto.Crear(producto);
             LimpiarProductos();
             DesactivarBotonesProductos();
             dg_producto.ItemsSource = unit.RepositorioProducto.ObtenerVarios(c => c.ClienteId == cliente.ClienteId).ToList();
+            MessageBox.Show("Producto nuevo añadido");
         }
 
+        //modificar producto
         private void bt_pr_modificar_Click(object sender, RoutedEventArgs e)
         {
             if (tb_pr_fechaventa.Text == "") { producto.FechaVenta = DateTime.Today; }
             else { producto.FechaVenta = Convert.ToDateTime(tb_pr_fechaventa.Text); }
+
             unit.RepositorioProducto.Actualizar(producto);
             LimpiarProductos();
             DesactivarBotonesProductos();
             dg_producto.ItemsSource = unit.RepositorioProducto.ObtenerVarios(c => c.ClienteId == cliente.ClienteId).ToList();
+            MessageBox.Show("Producto modificado");
         }
 
+        //eliminar producto
         private void bt_pr_eliminar_Click(object sender, RoutedEventArgs e)
         {
-            producto.ClienteId = cliente.ClienteId;
-            if (tb_pr_fechaventa.Text == "") { producto.FechaVenta = DateTime.Today; }
-            else { producto.FechaVenta = Convert.ToDateTime(tb_pr_fechaventa.Text); }
-            unit.RepositorioProducto.Eliminar(producto);
-            LimpiarProductos();
-            DesactivarBotonesProductos();
-            dg_producto.ItemsSource = unit.RepositorioProducto.ObtenerVarios(c => c.ClienteId == cliente.ClienteId).ToList();
+            if (MessageBox.Show("¿Desea eliminar el producto?", "Cancelar", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                producto.ClienteId = cliente.ClienteId;
+
+                if (tb_pr_fechaventa.Text == "") { producto.FechaVenta = DateTime.Today; }
+                else { producto.FechaVenta = Convert.ToDateTime(tb_pr_fechaventa.Text); }
+
+                unit.RepositorioProducto.Eliminar(producto);
+                LimpiarProductos();
+                DesactivarBotonesProductos();
+                dg_producto.ItemsSource = unit.RepositorioProducto.ObtenerVarios(c => c.ClienteId == cliente.ClienteId).ToList();
+            }
+            else { MessageBox.Show("Eliminación de producto cancelada"); }
         }
 
+        //clic al datagrid de producto
         private void dg_producto_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -740,11 +806,13 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             }
         }
 
+        //chequear el boton de vendido
         private void cb_p_vendido_Checked(object sender, RoutedEventArgs e)
         {
             producto.Vendido = (bool) cb_pr_vendido.IsChecked;
         }
 
+        //clic a generar factura
         private void bt_pr_generarfactura_Click(object sender, RoutedEventArgs e)
         {
             fabricacion = unit.RepositorioFabricacion.ObtenerUno(x => x.ProductoId == producto.ProductoId);
@@ -805,16 +873,19 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             return clientedeproducto;
         }
 
+        //clic en combobox de clientes
         private void cb_f_clienteid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             cliente = listaclientes[cb_f_clienteid.SelectedIndex];
         }
 
+        //clic en combobox de producto
         private void cb_f_producto_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             productoseleccionado = cb_f_producto.SelectedIndex;
         }
 
+        //clic boton cuando aceptas el producto
         private void bt_f_seleccionar_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -849,6 +920,7 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             return estaempleado;
         }
 
+        //nueva fabricacion
         private void bt_f_nuevo_Click(object sender, RoutedEventArgs e)
         {
             fabricacion = new Fabricacion();
@@ -860,6 +932,7 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             DesactivarBotonesFabricacion();
         }
 
+        //añadir fabricacion
         private void bt_f_añadir_Click(object sender, RoutedEventArgs e)
         {
             if (fabricacion == null) { fabricacion = new Fabricacion(); }
@@ -882,18 +955,23 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             {
                 unit.RepositorioFabricacion.Crear(fabricacion);
             }
+
             LimpiarFabricacion();
             cb_f_clienteid.SelectedIndex = clienteseleccionado;
             DesactivarBotonesFabricacion();
             dg_fabricacion.ItemsSource = unit.RepositorioFabricacion.ObtenerVarios(c => c.ProductoId == producto.ProductoId).ToList();
+            MessageBox.Show("Fabricación nueva añadida");
         }
 
+        //modificar fabricacion
         private void bt_f_modificar_Click(object sender, RoutedEventArgs e)
         {
             if (tb_f_fechainicio.Text == "") { fabricacion.FechaInicio = DateTime.Today; }
             else { fabricacion.FechaInicio = Convert.ToDateTime(tb_f_fechainicio.Text); }
+
             if (tb_f_fechafinal.Text == "") { fabricacion.FechaAcaba = DateTime.Today; }
             else { fabricacion.FechaAcaba = Convert.ToDateTime(tb_f_fechafinal.Text); }
+
             fabricacion.ClienteId = cliente.ClienteId;
 
             //agregar fabricacion a empleado
@@ -913,22 +991,30 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             cb_f_clienteid.SelectedIndex = clienteseleccionado;
             DesactivarBotonesFabricacion();
             dg_fabricacion.ItemsSource = unit.RepositorioFabricacion.ObtenerVarios(c => c.ProductoId == producto.ProductoId).ToList();
-        
+            MessageBox.Show("Fabricación modificada");
         }
 
+        //eliminar fabricacion
         private void bt_f_eliminar_Click(object sender, RoutedEventArgs e)
-        { 
-            if (tb_f_fechainicio.Text == "") { fabricacion.FechaInicio = DateTime.Today; }
-            else { fabricacion.FechaInicio = Convert.ToDateTime(tb_f_fechainicio.Text); }
-            if (tb_f_fechainicio.Text == "") { fabricacion.FechaInicio = DateTime.Today; }
-            else { fabricacion.FechaInicio = Convert.ToDateTime(tb_f_fechainicio.Text); }
-            unit.RepositorioFabricacion.Eliminar(fabricacion);
-            LimpiarFabricacion();
-            cb_f_clienteid.SelectedIndex = clienteseleccionado;
-            DesactivarBotonesFabricacion();
-            dg_fabricacion.ItemsSource = unit.RepositorioFabricacion.ObtenerVarios(c => c.ProductoId == producto.ProductoId).ToList();
+        {
+            if (MessageBox.Show("¿Desea eliminar la fabricación?", "Cancelar", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                if (tb_f_fechainicio.Text == "") { fabricacion.FechaInicio = DateTime.Today; }
+                else { fabricacion.FechaInicio = Convert.ToDateTime(tb_f_fechainicio.Text); }
+
+                if (tb_f_fechainicio.Text == "") { fabricacion.FechaInicio = DateTime.Today; }
+                else { fabricacion.FechaInicio = Convert.ToDateTime(tb_f_fechainicio.Text); }
+
+                unit.RepositorioFabricacion.Eliminar(fabricacion);
+                LimpiarFabricacion();
+                cb_f_clienteid.SelectedIndex = clienteseleccionado;
+                DesactivarBotonesFabricacion();
+                dg_fabricacion.ItemsSource = unit.RepositorioFabricacion.ObtenerVarios(c => c.ProductoId == producto.ProductoId).ToList();
+            }
+            else { MessageBox.Show("Eliminación de fabricación cancelada"); }
         }
 
+        //clic en datagrid de fabricación
         private void dg_fabricacion_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -954,6 +1040,7 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             }
         }
 
+        //clic en checkbox de fabricado
         private void cb_f_fabricado_Checked(object sender, RoutedEventArgs e)
         {
             fabricacion.Fabricado = (bool)cb_f_fabricado.IsChecked;
@@ -964,22 +1051,31 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
 //Materiales
 #region MATERIALES
 
+        //clic en boton de gestión de materiales
         private void bt_m_gestion_Click(object sender, RoutedEventArgs e)
+        {
+            Metodo_Gestion();
+        }
+
+        //método de gestion para llamarlo desde otras ventanas
+        public void Metodo_Gestion()
         {
             LimpiarGrids();
             grid_material_gestion.Visibility = Visibility.Visible;
             LimpiarMaterial();
             grid_material_gestion.DataContext = material;
             RellenarComboboxProveedores();
+            RellenarComboboxCategoria();
             DesactivarBotonesMaterial();
         }
 
+        //clic en boton de materiales utilizados
         private void bt_m_utilizacion_Click(object sender, RoutedEventArgs e)
         {
             LimpiarGrids();
             grid_material_utilizado.Visibility = Visibility.Visible;
             sp_materiales.Children.Clear();
-            sp_proveedores.Children.Clear();
+            sp_categorias.Children.Clear();
             GenerarBotones();
             RellenarComboboxFabricacionId();          
             if (cb_fabricacionid != null && listafabricaciones.Count != 0)
@@ -994,6 +1090,7 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             
         }
 
+        //rellenar combobox de fabricaciónid
         private void RellenarComboboxFabricacionId()
         {
             cb_fabricacionid.Items.Clear();
@@ -1005,6 +1102,7 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             }
         }
 
+        //método para devolver imagen pasandole un string
         private BitmapImage EnseñarBit(string ruta)
         {
             try
@@ -1021,6 +1119,23 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             }
             
         }
+
+        //rellenar combobox de categoria
+        private void RellenarComboboxCategoria()
+        {
+            cb_categoria.Items.Clear();
+            listacategorias = new List<Categoria>();
+            listacategorias = unit.RepositorioCategoria.ObtenerTodo();
+            if (cb_categoria!=null)
+            {
+                foreach (var item in listacategorias)
+                {
+                    cb_categoria.Items.Add(item.CategoriaId+"-->"+item.Nombre);
+                }
+                cb_categoria.SelectedIndex = 0;
+                categoriaseleccionado = listacategorias.ElementAt(0).CategoriaId;
+            }
+        }
         
 
         #endregion
@@ -1028,18 +1143,22 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
 //Materiales - Gestion
 #region MATERIALES - GESTION
 
+        //rellenar combobox de proveedores
         private void RellenarComboboxProveedores()
         {
             cb_m_proveedor.Items.Clear();
             listaproveedores = new List<Proveedor>();
             listaproveedores = unit.RepositorioProveedor.ObtenerTodo();
+
             foreach (var item in listaproveedores)
             {
                 cb_m_proveedor.Items.Add(item.ProveedorId + "--> " + item.Nombre);
             }
+
             if (cb_m_proveedor != null) cb_m_proveedor.SelectedIndex = 0;
         }
 
+        //clic en combobox de proveedores
         private void tb_m_proveedor_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -1052,6 +1171,7 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             
         }
 
+        //nuevo material
         private void bt_m_nuevo_Click(object sender, RoutedEventArgs e)
         {
             material = new Material();
@@ -1059,34 +1179,53 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             BitmapImage bit = new BitmapImage();
             imagen_materiales.Source = bit;
             RellenarComboboxProveedores();
+            RellenarComboboxCategoria();
             DesactivarBotonesMaterial();
         }
 
+        //añadir material
         private void bt_m_añadir_Click(object sender, RoutedEventArgs e)
         {
             material.ProveedorId = proveedor.ProveedorId;
-            material.Foto = tb_m_foto.Text;
+            material.CategoriaId = categoriaseleccionado;
+
+            if (tb_m_foto.Text != "")
+            {
+                material.Foto = tb_m_foto.Text;
+            }
+            else { material.Foto = Environment.CurrentDirectory + @"\Imagenes\imagendefecto.png"; }
+            
             unit.RepositorioMaterial.Crear(material);
             LimpiarMaterial();
             DesactivarBotonesMaterial();
+            MessageBox.Show("Material nuevo añadido");
         }
 
+        //modificar material
         private void bt_m_modificar_Click(object sender, RoutedEventArgs e)
         {
             material.ProveedorId = proveedor.ProveedorId;
             material.Foto = tb_m_foto.Text;
+            material.CategoriaId = listacategorias.ElementAt(cb_categoria.SelectedIndex).CategoriaId;
             unit.RepositorioMaterial.Actualizar(material);
             LimpiarMaterial();
             DesactivarBotonesMaterial();
+            MessageBox.Show("Material modificado");
         }
 
+        //eliminar material
         private void bt_m_eliminar_Click(object sender, RoutedEventArgs e)
         {
-            unit.RepositorioMaterial.Eliminar(material);
-            LimpiarMaterial();
-            DesactivarBotonesMaterial();
+            if (MessageBox.Show("¿Desea eliminar el material?", "Cancelar", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                unit.RepositorioMaterial.Eliminar(material);
+                LimpiarMaterial();
+                DesactivarBotonesMaterial();
+            }
+            else { MessageBox.Show("Eliminación de material cancelado"); }
         }
 
+        //clic en datagrid de materiales
         private void dg_material_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -1095,6 +1234,7 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
                 grid_material_gestion.DataContext = material;
                 imagen_materiales.Source = EnseñarBit(material.Foto);
                 cb_m_proveedor.SelectedIndex = material.ProveedorId-1;
+                cb_categoria.SelectedIndex = material.CategoriaId-1;
                 ActivarBotonesMaterial();
             }
             catch (Exception)
@@ -1102,6 +1242,7 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             }
         }
 
+        //clic en boton de elegir imagen
         private void bt_m_elegir_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Forms.OpenFileDialog explorador = new System.Windows.Forms.OpenFileDialog();
@@ -1112,12 +1253,32 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             imagen_materiales.Source = EnseñarBit(tb_m_foto.Text);
         }
 
+        //clic en combobox de categoria
+        private void cb_categoria_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                categoriaseleccionado = listacategorias.ElementAt(cb_categoria.SelectedIndex).CategoriaId;
+            }
+            catch (Exception)
+            {
+            }
+            
+        }
+
+        //clic en modificar categorias
+        private void bt_m_modificarcategorias_Click(object sender, RoutedEventArgs e)
+        {
+            VentanaCategorias ventanaCategorias = new VentanaCategorias(this);
+            ventanaCategorias.ShowDialog();
+        }
 
         #endregion
 
 //Materiales - Utilizado
 #region MATERIALES - UTILIZADO
 
+        //clic en combobox de fabricacion id
         private void cb_fabricacionid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -1159,27 +1320,25 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             try
 
             {
-                while ( sp_proveedores.Children.Count > 0)
+                while (sp_categorias.Children.Count > 0)
                 {
-                    sp_proveedores.Children.RemoveAt(sp_proveedores.Children.Count - 1);
+                    sp_categorias.Children.RemoveAt(sp_categorias.Children.Count - 1);
                 }
                 estilo = this.FindResource("botonazul") as System.Windows.Style;
 
-                List<Proveedor> proveedores = new List<Proveedor>();
-                proveedores = unit.RepositorioProveedor.ObtenerTodo();
-                for (int i = 0; i < proveedores.Count; i++)
+                List<Categoria> categorias = new List<Categoria>();
+                categorias = unit.RepositorioCategoria.ObtenerTodo();
+                for (int i = 0; i < categorias.Count; i++)
                 {
                     Button n = new Button();
                     
-                    n.Content = proveedores[i].Nombre;
+                    n.Content = categorias[i].Nombre;
                     n.Height = 40;
                     n.Width = 130;
                     n.Margin = new Thickness(2);
-                    n.Click += proveedor_click;
-
-                    //n.Background = GradienteBoton();
+                    n.Click += categoria_click;
                     n.Style = estilo;
-                    sp_proveedores.Children.Add(n);
+                    sp_categorias.Children.Add(n);
                 }
             }
             catch (Exception)
@@ -1190,11 +1349,11 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
         }
 
         //Click  en una categoria y creacion de botones de productos
-        private void proveedor_click(object sender, RoutedEventArgs e)
+        private void categoria_click(object sender, RoutedEventArgs e)
         {
 
             List<Material> listmateriales = new List<Material>();
-            Proveedor cat = new Proveedor();
+            Categoria cat = new Categoria();
 
             estilo = this.FindResource("botonproductosi") as System.Windows.Style;
             System.Windows.Style estilo2 = this.FindResource("botonproductono") as System.Windows.Style;
@@ -1204,8 +1363,8 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             if (aux.GetType() == typeof(Button))
             {
                 var a = sender as Button;
-                cat = unit.RepositorioProveedor.ObtenerUno(d => d.Nombre.Equals(a.Content.ToString()));
-                listmateriales = unit.RepositorioMaterial.ObtenerVarios(c => c.ProveedorId.Equals(cat.ProveedorId));
+                cat = unit.RepositorioCategoria.ObtenerUno(d => d.Nombre.Equals(a.Content.ToString()));
+                listmateriales = unit.RepositorioMaterial.ObtenerVarios(c => c.CategoriaId.Equals(cat.CategoriaId));
 
                 for (int i = 0; i < listmateriales.Count; i++)
                 {
@@ -1280,7 +1439,7 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
                     }
                 }
             }
-            else { MessageBox.Show("Tiene que estar en una fabricacion"); }
+            else { MessageBox.Show("Tiene que estar en una fabricacion", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
         }
 
         //Clickar en delete en datagrid
@@ -1288,7 +1447,7 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (MessageBox.Show("¿Desea eliminar el producto?", "Cancelar", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show("¿Desea eliminar el material de la fabricación?", "Cancelar", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     Material materialaux = listamateriales.ElementAt(dg_material_aplicado.SelectedIndex);
                     material = unit.RepositorioMaterial.ObtenerUno(c => c.MaterialId==materialaux.MaterialId);
@@ -1307,7 +1466,7 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
                 }
                 else
                 {
-                    MessageBox.Show("Cancelada eliminacion");
+                    MessageBox.Show("Eliminación cancelada");
                 }
             }
             catch (Exception)
@@ -1320,8 +1479,9 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
         public void CrearRecibo(Fabricacion fabricacion)
         {   
             /*siempre se mira si existe*/
-            String factura = "  Lista de Materiales de Fabricacion N " + fabricacion.FabricacionId + ".txt";
+            String factura = "Lista de Materiales de Fabricacion N " + fabricacion.FabricacionId + ".txt";
             bool borrar = true;
+
             if (!File.Exists(factura))
             {
                 borrar = true;
@@ -1427,15 +1587,16 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             return espacios;
         }
 
+        //clic en aplicar fabricacion
         private void bt_aplicar_fabricacion_Click(object sender, RoutedEventArgs e)
         {
             listamateriales = new List<Material>();
             dg_material_aplicado.ItemsSource = "";
+
             fabricacion = new Fabricacion();
-            //fabricacion = unit.RepositorioFabricacion.ObtenerUno(c => c.FabricacionId == fabricacioneseleccionado);
             fabricacion = listafabricaciones.Where(c => c.FabricacionId == fabricacioneseleccionado).FirstOrDefault();
             cliente = unit.RepositorioCliente.ObtenerUno(c => c.ClienteId == fabricacion.ClienteId);
-            // dg_material_aplicado.ItemsSource = fabricacion.Materiales;
+
             foreach (var item in fabricacion.Materiales)
             {
                 listamateriales.Add(item);
@@ -1447,6 +1608,7 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
             fabricacionaplicada = true;
         }
 
+        //Aplicar cambios en fabricacion
         private void bt_aplicarcambios_Click(object sender, RoutedEventArgs e)
         {
             fabricacion.Materiales = listamateriales;
@@ -1463,6 +1625,7 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
 
         }
 
+        //generar recibo
         private void bt_generar_materiales_Click(object sender, RoutedEventArgs e)
         {
             CrearRecibo(fabricacion);
@@ -1471,6 +1634,8 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
         #endregion
 
 #region PDF
+
+        //generar factura en pdf
         private void GenerarFactura()
         {
             String imgFile = Environment.CurrentDirectory + @"\Imagenes\iconofactura.png";
@@ -1706,8 +1871,9 @@ private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
 
 
 
-        #endregion
 
-        
+
+        #endregion
+       
     }
 }

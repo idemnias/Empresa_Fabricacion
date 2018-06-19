@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Empresa_Fabricacion"
         mc:Ignorable="d"
-        Title="Empresa de Fabricacion de Ordenadores Custom" Height="581.373" Width="917.157" Icon="Imagenes/Nishad2m8-Hologram-Dock-My-computer.ico" MinWidth="917.157" MinHeight="581.373" WindowStartupLocation="CenterScreen">
+        Title="Empresa de Fabricacion de Ordenadores Custom" Height="603.751" Width="917.157" Icon="Imagenes/Nishad2m8-Hologram-Dock-My-computer.ico" MinWidth="917.157" MinHeight="603.751" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="botontemplate" TargetType="Button">
             <Setter Property="Cursor" Value="Hand"/>
@@ -345,7 +345,7 @@
                 <RowDefinition Height="200"/>
             </Grid.RowDefinitions>
             <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0">
-                <StackPanel Name="sp_proveedores" Grid.Column="0" Grid.Row="0" />
+                <StackPanel Name="sp_categorias" Grid.Column="0" Grid.Row="0" />
             </ScrollViewer>
 
             <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1">
@@ -379,7 +379,7 @@
 
         </Grid>
 
-        <Grid Name="grid_material_gestion" Visibility="Hidden" Grid.Row="1">
+        <Grid Name="grid_material_gestion" Visibility="Visible" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -403,15 +403,17 @@
             <Label Content="Precio" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Content="Stock" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Content="Proveedor" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
-            <Label Content="Foto" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
+            <Label Content="Categoria" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
+            <Label Content="Foto" Grid.Row="7" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
 
             <TextBox Name="tb_m_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir nombre de material" Width="170"/>
             <TextBox Name="tb_m_precio" Text="{Binding Path= Precio , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir precio del material" Width="170"/>
             <TextBox Name="tb_m_stock" Text="{Binding Path= Stock , Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir stock de material" Width="170"/>
             <ComboBox Name="cb_m_proveedor" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="170" ToolTip="Elija el proveedor" SelectionChanged="tb_m_proveedor_SelectionChanged"/>
-            <TextBox Name="tb_m_foto" Text="{Binding Path= Foto , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" ToolTip="Escribir ruta de la foto" HorizontalAlignment="Left" Width="170"/>
-            <Image Name="imagen_materiales" Grid.Row="8" Grid.Column="1" Width="130" Height="130" ToolTip="Imagen" HorizontalAlignment="Left"/>
-            <Button x:Name="bt_m_elegir" Content="..." HorizontalAlignment="Left" Grid.Column="1" Grid.Row="6" Width="24" Height="23" ToolTip="Elección de la imagen" Margin="188,0,0,0" Click="bt_m_elegir_Click" Style="{StaticResource botonverde}"/>
+            <ComboBox Name="cb_categoria" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" ToolTip="Elija el identificador de fabricación." Width="170" Height="26" SelectionChanged="cb_categoria_SelectionChanged" />
+            <TextBox Name="tb_m_foto" Text="{Binding Path= Foto , Mode=TwoWay}" Grid.Row="7" Grid.Column="1" ToolTip="Escribir ruta de la foto" HorizontalAlignment="Left" Width="170"/>
+            <Image Name="imagen_materiales" Grid.Row="8" Grid.Column="1" Width="130" Height="130" ToolTip="Imagen" HorizontalAlignment="Left" Margin="39,0,0,0"/>
+            <Button x:Name="bt_m_elegir" Content="..." HorizontalAlignment="Left" Grid.Column="1" Grid.Row="7" Width="24" Height="23" ToolTip="Elección de la imagen" Margin="188,0,0,0" Click="bt_m_elegir_Click" Style="{StaticResource botonverde}"/>
 
             <DataGrid Name="dg_material" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="7" Margin="0,0,20,0" SelectionChanged="dg_material_SelectionChanged" />
 
@@ -421,6 +423,9 @@
                 <Button Name="bt_m_modificar" Content="Modificar" Visibility="Visible" Width="130" Height="30" ToolTip="Modificar el material" Style="{StaticResource botonazul}" Click="bt_m_modificar_Click"/>
                 <Button Name="bt_m_eliminar" Content="Eliminar" Visibility="Visible" Width="130" Height="30" ToolTip="Eliminar el material" Style="{StaticResource botonrojo}" Click="bt_m_eliminar_Click"/>
             </UniformGrid>
+
+            <Button Name="bt_m_modificarcategorias" Content="Modificar categorias" HorizontalAlignment="Right" Margin="0,0,19,0" Grid.Row="8" Grid.Column="0" Width="130" Height="30" ToolTip="Modificar las categorias" Style="{StaticResource botonazul}" Click="bt_m_modificarcategorias_Click"/>
+
         </Grid>
 
         <Grid Name="grid_producto" Visibility="Hidden" Grid.Row="1">
@@ -472,7 +477,7 @@
             </UniformGrid>
         </Grid>
 
-        <Grid Name="grid_inicio" Visibility="Visible" Grid.Row="1">
+        <Grid Name="grid_inicio" Visibility="Hidden" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -605,7 +610,7 @@
             <Label Content="Dni" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Content="Nombre" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Content="Apellidos" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
-            <Label Content="Direccion" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
+            <Label Content="Correo" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Content="Telefono" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Content="Usuario" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Content="Contraseña" Grid.Row="7" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
@@ -614,7 +619,7 @@
             <TextBox Name="tb_u_dni" Text="{Binding Path= Dni , Mode=TwoWay}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir DNI del empleado" Width="170"/>
             <TextBox Name="tb_u_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir nombre del empleado" Width="170"/>
             <TextBox Name="tb_u_apellidos" Text="{Binding Path= Apellidos , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir apellidos del empleado" Width="170"/>
-            <TextBox Name="tb_u_direccion" Text="{Binding Path= Direccion , Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir dirección del empleado" Width="170"/>
+            <TextBox Name="tb_u_direccion" Text="{Binding Path= Correo , Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir dirección del empleado" Width="170"/>
             <TextBox Name="tb_u_telefono" Text="{Binding Path= Telefono , Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir teléfono del empleado" Width="170"/>
             <TextBox Name="tb_u_usuario" Text="{Binding Path= Usuario , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir usuario del empleado" Width="170"/>
             <TextBox Name="tb_u_contraseña" Text="{Binding Path= Contraseña , Mode=TwoWay}" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir contraseña del empleado" Width="170"/>

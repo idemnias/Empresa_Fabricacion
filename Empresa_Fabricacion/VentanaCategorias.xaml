@@ -1,0 +1,148 @@
+﻿<Window x:Class="Empresa_Fabricacion.VentanaCategorias"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Empresa_Fabricacion"
+        mc:Ignorable="d"
+        Title="VentanaCategorias" Height="328.064" Width="466.452" MinHeight="299.032" MinWidth="466.452" Icon="Imagenes/Nishad2m8-Hologram-Dock-My-computer.ico" WindowStartupLocation="CenterScreen" Closed="Window_Closed">
+    <Window.Resources>
+        <Style x:Key="botonverde" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF00CF00" Offset="0.5"/>
+                        <GradientStop Color="#FF4B614B" Offset="0.15"/>
+                        <GradientStop Color="#FF4B614B" Offset="0.85"/>
+                        <GradientStop Color="#FF1D282B"/>
+                        <GradientStop Color="#FF1D282B" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="#FF0A2476" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF00CF00" Offset="0.496"/>
+                                <GradientStop Color="#FF4B614B" Offset="0.025"/>
+                                <GradientStop Color="#FF4B614B" Offset="0.975"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Foreground" Value="#FF0A2476" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="botonazul" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF00C6FF" Offset="0.5"/>
+                        <GradientStop Color="#FF45575D" Offset="0.15"/>
+                        <GradientStop Color="#FF45575D" Offset="0.85"/>
+                        <GradientStop Color="#FF222D30"/>
+                        <GradientStop Color="#FF222D30" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="#FF0A2476" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF00C6FF" Offset="0.496"/>
+                                <GradientStop Color="#FF45575D" Offset="0.025"/>
+                                <GradientStop Color="#FF45575D" Offset="0.975"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Foreground" Value="#FF0A2476" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="botonrojo" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFD11515" Offset="0.5"/>
+                        <GradientStop Color="#FF641414" Offset="0.15"/>
+                        <GradientStop Color="#FF641414" Offset="0.85"/>
+                        <GradientStop Color="#FF3A0E0E"/>
+                        <GradientStop Color="#FF3A0E0E" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="#FF0A2476" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFD11515" Offset="0.496"/>
+                                <GradientStop Color="#FF641414" Offset="0.025"/>
+                                <GradientStop Color="#FF641414" Offset="0.975"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Foreground" Value="#FF0A2476" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    
+    
+    <Grid Name="grid_categorias">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF3A4DC3" Offset="0"/>
+                <GradientStop Color="White" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <Label Content="Nombre de categoria" Margin="37,44,188,181" FontWeight="Bold" HorizontalContentAlignment="Center" FontSize="17"/>
+        <TextBox Height="39" Margin="52,92,203,0" Text="{Binding Path= Nombre , Mode=TwoWay}" ToolTip="Escriba la categoria" TextWrapping="Wrap" VerticalAlignment="Top" Width="203" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="17"/>
+
+        <Button Name="bt_c_añadir" Content="Añadir" Width="130" Height="30" VerticalAlignment="Center" ToolTip="Añadir una categoria" Style="{StaticResource botonverde}" Click="bt_c_añadir_Click" Margin="0,190,142,0"/>
+        <Button Name="bt_c_nuevo" Content="Nuevo" Width="130" Height="30" VerticalAlignment="Center" ToolTip="Nuevo categoria" Style="{StaticResource botonverde}" Click="bt_c_nuevo_Click" Margin="0,20,142,0"/>
+        <Button Name="bt_c_modificar" Content="Modificar" Visibility="Visible" Width="130" Height="30" ToolTip="Modificar la categoria" Style="{StaticResource botonazul}" Click="bt_c_modificar_Click" Margin="0,145,142,0"/>
+        <Button Name="bt_c_eliminar" Content="Eliminar" Visibility="Visible" Width="130" Height="30" ToolTip="Eliminar la categoria" Style="{StaticResource botonrojo}" Click="bt_c_eliminar_Click" Margin="0,250,142,0"/>
+
+        <ListBox Name="lb_categorias" HorizontalAlignment="Left" Height="277" Margin="283,10,0,0" VerticalAlignment="Top" Width="165" SelectionChanged="lb_categorias_SelectionChanged"/>
+
+
+
+    </Grid>
+</Window>
