@@ -105,9 +105,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Migrations\201806190904183_Migracion.cs" />
-    <Compile Include="Migrations\201806190904183_Migracion.Designer.cs">
-      <DependentUpon>201806190904183_Migracion.cs</DependentUpon>
+    <Compile Include="Migrations\201806201036238_Migracion.cs" />
+    <Compile Include="Migrations\201806201036238_Migracion.Designer.cs">
+      <DependentUpon>201806201036238_Migracion.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Categoria.cs" />
@@ -169,8 +169,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201806190904183_Migracion.resx">
-      <DependentUpon>201806190904183_Migracion.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201806201036238_Migracion.resx">
+      <DependentUpon>201806201036238_Migracion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

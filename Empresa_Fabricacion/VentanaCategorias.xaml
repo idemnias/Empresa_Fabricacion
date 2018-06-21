@@ -133,14 +133,14 @@
         </Grid.Background>
 
         <Label Content="Nombre de categoria" Margin="37,44,188,181" FontWeight="Bold" HorizontalContentAlignment="Center" FontSize="17"/>
-        <TextBox Height="39" Margin="52,92,203,0" Text="{Binding Path= Nombre , Mode=TwoWay}" ToolTip="Escriba la categoria" TextWrapping="Wrap" VerticalAlignment="Top" Width="203" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="17"/>
+        <TextBox Name="tb_nombre_categoria" Height="39" Margin="52,92,203,0" Text="{Binding Path=Nombre , Mode=TwoWay}" ToolTip="Escriba la categoria" TextWrapping="Wrap" VerticalAlignment="Top" Width="203" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="17"/>
 
         <Button Name="bt_c_añadir" Content="Añadir" Width="130" Height="30" VerticalAlignment="Center" ToolTip="Añadir una categoria" Style="{StaticResource botonverde}" Click="bt_c_añadir_Click" Margin="0,190,142,0"/>
         <Button Name="bt_c_nuevo" Content="Nuevo" Width="130" Height="30" VerticalAlignment="Center" ToolTip="Nuevo categoria" Style="{StaticResource botonverde}" Click="bt_c_nuevo_Click" Margin="0,20,142,0"/>
         <Button Name="bt_c_modificar" Content="Modificar" Visibility="Visible" Width="130" Height="30" ToolTip="Modificar la categoria" Style="{StaticResource botonazul}" Click="bt_c_modificar_Click" Margin="0,145,142,0"/>
         <Button Name="bt_c_eliminar" Content="Eliminar" Visibility="Visible" Width="130" Height="30" ToolTip="Eliminar la categoria" Style="{StaticResource botonrojo}" Click="bt_c_eliminar_Click" Margin="0,250,142,0"/>
 
-        <ListBox Name="lb_categorias" HorizontalAlignment="Left" Height="277" Margin="283,10,0,0" VerticalAlignment="Top" Width="165" SelectionChanged="lb_categorias_SelectionChanged"/>
+        <DataGrid Name="lb_categorias" HorizontalAlignment="Left" Height="277" Margin="283,10,0,0" VerticalAlignment="Top" Width="165" SelectionChanged="lb_categorias_SelectionChanged"/>
 
 
 

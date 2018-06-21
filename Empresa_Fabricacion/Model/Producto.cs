@@ -20,7 +20,7 @@ namespace Empresa_Fabricacion.Model
         public int ProductoId { get; set; }
         public string Nombre { get; set; }
         public double Precio { get; set; }
-        public bool Vendido { get; set; }
+        public bool Pagado { get; set; }
         public DateTime FechaVenta { get; set; }
         public string Descripcion { get; set; }
 

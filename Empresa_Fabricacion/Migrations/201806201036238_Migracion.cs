@@ -79,7 +79,7 @@ namespace Empresa_Fabricacion.Migrations
                         ProductoId = c.Int(nullable: false, identity: true),
                         Nombre = c.String(),
                         Precio = c.Double(nullable: false),
-                        Vendido = c.Boolean(nullable: false),
+                        Pagado = c.Boolean(nullable: false),
                         FechaVenta = c.DateTime(nullable: false),
                         Descripcion = c.String(),
                         ClienteId = c.Int(nullable: false),

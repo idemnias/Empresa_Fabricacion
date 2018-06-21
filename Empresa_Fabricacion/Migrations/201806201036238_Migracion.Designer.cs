@@ -13,7 +13,7 @@ namespace Empresa_Fabricacion.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201806190904183_Migracion"; }
+            get { return "201806201036238_Migracion"; }
         }
         
         string IMigrationMetadata.Source

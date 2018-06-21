@@ -121,6 +121,7 @@ namespace Empresa_Fabricacion
         {
             empleado = new Empleado();
             grid_empleado.DataContext = empleado;
+            cb_u_tipocuenta.SelectedIndex = 0;
             dg_empleado.ItemsSource = unit.RepositorioEmpleado.ObtenerTodo().ToList();
         }
         private void LimpiarProveedores()
@@ -322,12 +323,31 @@ namespace Empresa_Fabricacion
             bt_f_añadir.Visibility = Visibility.Hidden;
             bt_f_modificar.Visibility = Visibility.Visible;
             bt_f_eliminar.Visibility = Visibility.Visible;
+            label_fabricacion_empleado.Visibility = Visibility.Visible;
+
+            List<Empleado> auxempleados = new List<Empleado>();
+            foreach (var item in fabricacion.Empleados)
+            {
+                auxempleados.Add(item);
+            }
+            string frase = "Los empleados activos son ";
+            if (auxempleados.Count != 0)
+            {
+                
+                foreach (var item in auxempleados)
+                {
+                    frase = frase + "-" + item.Nombre+"-";
+                }
+            }
+            else { frase = "No hay empleados en esta fabricación"; }
+            label_fabricacion_empleado.Content = frase;
         }
         private void DesactivarBotonesFabricacion()
         {
             bt_f_añadir.Visibility = Visibility.Visible;
             bt_f_modificar.Visibility = Visibility.Hidden;
             bt_f_eliminar.Visibility = Visibility.Hidden;
+            label_fabricacion_empleado.Visibility = Visibility.Hidden;
         }
 
         private void ActivarBotonesMaterial()
@@ -350,6 +370,7 @@ namespace Empresa_Fabricacion
         //inicio
         private void bt_inicio_Click(object sender, RoutedEventArgs e)
         {
+            labelempleado.Visibility = Visibility.Hidden;
             LimpiarGrids();
             grid_inicio.Visibility = Visibility.Visible;
             LimpiarBotones();
@@ -363,6 +384,7 @@ namespace Empresa_Fabricacion
             LimpiarFabricacion();
             DesactivarFabricacionProducto();
             RellenarComboboxFabricacion();
+            label_fabricacion_empleado.Visibility = Visibility.Hidden;
         }
 
         //material
@@ -446,6 +468,13 @@ namespace Empresa_Fabricacion
                     else { }
                     MessageBox.Show("Sesion iniciado correctamente con la cuenta de " + aux.Nombre + " " + aux.Apellidos);
                     usuarioactivo = aux;
+                    labelempleado.Visibility = Visibility.Visible;
+                    if (usuarioactivo.FabricacionId != null)
+                    {
+                        labelempleado.Content = "Ahora mismo este usuario esta trabajando en la fabricación " + usuarioactivo.FabricacionId;
+                    }
+                    else { labelempleado.Content = "Ahora mismo este usuario no tiene fabricación activa"; }
+
                 }
                 else
                 {
@@ -535,19 +564,61 @@ namespace Empresa_Fabricacion
         //añadir empleado
         private void bt_e_añadir_Click(object sender, RoutedEventArgs e)
         {
-            unit.RepositorioEmpleado.Crear(empleado);
-            LimpiarEmpleados();
-            DesactivarBotonesEmpleado();
-            MessageBox.Show("Empleado nuevo añadido");
+            if (tb_u_dni.Text!="")
+            {
+                if (tb_u_nombre.Text != "")
+                {
+                    if (tb_u_direccion.Text != "")
+                    {
+                        if (tb_u_usuario.Text != "")
+                        {
+                            if (tb_u_contraseña.Text != "") 
+                            {
+                                unit.RepositorioEmpleado.Crear(empleado);
+                                LimpiarEmpleados();
+                                DesactivarBotonesEmpleado();
+                                MessageBox.Show("Empleado nuevo añadido");
+                            }
+                            else { MessageBox.Show("El campo contraseña es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+                        }
+                        else { MessageBox.Show("El campo usuario es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+                    }
+                    else { MessageBox.Show("El campo correo es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+                }
+                else { MessageBox.Show("El campo nombre es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+            }
+            else { MessageBox.Show("El campo dni es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+
+            
         }
 
         //modificar empleado
         private void bt_e_modificar_Click(object sender, RoutedEventArgs e)
         {
-            unit.RepositorioEmpleado.Actualizar(empleado);
-            LimpiarEmpleados();
-            DesactivarBotonesEmpleado();
-            MessageBox.Show("Empleado modificado");
+            if (tb_u_dni.Text != "")
+            {
+                if (tb_u_nombre.Text != "")
+                {
+                    if (tb_u_direccion.Text != "")
+                    {
+                        if (tb_u_usuario.Text != "")
+                        {
+                            if (tb_u_contraseña.Text != "")
+                            {
+                                unit.RepositorioEmpleado.Actualizar(empleado);
+                                LimpiarEmpleados();
+                                DesactivarBotonesEmpleado();
+                                MessageBox.Show("Empleado modificado");
+                            }
+                            else { MessageBox.Show("Necesitamos que cubra el contraseña", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+                        }
+                        else { MessageBox.Show("Necesitamos que cubra el usuario", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+                    }
+                    else { MessageBox.Show("Necesitamos que cubra el correo", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+                }
+                else { MessageBox.Show("Necesitamos que cubra el nombre", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+            }
+            else { MessageBox.Show("Necesitamos que cubra el dni", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
         }
 
         //eliminar empleado
@@ -593,19 +664,51 @@ namespace Empresa_Fabricacion
         //añadir proveedor
         private void bt_p_añadir_Click(object sender, RoutedEventArgs e)
         {
-            unit.RepositorioProveedor.Crear(proveedor);
-            LimpiarProveedores();
-            DesactivarBotonesProveedor();
-            MessageBox.Show("Proveedor nuevo añadido");
+            if (tb_p_nombre.Text != "")
+            {
+                if (tb_p_telefono.Text != "")
+                {
+                    if (tb_p_contacto.Text!="")
+                    {
+                        if (tb_p_correo.Text!="")
+                        {
+                            unit.RepositorioProveedor.Crear(proveedor);
+                            LimpiarProveedores();
+                            DesactivarBotonesProveedor();
+                            MessageBox.Show("Proveedor nuevo añadido");
+                        }
+                        else { MessageBox.Show("El campo correo es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+                    }
+                    else { MessageBox.Show("El campo contacto es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+                }
+                else { MessageBox.Show("El campo telefono es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+            }
+            else { MessageBox.Show("El campo nombre es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }         
         }
 
         //modificar proveedor
         private void bt_p_modificar_Click(object sender, RoutedEventArgs e)
         {
-            unit.RepositorioProveedor.Actualizar(proveedor);
-            LimpiarProveedores();
-            DesactivarBotonesProveedor();
-            MessageBox.Show("Proveedor modificado");
+            if (tb_p_nombre.Text != "")
+            {
+                if (tb_p_telefono.Text != "")
+                {
+                    if (tb_p_contacto.Text != "")
+                    {
+                        if (tb_p_correo.Text != "")
+                        {
+                            unit.RepositorioProveedor.Actualizar(proveedor);
+                            LimpiarProveedores();
+                            DesactivarBotonesProveedor();
+                            MessageBox.Show("Proveedor modificado");
+                        }
+                        else { MessageBox.Show("El campo correo es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+                    }
+                    else { MessageBox.Show("El campo contacto es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+                }
+                else { MessageBox.Show("El campo telefono es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+            }
+            else { MessageBox.Show("El campo nombre es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
         }
 
         //eliminar proveedor
@@ -650,19 +753,51 @@ namespace Empresa_Fabricacion
         //añadir nuevo cliente
         private void bt_c_añadir_Click(object sender, RoutedEventArgs e)
         {
-            unit.RepositorioCliente.Crear(cliente);
-            LimpiarCliente();
-            DesactivarBotonesCliente();
-            MessageBox.Show("Cliente nuevo añadido");
+            if (tb_c_nif.Text!="")
+            {
+                if (tb_c_nombre.Text!="")
+                {
+                    if (tb_c_apellidos.Text!="")
+                    {
+                        if (tb_c_telefono.Text!="")
+                        {
+                            unit.RepositorioCliente.Crear(cliente);
+                            LimpiarCliente();
+                            DesactivarBotonesCliente();
+                            MessageBox.Show("Cliente nuevo añadido");
+                        }
+                        else { MessageBox.Show("El campo telefono es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+                    }
+                    else { MessageBox.Show("El campo apellidos es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+                }
+                else { MessageBox.Show("El campo nombre es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+            }
+            else { MessageBox.Show("El campo nif es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }            
         }
 
         //modificar cliente
         private void bt_c_modificar_Click(object sender, RoutedEventArgs e)
         {
-            unit.RepositorioCliente.Actualizar(cliente);
-            LimpiarCliente();
-            DesactivarBotonesCliente();
-            MessageBox.Show("Cliente modificado");
+            if (tb_c_nif.Text != "")
+            {
+                if (tb_c_nombre.Text != "")
+                {
+                    if (tb_c_apellidos.Text != "")
+                    {
+                        if (tb_c_telefono.Text != "")
+                        {
+                            unit.RepositorioCliente.Actualizar(cliente);
+                            LimpiarCliente();
+                            DesactivarBotonesCliente();
+                            MessageBox.Show("Cliente modificado");
+                        }
+                        else { MessageBox.Show("El campo telefono es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+                    }
+                    else { MessageBox.Show("El campo apellidos es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+                }
+                else { MessageBox.Show("El campo nombre es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+            }
+            else { MessageBox.Show("El campo nif es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
         }
 
         //eliminar cliente
@@ -747,30 +882,58 @@ namespace Empresa_Fabricacion
         //añadir producto
         private void bt_pr_añadir_Click(object sender, RoutedEventArgs e)
         {
-            if (producto == null) { producto = new Producto(); }
-            producto.ClienteId = cliente.ClienteId;
+            if (tb_pr_nombre.Text != "")
+            {
+                if (tb_pr_Descripcion.Text != "")
+                {
+                    
+                    if (producto == null) { producto = new Producto(); }
+                    producto.ClienteId = cliente.ClienteId;
 
-            if (tb_pr_fechaventa.Text == "") { producto.FechaVenta = DateTime.Today; }
-            else { producto.FechaVenta = Convert.ToDateTime(tb_pr_fechaventa.Text); }   
-            
-            unit.RepositorioProducto.Crear(producto);
-            LimpiarProductos();
-            DesactivarBotonesProductos();
-            dg_producto.ItemsSource = unit.RepositorioProducto.ObtenerVarios(c => c.ClienteId == cliente.ClienteId).ToList();
-            MessageBox.Show("Producto nuevo añadido");
+                    if (tb_pr_fechaventa.Text == "") { producto.FechaVenta = DateTime.Today; }
+                    else { producto.FechaVenta = Convert.ToDateTime(tb_pr_fechaventa.Text); }
+
+                    int result = DateTime.Compare(producto.FechaVenta, DateTime.Today);
+                    if (result <= 0)
+                    { 
+
+                        unit.RepositorioProducto.Crear(producto);
+                        LimpiarProductos();
+                        DesactivarBotonesProductos();
+                        dg_producto.ItemsSource = unit.RepositorioProducto.ObtenerVarios(c => c.ClienteId == cliente.ClienteId).ToList();
+                        MessageBox.Show("Producto nuevo añadido");
+                    }
+                    else { MessageBox.Show("El campo fecha no es valido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+                }
+                else { MessageBox.Show("El campo descripción es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+            }
+            else { MessageBox.Show("El campo nombre es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
         }
 
         //modificar producto
         private void bt_pr_modificar_Click(object sender, RoutedEventArgs e)
         {
-            if (tb_pr_fechaventa.Text == "") { producto.FechaVenta = DateTime.Today; }
-            else { producto.FechaVenta = Convert.ToDateTime(tb_pr_fechaventa.Text); }
+            if (tb_pr_nombre.Text != "")
+            {
+                if (tb_pr_Descripcion.Text != "")
+                {
+                        if (tb_pr_fechaventa.Text == "") { producto.FechaVenta = DateTime.Today; }
+                        else { producto.FechaVenta = Convert.ToDateTime(tb_pr_fechaventa.Text); }
 
-            unit.RepositorioProducto.Actualizar(producto);
-            LimpiarProductos();
-            DesactivarBotonesProductos();
-            dg_producto.ItemsSource = unit.RepositorioProducto.ObtenerVarios(c => c.ClienteId == cliente.ClienteId).ToList();
-            MessageBox.Show("Producto modificado");
+                    int result = DateTime.Compare(producto.FechaVenta, DateTime.Today);
+                    if (result <= 0)
+                    {
+                        unit.RepositorioProducto.Actualizar(producto);
+                        LimpiarProductos();
+                        DesactivarBotonesProductos();
+                        dg_producto.ItemsSource = unit.RepositorioProducto.ObtenerVarios(c => c.ClienteId == cliente.ClienteId).ToList();
+                        MessageBox.Show("Producto modificado");
+                    }
+                    else { MessageBox.Show("El campo fecha no es valido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+                }
+                else { MessageBox.Show("El campo descripción es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+            }
+            else { MessageBox.Show("El campo nombre es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
         }
 
         //eliminar producto
@@ -809,7 +972,7 @@ namespace Empresa_Fabricacion
         //chequear el boton de vendido
         private void cb_p_vendido_Checked(object sender, RoutedEventArgs e)
         {
-            producto.Vendido = (bool) cb_pr_vendido.IsChecked;
+            producto.Pagado = (bool) cb_pr_vendido.IsChecked;
         }
 
         //clic a generar factura
@@ -876,7 +1039,14 @@ namespace Empresa_Fabricacion
         //clic en combobox de clientes
         private void cb_f_clienteid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            cliente = listaclientes[cb_f_clienteid.SelectedIndex];
+            try
+            {
+                cliente = listaclientes[cb_f_clienteid.SelectedIndex];
+            }
+            catch (Exception)
+            {
+            }
+            
         }
 
         //clic en combobox de producto
@@ -888,8 +1058,6 @@ namespace Empresa_Fabricacion
         //clic boton cuando aceptas el producto
         private void bt_f_seleccionar_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
                 producto = listaproductos[productoseleccionado];
                 int numeroid = listaproductos[productoseleccionado].ProductoId;
                 producto = unit.RepositorioProducto.ObtenerUno(c => c.ProductoId == producto.ProductoId);
@@ -899,11 +1067,6 @@ namespace Empresa_Fabricacion
                 DesactivarBotonesFabricacion();
                 grid_fabricacion.DataContext = fabricacion;
                 dg_fabricacion.ItemsSource = unit.RepositorioFabricacion.ObtenerVarios(c => c.ProductoId == producto.ProductoId).ToList();
-            }
-            catch (Exception)
-            {
-
-            }
         }
 
         //Comprobar empleado si esta en la fabricacion
@@ -935,32 +1098,40 @@ namespace Empresa_Fabricacion
         //añadir fabricacion
         private void bt_f_añadir_Click(object sender, RoutedEventArgs e)
         {
-            if (fabricacion == null) { fabricacion = new Fabricacion(); }
-            fabricacion.ProductoId = producto.ProductoId;
-            fabricacion.ClienteId = cliente.ClienteId;
-            if (tb_f_fechainicio.Text == "") { fabricacion.FechaInicio = DateTime.Today; }
-            else { fabricacion.FechaInicio = Convert.ToDateTime(tb_f_fechainicio.Text); }
-            if (tb_f_fechafinal.Text == "") { fabricacion.FechaAcaba = DateTime.Today; }
-            else { fabricacion.FechaAcaba = Convert.ToDateTime(tb_f_fechafinal.Text); }
+                    List<Fabricacion> comprobacion = ComprobarListaFabricacion();
+                    if (fabricacion == null) { fabricacion = new Fabricacion(); }
+                    if (comprobacion.Count != 0) { fabricacion.Materiales = comprobacion[0].Materiales; }
+                    fabricacion.ProductoId = producto.ProductoId;
+                    fabricacion.ClienteId = cliente.ClienteId;
+                    if (tb_f_fechainicio.Text == "") { fabricacion.FechaInicio = DateTime.Today; }
+                    else { fabricacion.FechaInicio = Convert.ToDateTime(tb_f_fechainicio.Text); }
+                    if (tb_f_fechafinal.Text == "") { fabricacion.FechaAcaba = DateTime.Today; }
+                    else { fabricacion.FechaAcaba = Convert.ToDateTime(tb_f_fechafinal.Text); }
 
-            //agregar fabricacion a empleado
-            if (cb_f_trabajadoractivo.IsChecked == true)
-            {
-                fabricacion.Empleados.Add(usuarioactivo);
-                unit.RepositorioFabricacion.Crear(fabricacion);
-                usuarioactivo.FabricacionId = fabricacion.FabricacionId;
-                unit.RepositorioEmpleado.Actualizar(usuarioactivo);
-            }
-            else
-            {
-                unit.RepositorioFabricacion.Crear(fabricacion);
-            }
+                int result = DateTime.Compare(fabricacion.FechaInicio, fabricacion.FechaAcaba);
+                if (result <= 0)
+                {
 
-            LimpiarFabricacion();
-            cb_f_clienteid.SelectedIndex = clienteseleccionado;
-            DesactivarBotonesFabricacion();
-            dg_fabricacion.ItemsSource = unit.RepositorioFabricacion.ObtenerVarios(c => c.ProductoId == producto.ProductoId).ToList();
-            MessageBox.Show("Fabricación nueva añadida");
+                    //agregar fabricacion a empleado
+                    if (cb_f_trabajadoractivo.IsChecked == true)
+                    {
+                        fabricacion.Empleados.Add(usuarioactivo);
+                        unit.RepositorioFabricacion.Crear(fabricacion);
+                        usuarioactivo.FabricacionId = fabricacion.FabricacionId;
+                        unit.RepositorioEmpleado.Actualizar(usuarioactivo);
+                    }
+                    else
+                    {
+                        unit.RepositorioFabricacion.Crear(fabricacion);
+                    }
+
+                    LimpiarFabricacion();
+                    cb_f_clienteid.SelectedIndex = clienteseleccionado;
+                    DesactivarBotonesFabricacion();
+                    dg_fabricacion.ItemsSource = unit.RepositorioFabricacion.ObtenerVarios(c => c.ProductoId == producto.ProductoId).ToList();
+                    MessageBox.Show("Fabricación nueva añadida");
+                }
+                else { MessageBox.Show("La fecha final no puede ser antes que la fecha de inicio", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
         }
 
         //modificar fabricacion
@@ -972,26 +1143,32 @@ namespace Empresa_Fabricacion
             if (tb_f_fechafinal.Text == "") { fabricacion.FechaAcaba = DateTime.Today; }
             else { fabricacion.FechaAcaba = Convert.ToDateTime(tb_f_fechafinal.Text); }
 
-            fabricacion.ClienteId = cliente.ClienteId;
-
-            //agregar fabricacion a empleado
-            if (comprobarempleadoidenfabricacion(fabricacion) == false)
+            int result = DateTime.Compare(fabricacion.FechaInicio, fabricacion.FechaAcaba);
+            if (result <= 0)
             {
-                if (cb_f_trabajadoractivo.IsChecked == true)
-                {
-                    fabricacion.Empleados.Add(usuarioactivo);
-                    usuarioactivo.FabricacionId = fabricacion.FabricacionId;
-                }
-            }
-            else if(cb_f_trabajadoractivo.IsChecked == false){ usuarioactivo.FabricacionId = null; }
 
-            unit.RepositorioEmpleado.Actualizar(usuarioactivo);
-            unit.RepositorioFabricacion.Actualizar(fabricacion);
-            LimpiarFabricacion();
-            cb_f_clienteid.SelectedIndex = clienteseleccionado;
-            DesactivarBotonesFabricacion();
-            dg_fabricacion.ItemsSource = unit.RepositorioFabricacion.ObtenerVarios(c => c.ProductoId == producto.ProductoId).ToList();
-            MessageBox.Show("Fabricación modificada");
+                fabricacion.ClienteId = cliente.ClienteId;
+
+                //agregar fabricacion a empleado
+                if (comprobarempleadoidenfabricacion(fabricacion) == false)
+                {
+                    if (cb_f_trabajadoractivo.IsChecked == true)
+                    {
+                        fabricacion.Empleados.Add(usuarioactivo);
+                        usuarioactivo.FabricacionId = fabricacion.FabricacionId;
+                    }
+                }
+                else if(cb_f_trabajadoractivo.IsChecked == false){ usuarioactivo.FabricacionId = null; }
+
+                unit.RepositorioEmpleado.Actualizar(usuarioactivo);
+                unit.RepositorioFabricacion.Actualizar(fabricacion);
+                LimpiarFabricacion();
+                cb_f_clienteid.SelectedIndex = clienteseleccionado;
+                DesactivarBotonesFabricacion();
+                dg_fabricacion.ItemsSource = unit.RepositorioFabricacion.ObtenerVarios(c => c.ProductoId == producto.ProductoId).ToList();
+                MessageBox.Show("Fabricación modificada");
+            }
+            else { MessageBox.Show("La fecha final no puede ser antes que la fecha de inicio", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
         }
 
         //eliminar fabricacion
@@ -1044,6 +1221,15 @@ namespace Empresa_Fabricacion
         private void cb_f_fabricado_Checked(object sender, RoutedEventArgs e)
         {
             fabricacion.Fabricado = (bool)cb_f_fabricado.IsChecked;
+        }
+
+        //Comprobar si ya hay alguna produccion hecha de ese producto
+        private List<Fabricacion> ComprobarListaFabricacion()
+        {
+            List<Fabricacion> comprobarlista = new List<Fabricacion>();
+            comprobarlista = unit.RepositorioFabricacion.ObtenerVarios(c => c.ProductoId == producto.ProductoId);
+
+            return comprobarlista;
         }
 
         #endregion
@@ -1186,19 +1372,28 @@ namespace Empresa_Fabricacion
         //añadir material
         private void bt_m_añadir_Click(object sender, RoutedEventArgs e)
         {
-            material.ProveedorId = proveedor.ProveedorId;
-            material.CategoriaId = categoriaseleccionado;
-
-            if (tb_m_foto.Text != "")
+            if (tb_m_nombre.Text != "")
             {
-                material.Foto = tb_m_foto.Text;
+                if (tb_m_precio.Text != "0" && tb_m_precio.Text != "") {
+                    material.ProveedorId = proveedor.ProveedorId;
+                    material.CategoriaId = categoriaseleccionado;
+
+                    if (tb_m_foto.Text != "")
+                    {
+                        material.Foto = tb_m_foto.Text;
+                    }
+                    else { material.Foto = Environment.CurrentDirectory + @"\Imagenes\imagendefecto.png"; }
+
+                    unit.RepositorioMaterial.Crear(material);
+                    LimpiarMaterial();
+                    DesactivarBotonesMaterial();
+                    MessageBox.Show("Material nuevo añadido");
+                }
+                else { MessageBox.Show("El precio tiene que ser mayor a 0", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
             }
-            else { material.Foto = Environment.CurrentDirectory + @"\Imagenes\imagendefecto.png"; }
+            else { MessageBox.Show("El campo nombre es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
+
             
-            unit.RepositorioMaterial.Crear(material);
-            LimpiarMaterial();
-            DesactivarBotonesMaterial();
-            MessageBox.Show("Material nuevo añadido");
         }
 
         //modificar material
@@ -1722,8 +1917,8 @@ namespace Empresa_Fabricacion
                             z1.SetFontSize(12);
                             z1.SetMarginLeft(210);
                             z1.Add("Cliente: " + cliente.Nombre + " " + cliente.Apellidos + "\n");
-                            z1.Add("NIF: " + cliente.NIF);
-                            if (producto.Vendido == true)
+                            z1.Add("NIF: " + cliente.NIF+"\n");
+                            if (producto.Pagado == true)
                             {
                                 z1.Add("Producto entregado: " + "'" + producto.Nombre + "'" + "\n");
                             }
@@ -1848,8 +2043,8 @@ namespace Empresa_Fabricacion
                             double iva= producto.Precio*0.21;
 
                             a.Add("Base imponible            " + (producto.Precio - iva) + " €" + "\n");
-                            a.Add("21% IVA:                  " + iva +" €"+"\n");
-                            a.Add("Total factura :         " + producto.Precio + " €" + "\n");
+                            a.Add("21% IVA:                      " + iva +" €"+"\n");
+                            a.Add("Total factura :               " + producto.Precio + " €" + "\n");
                             cellivaytotal.Add(a);
                             t4.AddCell(cellivaytotal);
 
@@ -1863,7 +2058,7 @@ namespace Empresa_Fabricacion
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("Pdf con mismo nombre abierto. Cierrelo primero.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Tendremos que realizar la fabricacion de este producto", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

@@ -52,7 +52,8 @@ namespace Empresa_Fabricacion.DAL
                     new Proveedor { ProveedorId = 0005, Nombre="Custom Computer", Direccion="", Telefono="", Contacto="", Correo="Customcomputerdam@gmail.com" },
                     new Proveedor { ProveedorId = 0006, Nombre="Barracuda", Direccion="Ourense", Telefono="988153545", Contacto="Jason", Correo="Jason@barracuda.com" },
                     new Proveedor { ProveedorId = 0007, Nombre="MetalBlade", Direccion="Ourense", Telefono="988884516", Contacto="Carlos", Correo="Carlos@metalblade.com" },
-                    new Proveedor { ProveedorId = 0008, Nombre="Samsung", Direccion="Ourense", Telefono="988359988", Contacto="Morfeo", Correo="Morfeo@samsung.com" }
+                    new Proveedor { ProveedorId = 0008, Nombre="Samsung", Direccion="Ourense", Telefono="988359988", Contacto="Morfeo", Correo="Morfeo@samsung.com" },
+                    new Proveedor { ProveedorId = 0009, Nombre="Razer", Direccion="Ourense", Telefono="988486544", Contacto="Manu", Correo="Manu@razer.com" }
                     );
                 context.Materiales.AddOrUpdate(
                     new Material { MaterialId = 1000, Nombre= "Montaje", Precio=50, Stock=1000, Foto= Environment.CurrentDirectory + @"\Imagenes\fabricacion.png", ProveedorId=0005, CategoriaId=5000 },
@@ -63,8 +64,9 @@ namespace Empresa_Fabricacion.DAL
                     new Material { MaterialId = 1005, Nombre = "Memoria Ram Crucial Ballistix Sport DDR4 2666 16GB CL16", Precio = 169, Stock = 20, Foto = Environment.CurrentDirectory + @"\Imagenes\memorias-ram-crucial-ddr4-16gb-2400mhz-ballistix-sport-lt-red-1g.png", ProveedorId = 0004, CategoriaId=5003},
                     new Material { MaterialId = 1006, Nombre= "Fuente de alimentacion MetalBlade 750W", Precio = 74, Stock =100, Foto= Environment.CurrentDirectory + @"\Imagenes\Fuente de alimentacion.png", ProveedorId=0007, CategoriaId=5005},
                     new Material { MaterialId = 1007, Nombre= "Disco duro 1tb Barracuda", Precio = 44.59, Stock =75, Foto= Environment.CurrentDirectory + @"\Imagenes\discoduronormal.png", ProveedorId=0006, CategoriaId=5006},
-                    new Material { MaterialId = 1007, Nombre= "Disco duro m.2 Samsung EVO 850 1tb ", Precio = 330, Stock =10, Foto= Environment.CurrentDirectory + @"\Imagenes\discom2.png", ProveedorId=0008, CategoriaId=5006},
-                    new Material { MaterialId = 1008, Nombre= "Caja Custom Pecera", Precio = 130, Stock =2, Foto= Environment.CurrentDirectory + @"\Imagenes\pecera.png", ProveedorId=0005, CategoriaId=5008 }
+                    new Material { MaterialId = 1008, Nombre= "Disco duro m.2 Samsung EVO 850 1tb ", Precio = 330, Stock =10, Foto= Environment.CurrentDirectory + @"\Imagenes\discom2.png", ProveedorId=0008, CategoriaId=5006},
+                    new Material { MaterialId = 1009, Nombre= "Caja Custom Pecera", Precio = 130, Stock =2, Foto= Environment.CurrentDirectory + @"\Imagenes\pecera.png", ProveedorId=0005, CategoriaId=5008 },
+                    new Material { MaterialId = 1010, Nombre= "Caja Custom Cubo", Precio = 170, Stock =5, Foto= Environment.CurrentDirectory + @"\Imagenes\iconofactura.png", ProveedorId=0009, CategoriaId=5008 }
                     );
                 context.Clientes.AddOrUpdate(
                     new Cliente { ClienteId=2001, Nombre="Pepe", Apellidos="Álvarez", NIF="44456148f", Direccion="Polvorín", Telefono="664871512", Correo="Pepe@gmail.com"},
@@ -72,10 +74,10 @@ namespace Empresa_Fabricacion.DAL
                     new Cliente { ClienteId=2003, Nombre="Mónica", Apellidos="Naranjo", NIF = "444665588d", Direccion ="Juan XXIII", Telefono="655784848", Correo="Monica@gmail.com"}
                     );
                 context.Productos.AddOrUpdate(
-                    new Producto { ProductoId=3001, Nombre="La pecera", Precio=1800, Vendido=true, FechaVenta= new DateTime(2018, 06, 13),
+                    new Producto { ProductoId=3001, Nombre="La pecera", Precio=1800, Pagado=true, FechaVenta= new DateTime(2018, 06, 13),
                         Descripcion ="Ordenador gaming creado con las mejores piezas del mercado y con apariencia de una pecera",ClienteId=2001},
-                    new Producto { ProductoId=3002, Nombre="La nevera", Precio=1800, Vendido=false, FechaVenta= DateTime.Today,
-                        Descripcion ="Ordenador gaming creado con las mejores piezas del mercado y con apariencia de una nevera",ClienteId=2003}
+                    new Producto { ProductoId=3002, Nombre="The cube", Precio=1800, Pagado=false, FechaVenta= DateTime.Today,
+                        Descripcion ="Ordenador gaming creado con las mejores piezas del mercado y con apariencia de un cubo",ClienteId=2003}
                     );
                 context.Fabricaciones.AddOrUpdate(
                     new Fabricacion { FabricacionId=4001,FechaInicio=new DateTime(2018,07,13), FechaAcaba=DateTime.Today ,Fabricado=false,ProductoId=3001,ClienteId=2001}

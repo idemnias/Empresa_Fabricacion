@@ -24,12 +24,10 @@ namespace Empresa_Fabricacion
         MainWindow mainWindow;
         UnitOfWork unit = new UnitOfWork();
         Categoria categoria = new Categoria();
-        List<Categoria> listacategorias = new List<Categoria>();
         public VentanaCategorias(MainWindow main)
         {
             InitializeComponent();
-            DesactivarBotonesCategorias();
-            ObtenerListaCategorias();
+            LimpiarGridCategorias();
             mainWindow = main;
         }
 
@@ -38,19 +36,8 @@ namespace Empresa_Fabricacion
         {
             categoria = new Categoria();
             grid_categorias.DataContext = categoria;
+            lb_categorias.ItemsSource = unit.RepositorioCategoria.ObtenerTodo().ToList();
             DesactivarBotonesCategorias();
-        }
-
-        //obtener lista de categorias
-        private void ObtenerListaCategorias()
-        {
-            listacategorias = unit.RepositorioCategoria.ObtenerTodo();
-            lb_categorias.Items.Clear();
-            foreach (var item in listacategorias)
-            {
-                lb_categorias.Items.Add(item.Nombre);
-            }
-            
         }
 
         //activar botones modificar y eliminar y desactivar añadir
@@ -78,20 +65,28 @@ namespace Empresa_Fabricacion
         //añadir categoria
         private void bt_c_añadir_Click(object sender, RoutedEventArgs e)
         {
-            unit.RepositorioCategoria.Crear(categoria);
-            LimpiarGridCategorias();
-            ObtenerListaCategorias();
-            MessageBox.Show("Categoría nueva añadida");
+            if (tb_nombre_categoria.Text!="")
+            {
+                categoria.Nombre = tb_nombre_categoria.Text;
+                unit.RepositorioCategoria.Crear(categoria);
+                LimpiarGridCategorias();
+                MessageBox.Show("Categoría nueva añadida");
+            }
+            else { MessageBox.Show("El campo categoria es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
         }
 
         //modificar categoria
         private void bt_c_modificar_Click(object sender, RoutedEventArgs e)
         {
-            unit.RepositorioCategoria.Actualizar(categoria);
-            ObtenerListaCategorias();
-            LimpiarGridCategorias();
-            DesactivarBotonesCategorias();
-            MessageBox.Show("Categoría modificada");
+            if (tb_nombre_categoria.Text != "")
+            {
+                categoria.Nombre = tb_nombre_categoria.Text;
+                unit.RepositorioCategoria.Actualizar(categoria);
+                LimpiarGridCategorias();
+                DesactivarBotonesCategorias();
+                MessageBox.Show("Categoría modificada");
+            }
+            else { MessageBox.Show("El campo categoria es requerido", "ERROR", MessageBoxButton.OK, MessageBoxImage.Stop); }
         }
 
         //eliminar categoria
@@ -100,20 +95,24 @@ namespace Empresa_Fabricacion
             if (MessageBox.Show("¿Desea eliminar la categoría?", "Cancelar", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 unit.RepositorioCategoria.Eliminar(categoria);
-            ObtenerListaCategorias();
-            LimpiarGridCategorias();
-            DesactivarBotonesCategorias();
+                LimpiarGridCategorias();
+                DesactivarBotonesCategorias();
             }
             else { MessageBox.Show("Eliminación de categoría cancelada"); }
         }
 
         //clic en la lista de categorias
         private void lb_categorias_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            categoria = new Categoria();
-            categoria = unit.RepositorioCategoria.ObtenerUno(c => c.CategoriaId == lb_categorias.SelectedIndex+1);
-            grid_categorias.DataContext = categoria;
-            ActivarBotonesCategorias();
+        {   
+            try
+            {
+                categoria = (Categoria)lb_categorias.SelectedItem;
+                grid_categorias.DataContext = categoria;
+                ActivarBotonesCategorias();
+            }
+            catch (Exception)
+            {
+            }
         }
 
         //cuando se cierra la ventana

@@ -247,6 +247,30 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style TargetType="DataGridCell">
+            <Style.Triggers>
+
+                <Trigger Property="IsSelected" Value="True">
+
+                    <Setter Property="Background" Value="LightGreen" />
+
+                    <Setter Property="Foreground" Value="Black" />
+
+                </Trigger>
+
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="DataGridRow">
+            <Style.Triggers>
+
+                <Trigger Property="IsSelected" Value="True">
+
+                    <Setter Property="BorderBrush" Value="Green" />
+
+                    <Setter Property="BorderThickness" Value="3" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.Background>
@@ -309,9 +333,9 @@
                 <CheckBox Name="cb_f_trabajadoractivo" ToolTip="Marque la casilla si ya esta finalizada la fabricación del producto" Width="15" Height="15" />
             </UniformGrid>
             <ComboBox Name="cb_f_clienteid" Grid.Column="1" Grid.Row="6" Width="170" HorizontalAlignment="Left" ToolTip="Eliga el cliente" SelectionChanged="cb_f_clienteid_SelectionChanged"/>
+            <Label x:Name="label_fabricacion_empleado" Grid.Row="8" Visibility="Hidden" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="30" Width="auto" Style="{StaticResource estilolabel}"/>
 
-            <DataGrid Name="dg_fabricacion" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="7" Margin="0,0,20,0"  SelectionChanged="dg_fabricacion_SelectionChanged" />
-
+            <DataGrid Name="dg_fabricacion" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="7" Margin="0,0,20,0"  SelectionChanged="dg_fabricacion_SelectionChanged"/>
 
             <Button Name="bt_f_añadir" Content="Añadir" Grid.Column="3" Grid.Row="9" ToolTip="Añadir el producto" Width="130" Height="30" VerticalAlignment="Center" Click="bt_f_añadir_Click" Style="{StaticResource botonverde}"/>
             <Button Name="bt_f_nuevo" Content="Nuevo" Grid.Column="2" Grid.Row="9" ToolTip="Crear un nuevo producto" Width="130" Height="30" VerticalAlignment="Center" Click="bt_f_nuevo_Click" Style="{StaticResource botonverde}"/>
@@ -371,10 +395,10 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <Label Content="FabricacionId" Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" Style="{StaticResource estilolabel}"/>
-            <ComboBox Name="cb_fabricacionid" Grid.Column="0" Grid.Row="1" ToolTip="Elija el identificador de fabricación." Width="150" Height="26" Margin="35,31,35,143" SelectionChanged="cb_fabricacionid_SelectionChanged"/>
-            <Button x:Name="bt_aplicar_fabricacion" Grid.Column="0" Grid.Row="1" Content="Aplicar Fabricacion"  ToolTip="Botón para aplicar fabricación" Height="30" Width="150" Click="bt_aplicar_fabricacion_Click" Margin="35,62,35,108" Style="{StaticResource botonverde}"/>
-            <Button x:Name="bt_aplicarcambios" Grid.Column="0" Grid.Row="1" Content="Aplicar Cambios" ToolTip="Botón para cambios en fabricación" Height="30" Width="150" VerticalAlignment="Bottom" Margin="35,0,35,59" Click="bt_aplicarcambios_Click" Style="{StaticResource botonazul}"/>
+            <Label Content="FabricacionId" Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="35,25,35,0" Width="150" Style="{StaticResource estilolabel}"/>
+            <ComboBox Name="cb_fabricacionid" Grid.Column="0" Grid.Row="1" ToolTip="Elija el identificador de fabricación." Width="150" Height="26" VerticalAlignment="Top" Margin="35,55,35,0" SelectionChanged="cb_fabricacionid_SelectionChanged"/>
+            <Button x:Name="bt_aplicar_fabricacion" Grid.Column="0" Grid.Row="1" Content="Aplicar Fabricacion"  ToolTip="Botón para aplicar fabricación" Height="30" Width="150" VerticalAlignment="Bottom" Click="bt_aplicar_fabricacion_Click" Margin="35,0,35,80" Style="{StaticResource botonverde}"/>
+            <Button x:Name="bt_aplicarcambios" Grid.Column="0" Grid.Row="1" Content="Aplicar Cambios" ToolTip="Botón para cambios en fabricación" Height="30" Width="150" VerticalAlignment="Bottom" Margin="35,0,35,45" Click="bt_aplicarcambios_Click" Style="{StaticResource botonazul}"/>
             <Button x:Name="bt_generar_materiales" Grid.Column="0" Grid.Row="1" Content="Generar Lista Materiales" ToolTip="Botón para generar listado de fabricación" Height="30" Width="150" VerticalAlignment="Bottom" Margin="35,0,35,10" Click="bt_generar_materiales_Click" Style="{StaticResource botonverde}"/>
 
         </Grid>
@@ -454,14 +478,14 @@
 
             <Label Name="lb1" Content="Nombre" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Name="lb2" Content="Precio" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
-            <Label Name="lb3" Content="Vendido" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
+            <Label Name="lb3" Content="Pagado" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Name="lb4" Content="Fecha de venta" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
             <Label Name="lb5" Content="Descripcion" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
 
             <TextBox Name="tb_pr_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" ToolTip="Escribir nombre del producto" HorizontalAlignment="Left" Width="170"/>
             <TextBox Name="tb_pr_precio" Text="{Binding Path= Precio , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" ToolTip="Escribir precio del producto" HorizontalAlignment="Left" Width="170"/>
             <UniformGrid Name="ug_producto" Columns="1" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Width="170" Background="#50FFFFFF">
-                <CheckBox Name="cb_pr_vendido" IsChecked="{Binding Path=Vendido ,  Mode=TwoWay}" Width="15" Height="15" ToolTip="Marque casilla para producto vendido" Checked="cb_p_vendido_Checked" />
+                <CheckBox Name="cb_pr_vendido" IsChecked="{Binding Path=Pagado ,  Mode=TwoWay}" Width="15" Height="15" ToolTip="Marque casilla para cuando el producto está pagado" Checked="cb_p_vendido_Checked" />
             </UniformGrid>
             <DatePicker Name="tb_pr_fechaventa" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Elija la fecha de venta" Width="170" Background="#50FFFFFF"/>
             <TextBox Name="tb_pr_Descripcion" Text="{Binding Path= Descripcion , Mode=TwoWay}" ToolTip="Escribir describa el producto" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.Row="6" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Left" Width="170" Height="auto"/>
@@ -496,9 +520,11 @@
             <TextBox Name="tb_usuario" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Escribir usuario" Width="170" Height="40" FontSize="24"/>
             <Label Content="Contraseña" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Background="#cc0C2B6C" VerticalContentAlignment="Center" Width="160" Height="40" FontSize="24" Foreground="White"/>
             <PasswordBox Name="tb_contraseña" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Escribir contraseña" Width="170" Height="40" FontSize="24"/>
-            <Button Name="bt_acceder" Content="Acceder" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" ToolTip="Acceder al usuario" VerticalAlignment="Top" Width="100" Height="50" Margin="20,10,0,0" Click="bt_acceder_Click" FontSize="24" Style="{StaticResource botonverde}"/>
+            <Button Name="bt_acceder" Content="Acceder" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" ToolTip="Acceder al usuario"
+                    VerticalAlignment="Top" Width="100" Height="50" Margin="20,10,0,0" Click="bt_acceder_Click" FontSize="24" Style="{StaticResource botonverde}"/>
+            <Label x:Name="labelempleado" Grid.Row="3" Visibility="Hidden" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="30" Width="auto" Style="{StaticResource estilolabel}"/>
             <Label Name="bt_olvidocontraseña" Content="¿Olvidaste la contraseña?" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" 
-                   ToolTip="Clic al olvidar usuario o contraseña" Foreground="White" VerticalContentAlignment="Center"
+                   ToolTip="Clic al olvidar usuario o contraseña" Foreground="Black" VerticalContentAlignment="Center"
                    VerticalAlignment="Bottom" Width="220" Height="35" Margin="20,0,0,10" Cursor="Hand" FontSize="18" MouseDown="OlvidarContraseña"/>
         </Grid>
 
@@ -522,17 +548,19 @@
             </Grid.RowDefinitions>
 
             <Label Content="CLIENTE" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" FontFamily="impact" FontSize="60" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource titulos}"/>
-            <Label Content="Nombre" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
-            <Label Content="Apellidos" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
-            <Label Content="Direccion" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
-            <Label Content="Telefono" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
-            <Label Content="Correo" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
+            <Label Content="NIF" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
+            <Label Content="Nombre" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
+            <Label Content="Apellidos" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
+            <Label Content="Direccion" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
+            <Label Content="Telefono" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
+            <Label Content="Correo" Grid.Row="7" Grid.Column="0" HorizontalAlignment="Right" Width="150" Style="{StaticResource estilolabel}"/>
 
-            <TextBox Name="tb_c_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir nombre del cliente" Width="170"/>
-            <TextBox Name="tb_c_apellidos" Text="{Binding Path= Apellidos , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir apellidos del cliente" Width="170"/>
-            <TextBox Name="tb_c_direccion" Text="{Binding Path= Direccion , Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir dirección del cliente" Width="170"/>
-            <TextBox Name="tb_c_telefono" Text="{Binding Path= Telefono , Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir teléfono del cliente" Width="170"/>
-            <TextBox Name="tb_c_correo" Text="{Binding Path= Correo , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir correo del cliente" Width="170"/>
+            <TextBox Name="tb_c_nif" Text="{Binding Path= NIF , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir NIF del cliente" Width="170"/>
+            <TextBox Name="tb_c_nombre" Text="{Binding Path= Nombre , Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir nombre del cliente" Width="170"/>
+            <TextBox Name="tb_c_apellidos" Text="{Binding Path= Apellidos , Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir apellidos del cliente" Width="170"/>
+            <TextBox Name="tb_c_direccion" Text="{Binding Path= Direccion , Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir dirección del cliente" Width="170"/>
+            <TextBox Name="tb_c_telefono" Text="{Binding Path= Telefono , Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir teléfono del cliente" Width="170"/>
+            <TextBox Name="tb_c_correo" Text="{Binding Path= Correo , Mode=TwoWay}" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Escribir correo del cliente" Width="170"/>
 
             <DataGrid Name="dg_cliente" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="7" Margin="0,0,20,0" SelectionChanged="dg_cliente_SelectionChanged"/>
 
